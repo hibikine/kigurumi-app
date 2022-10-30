@@ -1,0 +1,4 @@
+{
+  "jest.jestCommandLine": "yarn jest",
+  "playwright.env": { "use": { "headless": true } }
+}
