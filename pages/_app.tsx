@@ -1,8 +1,22 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import { defaultTheme, mergeTheme, ThemeProvider } from 'evergreen-ui';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const theme = mergeTheme(defaultTheme, {});
+
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps<{ session: Session }>) {
+  return (
+    <SessionProvider session={session}>
+      <ThemeProvider value={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </SessionProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;

@@ -26,11 +26,16 @@ const TopNav = () => {
           alignItems="center"
           src="/logo.svg"
           cursor="pointer"
+          maxHeight={majorScale(6)}
+          paddingRight={majorScale(2)}
+          marginRight={majorScale(2)}
         />
       </Link>
       <Pane flex={1}>
         <TopNavTabLink href="/belongings">持ち物</TopNavTabLink>
         <TopNavTabLink href="/making">制作</TopNavTabLink>
+      </Pane>
+      <Pane display="flex" justifyContent="flex-end" width={236}>
         <TopNavTabLink href="/login">ログイン</TopNavTabLink>
       </Pane>
     </Pane>

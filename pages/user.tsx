@@ -1,10 +1,11 @@
 import { Button, majorScale, Pane } from 'evergreen-ui';
-import { signIn } from 'next-auth/react';
 import PageHeader from '../components/PageHeader';
 import type { NextPage } from 'next';
+import { useSession, signOut } from 'next-auth/react';
 import Layout from '../components/Layout';
 
 const Login: NextPage = () => {
+  const { data: session } = useSession();
   return (
     <Layout>
       <Pane width="100%" display="grid" gridTemplateColumns="236px 1fr">
@@ -17,8 +18,9 @@ const Login: NextPage = () => {
           padding={majorScale(5)}
           maxWidth={majorScale(143)}
         >
-          <PageHeader title="ログイン" />
-          <Button onClick={() => signIn()}>ログイン</Button>
+          <PageHeader title="ユーザー" />
+          {session?.user?.email}
+          <Button onClick={() => signOut()}>ログアウト</Button>
         </Pane>
       </Pane>
     </Layout>
