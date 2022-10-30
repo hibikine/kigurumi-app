@@ -42,3 +42,5 @@ public/sw.js.map
 public/workbox-327c579b.js.map
 public/workbox-327c579b.js
 .env
+
+/mysql/data/

@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: mysql:8
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kiguapp
+      MYSQL_USER: kiguapp
+      MYSQL_PASSWORD: kiguapp
+      TZ: Asia/Tokyo
+      port: 3306
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_ja_0900_as_cs_ks
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: kiguapp
+      PMA_PASSWORD: kiguapp
+      PMA_ARBITRARY: 1
+    ports:
+      - 8080:80
+    depends_on:
+      - db

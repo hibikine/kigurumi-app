@@ -1,0 +1,15 @@
+sshd:
+  port: 50000
+docker_host:
+  address_pool:
+    prefix: 10.149.0.0
+    prefix_length: 16
+    subnet_length: 24
+  data_root: /var/lib/docker
+  cadvisor:
+    port: 59000
+tls:
+  domains:
+    mysql: mysql.hikage.works
+  acme_challenge_directory: /usr/share/nginx/html
+  mail: webmaster@mysql.hikage.works

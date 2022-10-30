@@ -1,0 +1,4 @@
+- name: Server initialization
+  hosts: web
+  roles:
+    - mysql-init

@@ -4,6 +4,14 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## サーバー側MySQL設定
+
+```sql
+create database if not exists kiguapp character set utf8mb4 collate utf8mb4_ja_0900_as_cs_ks;
+create database if not exists kiguapp_shadow character set utf8mb4 collate utf8mb4_ja_0900_as_cs_ks;
+```
+
+
 ## Getting Started
 
 First, run the development server:

@@ -2,8 +2,13 @@ import NextAuth from 'next-auth';
 import EmailProvider from 'next-auth/providers/email';
 import TwitterProvider from 'next-auth/providers/twitter';
 import GoogleProvider from 'next-auth/providers/google';
-import { Client as FaunaClient } from 'faunadb';
-import { FaunaAdapter } from '@next-auth/fauna-adapter';
+// import { FaunaAdapter } from '@next-auth/fauna-adapter';
+import { getFaunaClient } from '../../../utils/database';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import prisma from '../../../lib/prismadb';
+if (!process.env.TWITTER_CLIENT_ID || !process.env.TWITTER_CLIENT_SECRET) {
+  throw new Error('TWITTER_CLIENT_ID and TWITTER_CLIENT_SECRET must be set');
+}
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   throw new Error('Missing Google environment variables');
 }
@@ -16,19 +21,14 @@ if (
 ) {
   throw new Error('Missing email environment variables');
 }
-if (
+/*if (
   !process.env.FAUNADB_SECRET ||
   !process.env.FAUNADB_SCHEME ||
   !process.env.FAUNADB_PORT
 ) {
   throw new Error('Missing FaunaDB environment variables');
 }
-const client = new FaunaClient({
-  secret: process.env.FAUNADB_SECRET,
-  scheme: process.env.FAUNADB_SCHEME as 'http' | 'https',
-  domain: process.env.FAUNADB_DOMAIN,
-  port: parseInt(process.env.FAUNADB_PORT, 10),
-});
+const client = getFaunaClient();*/
 export const authOptions = {
   providers: [
     TwitterProvider({
@@ -62,6 +62,7 @@ export const authOptions = {
     appId: process.env.FIREBASE_APP_ID,
     measurementId: process.env.FIREBASE_MEASUREMENT_ID,
   }),*/
-  adapter: FaunaAdapter(client),
+  // adapter: FaunaAdapter(client),
+  adapter: PrismaAdapter(prisma),
 };
 export default NextAuth(authOptions);

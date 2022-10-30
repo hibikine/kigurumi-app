@@ -1,0 +1,8 @@
+- name: create databases
+  community.mysql.mysql_db:
+    name:
+      - kiguapp
+      - kiguapp_shadow
+    encoding: utf8mb4
+    collation:
+    state: present
