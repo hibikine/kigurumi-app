@@ -1,4 +1,4 @@
-import { Button, majorScale, Pane, Text, TextInputField } from 'evergreen-ui';
+import { majorScale, Pane, Text, TextInputField } from 'evergreen-ui';
 import {
   signIn,
   getProviders,
@@ -6,7 +6,6 @@ import {
   ClientSafeProvider,
 } from 'next-auth/react';
 import PageHeader from '../components/PageHeader';
-import { useForm } from 'react-hook-form';
 import type {
   NextPage,
   InferGetServerSidePropsType,
@@ -20,13 +19,6 @@ import TwitterLogoBlue from '../public/Twitter_Logo_Blue.svg';
 const Login: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ providers, csrfToken }) => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-
   return (
     <Layout>
       <Pane width="100%" display="grid" gridTemplateColumns="236px 1fr">
@@ -94,24 +86,19 @@ const Login: NextPage<
                 <Text size="small">もしくは</Text>
                 <Pane borderTop="1px solid #aaa" flexGrow="1" />
               </Pane>
-              <form
-                method="post"
-                onSubmit={handleSubmit(() => true)}
-                action="/api/auth/signin/email"
-              >
+              <form method="post" action="/api/auth/signin/email">
                 <input
+                  name="csrfToken"
                   type="hidden"
                   defaultValue={csrfToken}
-                  {...register('csrfToken')}
                 />
                 <TextInputField
                   type="email"
+                  name="email"
                   label="メールアドレス"
                   placeholder="mail@example.com"
                   id="email"
-                  {...register('email', { required: true })}
                 />
-                {errors.emailRequired && <span>This field is required</span>}
                 <LoginButton name="Eメール" type="submit" />
               </form>
             </Pane>

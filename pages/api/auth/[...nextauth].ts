@@ -6,6 +6,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import { getFaunaClient } from '../../../utils/database';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '../../../lib/prismadb';
+import sendVerificationRequest from '../../../lib/sendVerificationRequest';
 if (!process.env.TWITTER_CLIENT_ID || !process.env.TWITTER_CLIENT_SECRET) {
   throw new Error('TWITTER_CLIENT_ID and TWITTER_CLIENT_SECRET must be set');
 }
@@ -43,13 +44,14 @@ export const authOptions = {
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
+        port: parseInt(process.env.EMAIL_SERVER_PORT, 10),
         auth: {
           user: process.env.EMAIL_SERVER_USER,
           pass: process.env.EMAIL_SERVER_PASSWORD,
         },
       },
       from: process.env.EMAIL_FROM,
+      sendVerificationRequest,
     }),
   ],
   /*adapter: FirestoreAdapter({
