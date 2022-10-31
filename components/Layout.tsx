@@ -3,6 +3,7 @@ import PageFooter from './PageFooter';
 import Head from './Head';
 import TopNav from './TopNav';
 import { Pane } from 'evergreen-ui';
+import { backgroundColor } from '../styles/colors';
 type Props = {
   children?: ReactNode;
   title?: string;
@@ -10,9 +11,15 @@ type Props = {
 const Layout = ({ children, title = '' }: Props) => (
   <div>
     <Head title={title} />
-    <Pane width="100vw" display="flex" flexDirection="column" minHeight="100vh">
+    <Pane
+      width="100%"
+      display="flex"
+      flexDirection="column"
+      minHeight="100vh"
+      backgroundColor={backgroundColor.light}
+    >
       <TopNav />
-      <Pane flex={1} height="100%">
+      <Pane flex={1} height="100%" color="background">
         {children}
         <PageFooter />
       </Pane>

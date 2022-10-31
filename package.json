@@ -21,7 +21,8 @@
     "nodemailer": "^6.8.0",
     "prisma": "^4.5.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-reveal": "^1.2.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.27.1",

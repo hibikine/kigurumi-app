@@ -3,6 +3,9 @@ import type { AppProps } from 'next/app';
 import { defaultTheme, mergeTheme, ThemeProvider } from 'evergreen-ui';
 import { SessionProvider } from 'next-auth/react';
 import { Session } from 'next-auth';
+import config from 'react-reveal/globals';
+
+config({ ssrFadeout: true });
 
 const theme = mergeTheme(defaultTheme, {});
 

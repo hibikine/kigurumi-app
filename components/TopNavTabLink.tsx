@@ -13,6 +13,8 @@ const TopNavTabLink = ({ href, children }: Props) => {
   return (
     <Link href={href} passHref>
       <EvergreenLink
+        size={600}
+        fontWeight={isActive ? 600 : 400}
         color={isActive ? 'neutral' : undefined}
         marginRight={majorScale(3)}
       >

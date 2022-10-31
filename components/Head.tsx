@@ -11,7 +11,7 @@ const DocumentHead = ({ title }: Props) => {
     <Head>
       <title>
         {appName}
-        {title.length > 0 && ` - ${title}`}
+        {title.length > 0 ? ` - ${title}` : ''}
       </title>
       <meta property="og:title" content={appName} />
       <meta

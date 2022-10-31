@@ -11,6 +11,12 @@ create database if not exists kiguapp character set utf8mb4 collate utf8mb4_ja_0
 create database if not exists kiguapp_shadow character set utf8mb4 collate utf8mb4_ja_0900_as_cs_ks;
 ```
 
+## リンク
+
+- [きぐあぷり](https://app.hikage.works/)
+- [Twitter Developers](https://developer.twitter.com/en/portal/projects/1586553116706582528/settings)
+- [kigurumi-app – Overview - Vercel](https://vercel.com/hibikine/kigurumi-app)
+- [Google Search Console Overview](https://search.google.com/search-console?resource_id=https%3A%2F%2Fapp.hikage.works%2F)
 
 ## Getting Started
 
