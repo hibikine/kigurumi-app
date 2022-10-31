@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const path = require('path');
+
 const withPWA = require('next-pwa')({
   dest: 'public',
 });
