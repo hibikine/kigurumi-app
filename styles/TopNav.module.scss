@@ -1,0 +1,68 @@
+@use 'constants' as *;
+
+.logo {
+  padding-right: 16px;
+  margin-right: 16px;
+}
+@media screen and (max-width: 768px) {
+  .logo {
+    padding-right: 0;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+.topNav {
+  height: $navigation-height-pc;
+}
+@media screen and (max-width: 768px) {
+  .topNav {
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .topNav {
+    height: $navigation-height-sp;
+  }
+}
+.login {
+  margin-left: auto;
+}
+.topNavTabLink.topNavTabLink {
+  height: $navigation-height-pc;
+  line-height: $navigation-height-pc;
+}
+.topNavTabLinkWithIcon.topNavTabLinkWithIcon {
+  line-height: 12px;
+}
+@media screen and (max-width: $bp-pc) {
+  .topNavTabLink.topNavTabLink {
+    height: $navigation-height-sp;
+    line-height: $navigation-height-sp;
+  }
+}
+@media screen and (max-width: 768px) {
+  .login {
+    margin-left: initial;
+  }
+  .bottomNav {
+    position: fixed;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    height: 80px;
+    left: 0;
+    right: 0;
+    background-color: white;
+  }
+  .topNavTabLink {
+    width: auto;
+  }
+}
+.logoWrapper {
+  height: 64px;
+}
+@media screen and (max-width: 1024px) {
+  .topNav {
+    height: 80px;
+  }
+}

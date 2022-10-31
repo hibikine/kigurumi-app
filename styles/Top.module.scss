@@ -1,0 +1,74 @@
+@use 'constants' as *;
+
+.chatbox {
+  filter: drop-shadow(6px 6px 4px #ccc);
+  left: 540px;
+  top: 70px;
+}
+@media screen and (max-width: $bp-tablet) {
+  .chatbox {
+    z-index: initial;
+  }
+}
+@media screen and (max-width: 810px) {
+  .chatbox {
+    left: initial;
+    right: 30px;
+  }
+}
+@media screen and (max-width: $bp-pc) {
+  .chatbox {
+    left: initial;
+    right: 30px;
+  }
+}
+// portrait media
+@media screen and (min-width: 810px) and (orientation: portrait) {
+  .chatbox {
+    left: initial;
+    right: 60px;
+  }
+}
+
+.characterFade {
+  height: 100%;
+}
+.mainLogo {
+  height: min(280px, 20vh);
+}
+@media screen and (max-width: $bp-pc) {
+  .mainLogo {
+    height: min(150px, 20vh);
+  }
+}
+.overlayPane {
+  top: 40vh;
+  height: 60vh;
+}
+@media screen and (max-width: $bp-pc) {
+  .overlayPane {
+    top: 50vh;
+    height: 50vh;
+  }
+}
+.gatoImage {
+  left: initial;
+}
+@media screen and (max-width: 810px) {
+  .gatoImage {
+    left: calc(70vw - calc(810px * calc(70 / 100))) !important;
+  }
+}
+
+.cptButton {
+  width: 220px;
+}
+
+.gridPane {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+@media screen and (max-width: $bp-tablet) {
+  .gridPane {
+    grid-template-columns: 1fr;
+  }
+}

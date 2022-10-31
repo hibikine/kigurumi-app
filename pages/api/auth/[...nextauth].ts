@@ -64,5 +64,9 @@ export const authOptions = {
   }),*/
   // adapter: FaunaAdapter(client),
   adapter: PrismaAdapter(prisma),
+  theme: {
+    colorScheme: 'light' as const,
+    logo: '/logo.svg',
+  },
 };
 export default NextAuth(authOptions);
