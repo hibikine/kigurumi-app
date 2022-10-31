@@ -17,8 +17,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { data: data2 } = await fauna.query<any>(
     q.Get(q.Match(q.Index('account_by_provider_and_provider_account_id')))
   );
-  res.status(200).json(ret);
-  // res.status(200).send({ content: 'This is protected content!' });
+  // res.status(200).json(ret);
+  res.status(200).send({ content: 'This is protected content!' });
 };
 
 export default handler;
