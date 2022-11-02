@@ -11,12 +11,56 @@ create database if not exists kiguapp character set utf8mb4 collate utf8mb4_ja_0
 create database if not exists kiguapp_shadow character set utf8mb4 collate utf8mb4_ja_0900_as_cs_ks;
 ```
 
+## Prisma Studioの起動
+```bash
+yarn prisma studio
+```
+
+## マイグレーションファイルの生成
+### Schemaを変更した場合
+
+1. `yarn prisma migrate dev --create-only` でマイグレーションファイルだけを生成させる
+2. `%s/COLLATE utf8mb4_ /COLLATE utf8mb4_ja_0900_as_cs_ks/g` で置き換えする
+3. `yarn prisma migrate dev` を実行する
+
+## 開発環境用のSSL証明書の生成
+
+[mkcert](https://github.com/FiloSottile/mkcert#installation)を入れる
+
+Ubuntu環境の場合は以下の通り
+
+```bash
+sudo apt install libnss3-tools
+
+curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+chmod +x mkcert-v*-linux-amd64
+sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+```
+
+その後、認証局を生成する
+
+```bash
+cd kigurumi-app
+mkcert -install
+```
+
+localhostの証明書を発行する
+
+```bash
+mkcert localhost
+```
+
 ## リンク
 
 - [きぐあぷり](https://app.hikage.works/)
 - [Twitter Developers](https://developer.twitter.com/en/portal/projects/1586553116706582528/settings)
 - [kigurumi-app – Overview - Vercel](https://vercel.com/hibikine/kigurumi-app)
 - [Google Search Console Overview](https://search.google.com/search-console?resource_id=https%3A%2F%2Fapp.hikage.works%2F)
+
+## 使用ライブラリ
+
+- [vercel/next.js](https://github.com/vercel/next.js)
+- [shadowwalker/next-pwa](https://github.com/shadowwalker/next-pwa)
 
 ## Getting Started
 

@@ -2,57 +2,141 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/migrate-shadow
+    provider          = "mysql"
+    url               = env("DATABASE_URL")
+    shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/migrate-shadow
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  // previewFeatures = ["referentialActions"] // You won't need this in Prisma 3.X or higher.
+    provider = "prisma-client-js"
+    // previewFeatures = ["referentialActions"] // You won't need this in Prisma 3.X or higher.
+}
+
+model Fursuit {
+    id          Int           @id @default(autoincrement())
+    name        String
+    description String
+    parts       FursuitPart[]
+    madeAt      DateTime?     @default(now())
+    createdAt   DateTime      @default(now())
+    updatedAt   DateTime      @updatedAt
+    owner       User          @relation(fields: [ownerId], references: [id])
+    ownerId     String
+}
+
+model FursuitPart {
+    id                   Int                    @id @default(autoincrement())
+    name                 String
+    fursuitId            Int
+    fursuit              Fursuit                @relation(fields: [fursuitId], references: [id])
+    status               String
+    createdAt            DateTime               @default(now())
+    updatedAt            DateTime               @updatedAt
+    FursuitPartBelonging FursuitPartBelonging[]
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
+    @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+    id            String      @id @default(cuid())
+    name          String?
+    email         String?     @unique
+    emailVerified DateTime?
+    image         String?
+    accounts      Account[]
+    sessions      Session[]
+    FcmToken      FcmToken[]
+    events        Event[]
+    attendees     Attendee[]
+    belongings    Belonging[]
+    Fursuit       Fursuit[]
+}
+
+model FursuitPartBelonging {
+    id            Int         @id @default(autoincrement())
+    fursuitPartId Int
+    fursuitPart   FursuitPart @relation(fields: [fursuitPartId], references: [id])
+    belongingId   Int
+    belonging     Belonging   @relation(fields: [belongingId], references: [id])
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
+}
+
+model Belonging {
+    id                   Int                    @id @default(autoincrement())
+    name                 String
+    createdAt            DateTime               @default(now())
+    updatedAt            DateTime               @updatedAt
+    user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId               String
+    event                Event                  @relation(fields: [eventId], references: [id])
+    eventId              Int
+    FursuitPartBelonging FursuitPartBelonging[]
+    completed            Boolean                @default(false)
+}
+
+model Event {
+    id         Int         @id @default(autoincrement())
+    name       String
+    date       DateTime
+    location   String
+    createdAt  DateTime    @default(now())
+    updatedAt  DateTime    @updatedAt
+    creator    User        @relation(fields: [creatorId], references: [id])
+    creatorId  String
+    attendees  Attendee[]
+    belongings Belonging[]
+}
+
+model Attendee {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    user      User     @relation(fields: [userId], references: [id])
+    userId    String
+    event     Event    @relation(fields: [eventId], references: [id])
+    eventId   Int
 }
 
 model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+    identifier String
+    token      String   @unique
+    expires    DateTime
 
-  @@unique([identifier, token])
+    @@unique([identifier, token])
+}
+
+model FcmToken {
+    id        String   @id @default(cuid())
+    token     String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    lastUsed  DateTime
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String
 }

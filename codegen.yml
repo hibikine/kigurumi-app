@@ -1,0 +1,21 @@
+generates:
+  src/generated/schema.graphql:
+    schema:
+      - 'src/graphql/typeDefs/**/*.graphql'
+    plugins:
+      - schema-ast
+  src/generated/resolver-types.ts:
+    schema:
+      - 'src/graphql/typeDefs/**/*.graphql'
+    plugins:
+      - typescript
+      - typescript-resolvers
+    config:
+      contextType: '../graphql/context#Context'
+      mapperTypeSuffix: Model
+      mappes:
+        User: '@prisma/client#User'
+        Belonging: '@prisma/client#Belonging'
+        Event: '@prisma/client#Event'
+      scalars:
+        Datetime: string

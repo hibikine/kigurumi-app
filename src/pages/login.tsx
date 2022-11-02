@@ -90,7 +90,7 @@ const Login: NextPage<
                 <input
                   name="csrfToken"
                   type="hidden"
-                  defaultValue={csrfToken}
+                  defaultValue={csrfToken ?? undefined}
                 />
                 <TextInputField
                   type="email"
@@ -116,11 +116,11 @@ type PromiseType<T extends Promise<any>> = T extends Promise<infer P>
 
 export const getServerSideProps: GetServerSideProps<{
   providers: PromiseType<ReturnType<typeof getProviders>>;
-  csrfToken?: string;
+  csrfToken: string | null;
 }> = async (context) => {
   const providers = await getProviders();
   const csrfToken = await getCsrfToken(context);
   return {
-    props: { providers, csrfToken },
+    props: { providers, csrfToken: csrfToken ?? null },
   };
 };

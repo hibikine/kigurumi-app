@@ -1,0 +1,68 @@
+type Belonging {
+  id: Int!
+  name: String!
+  completed: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  event: Event!
+}
+
+type Query {
+  belongings: [Belonging!]!
+}
+
+type Mutation {
+  addBelonging(name: String!, eventId: Int!): Belonging!
+  updateBelonging(
+    belongingId: String!
+    completed: Boolean
+    name: String
+  ): Belonging!
+  deleteBelonging(belongingId: String!): Belonging!
+}
+
+fragment BelongingFragment on Belonging {
+  id
+  name
+  completed
+  createdAt
+  updatedAt
+  user {
+    ...UserFragment
+  }
+  event {
+    ...EventForBelongingsFragment
+  }
+}
+query Belongings {
+  belongings {
+    ...BelongingFragment
+  }
+}
+
+mutation AddBelonging($title: String!, $eventId: Int!) {
+  addBelonging(name: $name, eventId: $eventId) {
+    ...BelongingFragment
+  }
+}
+
+mutation UpdateBelonging(
+  $belongingId: String!
+  $completed: Boolean
+  $name: String
+) {
+  updateBelonging(
+    belongingId: $belongingId
+    completed: $completed
+    name: $name
+  ) {
+    ...BelongingFragment
+  }
+}
+
+mutation DeleteBelonging($belongingId: String!) {
+  deleteBelonging(belongingId: $belongingId) {
+    ...BelongingFragment
+  }
+}

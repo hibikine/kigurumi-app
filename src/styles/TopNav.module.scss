@@ -40,6 +40,11 @@
     line-height: $navigation-height-sp;
   }
 }
+@media screen and (max-width: $bp-sp) {
+  .topNavTabLink {
+    flex: 1;
+  }
+}
 @media screen and (max-width: 768px) {
   .login {
     margin-left: initial;
@@ -64,5 +69,17 @@
 @media screen and (max-width: 1024px) {
   .topNav {
     height: 80px;
+  }
+}
+
+.userLink {
+  margin-left: auto;
+}
+@media screen and (max-width: $bp-sp) {
+  .userLink {
+    margin-left: initial;
+    position: absolute;
+    right: 24px;
+    flex: 1;
   }
 }

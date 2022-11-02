@@ -1,3 +1,4 @@
+/** @type {@import('@jest/types').Config.InitialOptions} */
 // jest.config.js
 const nextJest = require('next/jest');
 

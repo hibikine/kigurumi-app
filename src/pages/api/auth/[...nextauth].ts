@@ -1,4 +1,4 @@
-import NextAuth from 'next-auth';
+import NextAuth, { CallbacksOptions } from 'next-auth';
 import EmailProvider from 'next-auth/providers/email';
 import TwitterProvider from 'next-auth/providers/twitter';
 import GoogleProvider from 'next-auth/providers/google';
@@ -70,5 +70,23 @@ export const authOptions = {
     colorScheme: 'light' as const,
     logo: '/logo.svg',
   },
+  callbacks: {
+    async session({
+      session,
+      user,
+    }: Parameters<CallbacksOptions['session']>[0]) {
+      const newSession: typeof session & {
+        user?: typeof session['user'] & { id?: string };
+      } = session;
+      if (user && newSession.user) {
+        newSession.user.id = user.id;
+      }
+      return newSession;
+    },
+  },
+  pages: {
+    signIn: '/login',
+  },
 };
+
 export default NextAuth(authOptions);

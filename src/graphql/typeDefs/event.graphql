@@ -1,0 +1,44 @@
+type Event {
+  id: Int!
+  name: String!
+  date: DateTime!
+  location: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  #creator: User!
+  # attendees: [User!]!
+  # belongings: [Belonging!]!
+}
+
+fragment EventForBelongingsFragment on Event {
+  id
+  name
+  date
+  location
+  createdAt
+  updatedAt
+  # creator {
+  #   ...UserFragment
+  # }
+  # attendees {
+  #   ...UserFragment
+  # }
+}
+
+fragment EventFragment on Event {
+  id
+  name
+  date
+  location
+  createdAt
+  updatedAt
+  creator {
+    ...UserFragment
+  }
+  attendees {
+    ...UserFragment
+  }
+  belongings {
+    ...BelongingFragment
+  }
+}

@@ -2,16 +2,20 @@ import {
   Pane,
   majorScale,
   NumberedListIcon,
+  PanelStatsIcon,
   BuildIcon,
   LogInIcon,
+  Avatar,
 } from 'evergreen-ui';
 import Link from 'next/link';
 import Image from 'next/image';
 import TopNavTabLink from './TopNavTabLink';
 import styles from '../styles/TopNav.module.scss';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 const TopNav = () => {
+  const { data: session } = useSession();
+  const isLogin = !!session;
   return (
     <Pane
       className={styles.topNav}
@@ -27,7 +31,7 @@ const TopNav = () => {
       borderBottom="muted"
       paddingX={majorScale(5)}
     >
-      <Link href="/">
+      <Link href={isLogin ? '/dashboard' : '/'}>
         <Pane
           className={styles.logoWrapper}
           display="flex"
@@ -55,12 +59,30 @@ const TopNav = () => {
   />*/}
       </Link>
       <Pane width="100%" display="flex" className={styles.bottomNav}>
+        {isLogin && (
+          <TopNavTabLink href="/dashboard" icon={PanelStatsIcon}>
+            ダッシュボード
+          </TopNavTabLink>
+        )}
         <TopNavTabLink href="/belongings" icon={NumberedListIcon}>
           持ち物
         </TopNavTabLink>
         <TopNavTabLink href="/making" icon={BuildIcon}>
           制作
         </TopNavTabLink>
+      </Pane>
+      {session ? (
+        <Link href="/user" className={styles.userLink}>
+          <Pane
+            height="100%"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Avatar name="test" size={majorScale(5)} />
+          </Pane>
+        </Link>
+      ) : (
         <TopNavTabLink
           className={styles.login}
           icon={LogInIcon}
@@ -68,7 +90,7 @@ const TopNav = () => {
         >
           ログイン
         </TopNavTabLink>
-      </Pane>
+      )}
     </Pane>
   );
 };
