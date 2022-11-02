@@ -1,23 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
 import { Text, TextInput } from 'evergreen-ui';
 import { useForm } from 'react-hook-form';
 import type { NextPage } from 'next';
 import Layout from '../components/Layout';
-import type {
-  ResponseData as BelongingsResponseData,
-  ErrorResponseData,
-} from './api/belongings';
 import {
   useAddBelongingMutation,
   useBelongingsQuery,
 } from '../generated/request';
 
 const Belongings: NextPage = () => {
-  /*const items = ['ケモ手', 'ケモ足', 'ボディ'].map((v) => ({
-    name: v,
-    checked: false,
-  }));*/
-  //const { data } = useQuery(['belongings'], fetchBelongings);
   const { data, refetch } = useBelongingsQuery();
   const {
     register,
