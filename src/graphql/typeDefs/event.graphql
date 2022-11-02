@@ -32,13 +32,13 @@ fragment EventFragment on Event {
   location
   createdAt
   updatedAt
-  creator {
-    ...UserFragment
-  }
-  attendees {
-    ...UserFragment
-  }
-  belongings {
-    ...BelongingFragment
-  }
+  #creator {
+  #  ...UserFragment
+  #}
+  #attendees {
+  #  ...UserFragment
+  #}
+  #belongings {
+  #  ...BelongingFragment
+  #}
 }

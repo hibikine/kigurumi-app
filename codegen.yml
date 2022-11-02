@@ -19,3 +19,18 @@ generates:
         Event: '@prisma/client#Event'
       scalars:
         Datetime: string
+  src/generated/request.ts:
+    schema:
+      - 'src/graphql/typeDefs/**/*.graphql'
+    documents:
+      - 'src/graphql/typeDefs/**/*.graphql'
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-query
+    config:
+      fetcher:
+        func: 'src/graphql/customFetcher#useFetchData'
+        isReactHook: true
+      scalars:
+        DateTime: string

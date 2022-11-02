@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import React, { Fragment, useState } from 'react';
 import type { AppProps } from 'next/app';
 import { defaultTheme, mergeTheme, ThemeProvider } from 'evergreen-ui';
@@ -11,6 +12,16 @@ import {
 } from '@tanstack/react-query';
 import config from 'react-reveal/globals';
 import Head from 'next/head';
+
+const NEXT_PUBLIC_GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT;
+if (!NEXT_PUBLIC_GRAPHQL_ENDPOINT) {
+  throw new Error('NEXT_PUBLIC_GRAPHQL_ENDPOINT is not defined');
+}
+
+export const client = new ApolloClient({
+  uri: NEXT_PUBLIC_GRAPHQL_ENDPOINT,
+  cache: new InMemoryCache(),
+});
 
 config({ ssrFadeout: true });
 
@@ -102,13 +113,15 @@ function MyApp({
         />
       </Head>
       <SessionProvider session={session}>
-        <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
-            <ThemeProvider value={theme}>
-              <Component {...pageProps} />
-            </ThemeProvider>
-          </Hydrate>
-        </QueryClientProvider>
+        <ApolloProvider client={client}>
+          <QueryClientProvider client={queryClient}>
+            <Hydrate state={pageProps.dehydratedState}>
+              <ThemeProvider value={theme}>
+                <Component {...pageProps} />
+              </ThemeProvider>
+            </Hydrate>
+          </QueryClientProvider>
+        </ApolloProvider>
       </SessionProvider>
     </>
   );

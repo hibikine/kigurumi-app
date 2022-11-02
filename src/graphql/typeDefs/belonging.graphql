@@ -41,7 +41,7 @@ query Belongings {
   }
 }
 
-mutation AddBelonging($title: String!, $eventId: Int!) {
+mutation AddBelonging($name: String!, $eventId: Int!) {
   addBelonging(name: $name, eventId: $eventId) {
     ...BelongingFragment
   }

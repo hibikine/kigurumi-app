@@ -13,8 +13,8 @@ import type {
 } from 'next';
 import Layout from '../components/Layout';
 import LoginButton from '../components/LoginButton';
-import GoogleLogo from '../public/googleloginlogo.svg';
-import TwitterLogoBlue from '../public/Twitter_Logo_Blue.svg';
+import GoogleLogo from '../../public/googleloginlogo.svg';
+import TwitterLogoBlue from '../../public/Twitter_Logo_Blue.svg';
 
 const Login: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>

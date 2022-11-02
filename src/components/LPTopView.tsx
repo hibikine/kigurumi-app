@@ -9,10 +9,10 @@ import {
 } from 'evergreen-ui';
 import { useMediaQuery } from 'react-responsive';
 import Image from 'next/image';
-import gato from '../public/gato.png';
+import gato from '../../public/gato.png';
 import Fade from 'react-reveal/Fade';
 import Rotate from 'react-reveal/Rotate';
-import TextLogo from '../public/kiguapp-logo-text.svg';
+import TextLogo from '../../public/kiguapp-logo-text.svg';
 import styles from '../styles/Top.module.scss';
 import { backgroundColor } from '../styles/colors';
 import Link from 'next/link';
