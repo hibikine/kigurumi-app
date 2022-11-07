@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html>
       <Head />
-
+      {/* eslint-disable @next/next/no-head-element */}
       <head
         dangerouslySetInnerHTML={{
           __html: `<!-- apple splash screen images -->
@@ -19,6 +19,7 @@ export default function Document() {
 -->`,
         }}
       />
+      {/* eslint-enable @next/next/no-head-element */}
       <body>
         <Main />
         <NextScript />
