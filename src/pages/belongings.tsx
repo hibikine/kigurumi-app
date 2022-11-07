@@ -6,7 +6,7 @@ import {
   useAddBelongingMutation,
   useBelongingsQuery,
 } from '../generated/request';
-import { BelongingRow } from './BelongingRow';
+import { BelongingRow } from '../components/BelongingRow';
 
 const Belongings: NextPage = () => {
   const { data, refetch } = useBelongingsQuery();
