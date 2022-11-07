@@ -20,7 +20,13 @@ const Login: NextPage = () => {
         >
           <PageHeader title="ユーザー" />
           {session?.user?.email}
-          <Button onClick={() => signOut()}>ログアウト</Button>
+          <Button
+            onClick={() => {
+              signOut();
+            }}
+          >
+            ログアウト
+          </Button>
         </Pane>
       </Pane>
     </Layout>
