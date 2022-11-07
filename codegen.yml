@@ -30,7 +30,7 @@ generates:
       - typescript-react-query
     config:
       fetcher:
-        func: 'src/graphql/customFetcher#useFetchData'
+        func: '../graphql/customFetcher#useFetchData'
         isReactHook: true
       scalars:
         DateTime: string
