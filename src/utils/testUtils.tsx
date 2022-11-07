@@ -1,5 +1,6 @@
 import Queries from '@testing-library/dom/types/queries';
 import { render as defaultRender, RenderResult } from '@testing-library/react';
+import { SessionProvider } from 'next-auth/react';
 // import { RouterContext } from 'next/dist/next-server/lib/router-context';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 import { NextRouter } from 'next/router';
@@ -32,8 +33,10 @@ export const render = (
   };
 
   return defaultRender(
-    <RouterContext.Provider value={mockRouter}>
-      {children}
-    </RouterContext.Provider>
+    <SessionProvider session={{} as any}>
+      <RouterContext.Provider value={mockRouter}>
+        {children}
+      </RouterContext.Provider>
+    </SessionProvider>
   );
 };
