@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
  * ログインしていない場合はログインページにリダイレクトするhooks
  */
 export const useNeedToLogin = () => {
-  const session = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   useEffect(() => {
     if (!session) {
