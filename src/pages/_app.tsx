@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import type { AppProps } from 'next/app';
 import { defaultTheme, mergeTheme, ThemeProvider } from 'evergreen-ui';
 import { SessionProvider } from 'next-auth/react';
