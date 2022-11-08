@@ -3,9 +3,11 @@ import PageHeader from '../components/PageHeader';
 import type { NextPage } from 'next';
 import { useSession, signOut } from 'next-auth/react';
 import Layout from '../components/Layout';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Login: NextPage = () => {
   const { data: session } = useSession();
+  const queryClient = useQueryClient();
   return (
     <Layout>
       <Pane width="100%" display="grid" gridTemplateColumns="236px 1fr">
@@ -22,6 +24,7 @@ const Login: NextPage = () => {
           {session?.user?.email}
           <Button
             onClick={() => {
+              queryClient.clear();
               signOut();
             }}
           >
