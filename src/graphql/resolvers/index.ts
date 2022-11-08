@@ -1,5 +1,4 @@
 import type { Resolvers } from '../../generated/resolver-types';
-import { Belonging, Event } from '@prisma/client';
 
 export const resolvers: Resolvers = {
   Query: {
