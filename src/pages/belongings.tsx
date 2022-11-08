@@ -7,9 +7,13 @@ import {
   useBelongingsQuery,
 } from '../generated/request';
 import { BelongingRow } from '../components/BelongingRow';
+import useIsLogin from '../utils/hooks/useIsLogin';
+import { useNeedToLogin } from '../utils/hooks/useNeedToLogin';
 
 const Belongings: NextPage = () => {
-  const { data, refetch } = useBelongingsQuery();
+  useNeedToLogin();
+  const isLogin = useIsLogin();
+  const { data, refetch } = useBelongingsQuery({}, { enabled: isLogin });
   const {
     register,
     handleSubmit,
