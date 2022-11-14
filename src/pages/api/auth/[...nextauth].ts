@@ -33,30 +33,41 @@ const client = getFaunaClient();*/
 
 const providers: NextAuthOptions['providers'] = [];
 
-if (process.env.TWITTER_CLIENT_ID && process.env.TWITTER_CLIENT_SECRET) {
+export const isTwitterEnabled = !!(
+  process.env.TWITTER_CLIENT_ID && process.env.TWITTER_CLIENT_SECRET
+);
+
+if (isTwitterEnabled) {
   providers.push(
     TwitterProvider({
-      clientId: process.env.TWITTER_CLIENT_ID,
-      clientSecret: process.env.TWITTER_CLIENT_SECRET,
+      clientId: process.env.TWITTER_CLIENT_ID!,
+      clientSecret: process.env.TWITTER_CLIENT_SECRET!,
       version: '2.0',
     })
   );
 }
-if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+
+export const isGoogleEnabled = !!(
+  process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
+);
+
+if (isGoogleEnabled) {
   providers.push(
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     })
   );
 }
-if (
+export const isEmailEnabled = !!(
   process.env.EMAIL_SERVER_HOST &&
   process.env.EMAIL_SERVER_PORT &&
   process.env.EMAIL_SERVER_USER &&
   process.env.EMAIL_SERVER_PASSWORD &&
   process.env.EMAIL_FROM
-) {
+);
+
+if (isEmailEnabled) {
   providers.push(
     EmailProvider({
       server: {
