@@ -1,0 +1,7 @@
+@use 'constants' as *;
+
+@media screen and (max-width: $bp-tablet) {
+  .main {
+    padding-bottom: $navigation-height-sp;
+  }
+}
