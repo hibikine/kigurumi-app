@@ -1,4 +1,9 @@
 {
   "jest.jestCommandLine": "yarn jest",
-  "playwright.env": { "use": { "headless": true } }
+  "playwright.env": {
+    "use": {
+      "headless": true
+    }
+  },
+  "conventionalCommits.scopes": ["auth"]
 }
