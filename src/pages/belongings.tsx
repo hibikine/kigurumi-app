@@ -24,7 +24,6 @@ const Belongings: NextPage = () => {
   const onSubmit = async (data: any) => {
     await addBelongingsMutation.mutateAsync({
       ...data,
-      eventId: 1,
     });
     refetch();
   };

@@ -5,7 +5,7 @@ type Belonging {
   createdAt: DateTime!
   updatedAt: DateTime!
   user: User!
-  event: Event!
+  event: Event
 }
 
 type Query {
@@ -13,7 +13,7 @@ type Query {
 }
 
 type Mutation {
-  addBelonging(name: String!, eventId: Int!): Belonging!
+  addBelonging(name: String!, eventId: Int): Belonging!
   updateBelonging(
     belongingId: String!
     completed: Boolean
@@ -41,7 +41,7 @@ query Belongings {
   }
 }
 
-mutation AddBelonging($name: String!, $eventId: Int!) {
+mutation AddBelonging($name: String!, $eventId: Int) {
   addBelonging(name: $name, eventId: $eventId) {
     ...BelongingFragment
   }

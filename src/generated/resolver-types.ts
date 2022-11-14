@@ -20,7 +20,7 @@ export type Belonging = {
   __typename?: 'Belonging';
   completed: Scalars['Boolean'];
   createdAt: Scalars['DateTime'];
-  event: Event;
+  event?: Maybe<Event>;
   id: Scalars['Int'];
   name: Scalars['String'];
   updatedAt: Scalars['DateTime'];
@@ -46,7 +46,7 @@ export type Mutation = {
 
 
 export type MutationAddBelongingArgs = {
-  eventId: Scalars['Int'];
+  eventId?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
 };
 
@@ -172,7 +172,7 @@ export type ResolversParentTypes = {
 export type BelongingResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Belonging'] = ResolversParentTypes['Belonging']> = {
   completed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  event?: Resolver<ResolversTypes['Event'], ParentType, ContextType>;
+  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
@@ -195,7 +195,7 @@ export type EventResolvers<ContextType = Context, ParentType extends ResolversPa
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addBelonging?: Resolver<ResolversTypes['Belonging'], ParentType, ContextType, RequireFields<MutationAddBelongingArgs, 'eventId' | 'name'>>;
+  addBelonging?: Resolver<ResolversTypes['Belonging'], ParentType, ContextType, RequireFields<MutationAddBelongingArgs, 'name'>>;
   deleteBelonging?: Resolver<ResolversTypes['Belonging'], ParentType, ContextType, RequireFields<MutationDeleteBelongingArgs, 'belongingId'>>;
   updateBelonging?: Resolver<ResolversTypes['Belonging'], ParentType, ContextType, RequireFields<MutationUpdateBelongingArgs, 'belongingId'>>;
 };

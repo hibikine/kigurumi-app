@@ -19,7 +19,7 @@ export type Belonging = {
   __typename?: 'Belonging';
   completed: Scalars['Boolean'];
   createdAt: Scalars['DateTime'];
-  event: Event;
+  event?: Maybe<Event>;
   id: Scalars['Int'];
   name: Scalars['String'];
   updatedAt: Scalars['DateTime'];
@@ -45,7 +45,7 @@ export type Mutation = {
 
 
 export type MutationAddBelongingArgs = {
-  eventId: Scalars['Int'];
+  eventId?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
 };
 
@@ -73,20 +73,20 @@ export type User = {
   name?: Maybe<Scalars['String']>;
 };
 
-export type BelongingFragmentFragment = { __typename?: 'Belonging', id: number, name: string, completed: boolean, createdAt: string, updatedAt: string, user: { __typename?: 'User', id?: string | null, name?: string | null }, event: { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string } };
+export type BelongingFragmentFragment = { __typename?: 'Belonging', id: number, name: string, completed: boolean, createdAt: string, updatedAt: string, user: { __typename?: 'User', id?: string | null, name?: string | null }, event?: { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string } | null };
 
 export type BelongingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BelongingsQuery = { __typename?: 'Query', belongings: Array<{ __typename?: 'Belonging', id: number, name: string, completed: boolean, createdAt: string, updatedAt: string, user: { __typename?: 'User', id?: string | null, name?: string | null }, event: { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string } }> };
+export type BelongingsQuery = { __typename?: 'Query', belongings: Array<{ __typename?: 'Belonging', id: number, name: string, completed: boolean, createdAt: string, updatedAt: string, user: { __typename?: 'User', id?: string | null, name?: string | null }, event?: { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string } | null }> };
 
 export type AddBelongingMutationVariables = Exact<{
   name: Scalars['String'];
-  eventId: Scalars['Int'];
+  eventId?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type AddBelongingMutation = { __typename?: 'Mutation', addBelonging: { __typename?: 'Belonging', id: number, name: string, completed: boolean, createdAt: string, updatedAt: string, user: { __typename?: 'User', id?: string | null, name?: string | null }, event: { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string } } };
+export type AddBelongingMutation = { __typename?: 'Mutation', addBelonging: { __typename?: 'Belonging', id: number, name: string, completed: boolean, createdAt: string, updatedAt: string, user: { __typename?: 'User', id?: string | null, name?: string | null }, event?: { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string } | null } };
 
 export type UpdateBelongingMutationVariables = Exact<{
   belongingId: Scalars['String'];
@@ -95,14 +95,14 @@ export type UpdateBelongingMutationVariables = Exact<{
 }>;
 
 
-export type UpdateBelongingMutation = { __typename?: 'Mutation', updateBelonging: { __typename?: 'Belonging', id: number, name: string, completed: boolean, createdAt: string, updatedAt: string, user: { __typename?: 'User', id?: string | null, name?: string | null }, event: { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string } } };
+export type UpdateBelongingMutation = { __typename?: 'Mutation', updateBelonging: { __typename?: 'Belonging', id: number, name: string, completed: boolean, createdAt: string, updatedAt: string, user: { __typename?: 'User', id?: string | null, name?: string | null }, event?: { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string } | null } };
 
 export type DeleteBelongingMutationVariables = Exact<{
   belongingId: Scalars['String'];
 }>;
 
 
-export type DeleteBelongingMutation = { __typename?: 'Mutation', deleteBelonging: { __typename?: 'Belonging', id: number, name: string, completed: boolean, createdAt: string, updatedAt: string, user: { __typename?: 'User', id?: string | null, name?: string | null }, event: { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string } } };
+export type DeleteBelongingMutation = { __typename?: 'Mutation', deleteBelonging: { __typename?: 'Belonging', id: number, name: string, completed: boolean, createdAt: string, updatedAt: string, user: { __typename?: 'User', id?: string | null, name?: string | null }, event?: { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string } | null } };
 
 export type EventForBelongingsFragmentFragment = { __typename?: 'Event', id: number, name: string, date: string, location: string, createdAt: string, updatedAt: string };
 
@@ -172,7 +172,7 @@ export const useBelongingsQuery = <
       options
     );
 export const AddBelongingDocument = `
-    mutation AddBelonging($name: String!, $eventId: Int!) {
+    mutation AddBelonging($name: String!, $eventId: Int) {
   addBelonging(name: $name, eventId: $eventId) {
     ...BelongingFragment
   }

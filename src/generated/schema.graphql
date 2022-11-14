@@ -1,7 +1,7 @@
 type Belonging {
   completed: Boolean!
   createdAt: DateTime!
-  event: Event!
+  event: Event
   id: Int!
   name: String!
   updatedAt: DateTime!
@@ -20,7 +20,7 @@ type Event {
 }
 
 type Mutation {
-  addBelonging(eventId: Int!, name: String!): Belonging!
+  addBelonging(eventId: Int, name: String!): Belonging!
   deleteBelonging(belongingId: String!): Belonging!
   updateBelonging(belongingId: String!, completed: Boolean, name: String): Belonging!
 }
