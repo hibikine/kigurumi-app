@@ -7,21 +7,21 @@ import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '../../../lib/prismadb';
 import sendVerificationRequest from '../../../lib/sendVerificationRequest';
-if (!process.env.TWITTER_CLIENT_ID || !process.env.TWITTER_CLIENT_SECRET) {
-  throw new Error('TWITTER_CLIENT_ID and TWITTER_CLIENT_SECRET must be set');
-}
-if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-  throw new Error('Missing Google environment variables');
-}
-if (
-  !process.env.EMAIL_SERVER_USER ||
-  !process.env.EMAIL_SERVER_PASSWORD ||
-  !process.env.EMAIL_SERVER_HOST ||
-  !process.env.EMAIL_SERVER_PORT ||
-  !process.env.EMAIL_FROM
-) {
-  throw new Error('Missing email environment variables');
-}
+// if (!process.env.TWITTER_CLIENT_ID || !process.env.TWITTER_CLIENT_SECRET) {
+//   throw new Error('TWITTER_CLIENT_ID and TWITTER_CLIENT_SECRET must be set');
+// }
+// if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+//   throw new Error('Missing Google environment variables');
+// }
+// if (
+//   !process.env.EMAIL_SERVER_USER ||
+//   !process.env.EMAIL_SERVER_PASSWORD ||
+//   !process.env.EMAIL_SERVER_HOST ||
+//   !process.env.EMAIL_SERVER_PORT ||
+//   !process.env.EMAIL_FROM
+// ) {
+//   throw new Error('Missing email environment variables');
+// }
 /*if (
   !process.env.FAUNADB_SECRET ||
   !process.env.FAUNADB_SCHEME ||
