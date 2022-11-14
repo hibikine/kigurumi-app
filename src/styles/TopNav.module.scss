@@ -4,7 +4,7 @@
   padding-right: 16px;
   margin-right: 16px;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: $bp-tablet) {
   .logo {
     padding-right: 0;
     margin-right: auto;
@@ -14,12 +14,12 @@
 .topNav {
   height: $navigation-height-pc;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: $bp-tablet) {
   .topNav {
     justify-content: center;
   }
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: $bp-pc) {
   .topNav {
     height: $navigation-height-sp;
   }
@@ -45,7 +45,7 @@
     flex: 1;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: $bp-tablet) {
   .login {
     margin-left: initial;
   }
@@ -66,7 +66,7 @@
 .logoWrapper {
   height: 64px;
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: $bp-pc) {
   .topNav {
     height: 80px;
   }
