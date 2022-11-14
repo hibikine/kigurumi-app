@@ -1,9 +1,9 @@
-import NextAuth, { CallbacksOptions } from 'next-auth';
+import NextAuth, { CallbacksOptions, NextAuthOptions } from 'next-auth';
 import EmailProvider from 'next-auth/providers/email';
 import TwitterProvider from 'next-auth/providers/twitter';
 import GoogleProvider from 'next-auth/providers/google';
 // import { FaunaAdapter } from '@next-auth/fauna-adapter';
-import { getFaunaClient } from '../../../utils/database';
+// import { getFaunaClient } from '../../../utils/database';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '../../../lib/prismadb';
 import sendVerificationRequest from '../../../lib/sendVerificationRequest';
@@ -30,21 +30,38 @@ if (
   throw new Error('Missing FaunaDB environment variables');
 }
 const client = getFaunaClient();*/
-export const authOptions = {
-  providers: [
+
+const providers: NextAuthOptions['providers'] = [];
+
+if (process.env.TWITTER_CLIENT_ID && process.env.TWITTER_CLIENT_SECRET) {
+  providers.push(
     TwitterProvider({
       clientId: process.env.TWITTER_CLIENT_ID,
       clientSecret: process.env.TWITTER_CLIENT_SECRET,
       version: '2.0',
-    }),
+    })
+  );
+}
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  providers.push(
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
+    })
+  );
+}
+if (
+  process.env.EMAIL_SERVER_HOST &&
+  process.env.EMAIL_SERVER_PORT &&
+  process.env.EMAIL_SERVER_USER &&
+  process.env.EMAIL_SERVER_PASSWORD &&
+  process.env.EMAIL_FROM
+) {
+  providers.push(
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
-        port: parseInt(process.env.EMAIL_SERVER_PORT, 10),
+        port: Number(process.env.EMAIL_SERVER_PORT),
         auth: {
           user: process.env.EMAIL_SERVER_USER,
           pass: process.env.EMAIL_SERVER_PASSWORD,
@@ -52,8 +69,12 @@ export const authOptions = {
       },
       from: process.env.EMAIL_FROM,
       sendVerificationRequest,
-    }),
-  ],
+    })
+  );
+}
+
+export const authOptions: NextAuthOptions = {
+  providers,
   /*adapter: FirestoreAdapter({
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
