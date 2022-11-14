@@ -7,7 +7,7 @@ export const resolvers: Resolvers = {
         throw new Error('User not logged in.');
       }
       const belongings = await prisma.belonging.findMany({
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: 'asc' },
         include: { user: true, event: true },
         where: {
           userId: currentUser.id,

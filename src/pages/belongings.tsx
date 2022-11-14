@@ -1,11 +1,7 @@
-import { Pane, Table, Text, TextInput } from 'evergreen-ui';
-import { useForm } from 'react-hook-form';
+import { Pane, Table } from 'evergreen-ui';
 import type { NextPage } from 'next';
 import Layout from '../components/Layout';
-import {
-  useAddBelongingMutation,
-  useBelongingsQuery,
-} from '../generated/request';
+import { useBelongingsQuery } from '../generated/request';
 import { BelongingRow } from '../components/BelongingRow';
 import useIsLogin from '../utils/hooks/useIsLogin';
 import { useNeedToLogin } from '../utils/hooks/useNeedToLogin';
@@ -14,19 +10,6 @@ const Belongings: NextPage = () => {
   useNeedToLogin();
   const isLogin = useIsLogin();
   const { data, refetch } = useBelongingsQuery({}, { enabled: isLogin });
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-  const addBelongingsMutation = useAddBelongingMutation();
-  const onSubmit = async (data: any) => {
-    await addBelongingsMutation.mutateAsync({
-      ...data,
-    });
-    refetch();
-  };
 
   if (typeof data === 'undefined') {
     return null;
@@ -40,10 +23,6 @@ const Belongings: NextPage = () => {
   return (
     <Layout>
       <Pane className="flex flex-col items-center">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <TextInput {...register('name')} placeholder="持ち物を追加" />
-          <button type="submit">追加</button>
-        </form>
         <Table className="w-full" maxWidth="800px">
           <Table.Head>
             <Table.TextHeaderCell flexBasis={70} flexShrink={0} flexGrow={0} />
@@ -53,16 +32,9 @@ const Belongings: NextPage = () => {
             {items.map((item) => (
               <BelongingRow {...item} key={item.id} onAfterChange={refetch} />
             ))}
+            <BelongingRow name="" checked={false} onAfterChange={refetch} />
           </Table.Body>
         </Table>
-        <ul>
-          {items.map(({ name, checked, id }) => (
-            <li key={id}>
-              <input type="checkbox" defaultChecked={checked} />
-              <Text>{name}</Text>
-            </li>
-          ))}
-        </ul>
       </Pane>
     </Layout>
   );
