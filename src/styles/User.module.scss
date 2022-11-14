@@ -1,0 +1,14 @@
+@use 'constants' as *;
+
+.wrapper {
+  grid-template-columns: 236px 1fr;
+}
+
+@media screen and (max-width: $bp-tablet) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    display: none;
+  }
+}
