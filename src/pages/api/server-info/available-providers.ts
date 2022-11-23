@@ -6,7 +6,7 @@ import {
   isTwitterEnabled,
 } from '../auth/[...nextauth]';
 
-type Data = {
+export type Data = {
   email: boolean;
   google: boolean;
   twitter: boolean;

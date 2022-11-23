@@ -15,6 +15,15 @@ export type Scalars = {
   DateTime: string;
 };
 
+export type Account = {
+  __typename?: 'Account';
+  id: Scalars['ID'];
+  provider: Scalars['String'];
+  providerAccountId: Scalars['String'];
+  type: Scalars['String'];
+  userId: Scalars['String'];
+};
+
 export type Belonging = {
   __typename?: 'Belonging';
   completed: Scalars['Boolean'];

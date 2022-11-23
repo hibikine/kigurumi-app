@@ -1,0 +1,7 @@
+type Account {
+  id: ID!
+  userId: String!
+  type: String!
+  provider: String!
+  providerAccountId: String!
+}

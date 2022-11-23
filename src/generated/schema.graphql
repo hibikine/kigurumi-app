@@ -1,3 +1,11 @@
+type Account {
+  id: ID!
+  provider: String!
+  providerAccountId: String!
+  type: String!
+  userId: String!
+}
+
 type Belonging {
   completed: Boolean!
   createdAt: DateTime!

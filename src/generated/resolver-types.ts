@@ -16,6 +16,15 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type Account = {
+  __typename?: 'Account';
+  id: Scalars['ID'];
+  provider: Scalars['String'];
+  providerAccountId: Scalars['String'];
+  type: Scalars['String'];
+  userId: Scalars['String'];
+};
+
 export type Belonging = {
   __typename?: 'Belonging';
   completed: Scalars['Boolean'];
@@ -143,6 +152,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  Account: ResolverTypeWrapper<Account>;
   Belonging: ResolverTypeWrapper<Belonging>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
@@ -157,6 +167,7 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  Account: Account;
   Belonging: Belonging;
   Boolean: Scalars['Boolean'];
   DateTime: Scalars['DateTime'];
@@ -167,6 +178,15 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String'];
   User: User;
+};
+
+export type AccountResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  provider?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  providerAccountId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type BelongingResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Belonging'] = ResolversParentTypes['Belonging']> = {
@@ -212,6 +232,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 };
 
 export type Resolvers<ContextType = Context> = {
+  Account?: AccountResolvers<ContextType>;
   Belonging?: BelongingResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   Event?: EventResolvers<ContextType>;
