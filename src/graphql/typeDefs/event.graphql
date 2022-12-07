@@ -2,7 +2,9 @@ type Event {
   id: Int!
   name: String!
   date: DateTime!
+  endDate: DateTime
   location: String!
+  locationGoogleUrl: String
   createdAt: DateTime!
   updatedAt: DateTime!
   #creator: User!

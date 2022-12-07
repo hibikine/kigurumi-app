@@ -1,0 +1,27 @@
+-- CreateTable
+CREATE TABLE `EventUrl` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `eventId` INTEGER NOT NULL,
+    `url` VARCHAR(191) NOT NULL,
+    `urlTypeId` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_ja_0900_as_cs_ks;
+
+-- CreateTable
+CREATE TABLE `EventUrlType` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_ja_0900_as_cs_ks;
+
+-- AddForeignKey
+ALTER TABLE `EventUrl` ADD CONSTRAINT `EventUrl_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Event`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `EventUrl` ADD CONSTRAINT `EventUrl_urlTypeId_fkey` FOREIGN KEY (`urlTypeId`) REFERENCES `EventUrlType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

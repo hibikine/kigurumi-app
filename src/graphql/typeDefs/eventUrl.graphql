@@ -1,0 +1,8 @@
+type eventUrl {
+  id: Int!
+  eventId: Int!
+  url: String!
+  urlType: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}

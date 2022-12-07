@@ -94,7 +94,7 @@ model Belonging {
     updatedAt            DateTime               @updatedAt
     user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId               String
-    event                Event?                  @relation(fields: [eventId], references: [id])
+    event                Event?                 @relation(fields: [eventId], references: [id])
     eventId              Int?
     FursuitPartBelonging FursuitPartBelonging[]
     completed            Boolean                @default(false)
@@ -111,6 +111,26 @@ model Event {
     creatorId  String
     attendees  Attendee[]
     belongings Belonging[]
+    eventUrls  EventUrl[]
+}
+
+model EventUrl {
+    id        Int          @id @default(autoincrement())
+    event     Event        @relation(fields: [eventId], references: [id])
+    eventId   Int
+    url       String
+    urlType   EventUrlType @relation(fields: [urlTypeId], references: [id])
+    urlTypeId Int
+    createdAt DateTime     @default(now())
+    updatedAt DateTime     @updatedAt
+}
+
+model EventUrlType {
+    id        Int        @id @default(autoincrement())
+    name      String
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    EventUrl  EventUrl[]
 }
 
 model Attendee {

@@ -40,8 +40,10 @@ export type Event = {
   __typename?: 'Event';
   createdAt: Scalars['DateTime'];
   date: Scalars['DateTime'];
+  endDate?: Maybe<Scalars['DateTime']>;
   id: Scalars['Int'];
   location: Scalars['String'];
+  locationGoogleUrl?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   updatedAt: Scalars['DateTime'];
 };
@@ -81,6 +83,24 @@ export type User = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
+};
+
+export type EventUrl = {
+  __typename?: 'eventUrl';
+  createdAt: Scalars['DateTime'];
+  eventId: Scalars['Int'];
+  id: Scalars['Int'];
+  updatedAt: Scalars['DateTime'];
+  url: Scalars['String'];
+  urlType: Scalars['Int'];
+};
+
+export type EventUrlType = {
+  __typename?: 'eventUrlType';
+  createdAt: Scalars['DateTime'];
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 
@@ -163,6 +183,8 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
+  eventUrl: ResolverTypeWrapper<EventUrl>;
+  eventUrlType: ResolverTypeWrapper<EventUrlType>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -178,6 +200,8 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String'];
   User: User;
+  eventUrl: EventUrl;
+  eventUrlType: EventUrlType;
 };
 
 export type AccountResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']> = {
@@ -207,8 +231,10 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 export type EventResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   date?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  endDate?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   location?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  locationGoogleUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -231,6 +257,24 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type EventUrlResolvers<ContextType = Context, ParentType extends ResolversParentTypes['eventUrl'] = ResolversParentTypes['eventUrl']> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  eventId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  urlType?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type EventUrlTypeResolvers<ContextType = Context, ParentType extends ResolversParentTypes['eventUrlType'] = ResolversParentTypes['eventUrlType']> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = Context> = {
   Account?: AccountResolvers<ContextType>;
   Belonging?: BelongingResolvers<ContextType>;
@@ -239,5 +283,7 @@ export type Resolvers<ContextType = Context> = {
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  eventUrl?: EventUrlResolvers<ContextType>;
+  eventUrlType?: EventUrlTypeResolvers<ContextType>;
 };
 

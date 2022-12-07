@@ -21,8 +21,10 @@ scalar DateTime
 type Event {
   createdAt: DateTime!
   date: DateTime!
+  endDate: DateTime
   id: Int!
   location: String!
+  locationGoogleUrl: String
   name: String!
   updatedAt: DateTime!
 }
@@ -41,4 +43,20 @@ type User {
   email: String
   id: ID
   name: String
+}
+
+type eventUrl {
+  createdAt: DateTime!
+  eventId: Int!
+  id: Int!
+  updatedAt: DateTime!
+  url: String!
+  urlType: Int!
+}
+
+type eventUrlType {
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  updatedAt: DateTime!
 }
