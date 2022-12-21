@@ -68,6 +68,7 @@ model User {
     email         String?     @unique
     emailVerified DateTime?
     image         String?
+    admin         Boolean     @default(false)
     accounts      Account[]
     sessions      Session[]
     FcmToken      FcmToken[]
@@ -112,6 +113,7 @@ model Event {
     attendees  Attendee[]
     belongings Belonging[]
     eventUrls  EventUrl[]
+    Program    Program[]
 }
 
 model EventUrl {
@@ -168,6 +170,10 @@ model Program {
     endDate   DateTime?
     detail    String
     location  String?
+    url       String?
+    ownerUrl  String?
+    eventId   Int
+    event     Event     @relation(fields: [eventId], references: [id])
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
     deletedAt DateTime?
