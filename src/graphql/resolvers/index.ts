@@ -4,8 +4,12 @@ import fetch from 'cross-fetch';
 import { JSDOM } from 'jsdom';
 import dayjs from 'dayjs';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
+import UTC from 'dayjs/plugin/utc';
+import Timezone from 'dayjs/plugin/timezone';
 
 dayjs.extend(CustomParseFormat);
+dayjs.extend(UTC);
+dayjs.extend(Timezone);
 
 function naiveInnerText(node: Node): string {
   const Node = node; // We need Node(DOM's Node) for the constants, but Node doesn't exist in the nodejs global space, and any Node instance references the constants through the prototype chain
@@ -164,9 +168,11 @@ export const resolvers: Resolvers = {
         /\d{4}年\d{1,2}月\d{1,2}日[.] \d{2}:\d{2}/
       );
       const date = dateHourMinuteMatch
-        ? dayjs(dateHourMinuteMatch[0], 'YYYY年M月D日[dd] HH:mm').toISOString()
+        ? dayjs
+            .tz(dateHourMinuteMatch[0], 'YYYY年M月D日[dd] HH:mm', 'Asia/Tokyo')
+            .toISOString()
         : dateMatch
-        ? dayjs(dateMatch[0], 'YYYY年M月D日').toISOString()
+        ? dayjs.tz(dateMatch[0], 'YYYY年M月D日', 'Asia/Tokyo').toISOString()
         : '';
 
       const ownerUrlBase = dom.window.document
@@ -205,8 +211,8 @@ export const resolvers: Resolvers = {
       const program = await prisma.program.create({
         data: {
           name,
-          date: new Date(date).toISOString(),
-          endDate: endDate ? new Date(endDate).toISOString() : undefined,
+          date: dayjs(date).toISOString(),
+          endDate: endDate ? dayjs(endDate).toISOString() : undefined,
           detail,
           location,
           url,
@@ -229,9 +235,9 @@ export const resolvers: Resolvers = {
       }
       const data = {
         name: name || originalProgram?.name,
-        date: date ? new Date(date).toISOString() : originalProgram?.date,
+        date: date ? dayjs(date).toISOString() : originalProgram?.date,
         endDate: endDate
-          ? new Date(endDate).toISOString()
+          ? dayjs(endDate).toISOString()
           : originalProgram?.endDate,
         detail: detail || originalProgram?.detail,
         location: location || originalProgram?.location,

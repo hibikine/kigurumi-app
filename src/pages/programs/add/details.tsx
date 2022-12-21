@@ -23,6 +23,11 @@ import {
 import { useCallback, createRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
+import Timezone from 'dayjs/plugin/timezone';
+import UTC from 'dayjs/plugin/utc';
+
+dayjs.extend(Timezone);
+dayjs.extend(UTC);
 
 type FormData = {
   name: string;
@@ -63,7 +68,10 @@ const Belongings: NextPage = () => {
           setValue('name', data.twipla.name);
         }
         if (data.twipla?.date) {
-          setValue('date', dayjs(data.twipla.date).format('YYYY-MM-DDTHH:mm'));
+          setValue(
+            'date',
+            dayjs(data.twipla.date).tz('Asia/Tokyo').format('YYYY-MM-DDTHH:mm')
+          );
         }
         if (data.twipla?.detail) {
           setValue('detail', data.twipla.detail);

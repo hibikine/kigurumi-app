@@ -25,6 +25,11 @@ import {
 import { useCallback, createRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
+import UTC from 'dayjs/plugin/utc';
+import Timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(Timezone);
+dayjs.extend(UTC);
 
 type FormData = {
   name: string;
@@ -62,13 +67,17 @@ const Belongings: NextPage = () => {
         setValue(
           'date',
           data?.program?.date
-            ? dayjs(data.program.date).format('YYYY-MM-DDTHH:mm')
+            ? dayjs(data.program.date)
+                .tz('Asia/Tokyo')
+                .format('YYYY-MM-DDTHH:mm')
             : ''
         );
         setValue(
           'endDate',
           data?.program?.endDate
-            ? dayjs(data.program.endDate).format('YYYY-MM-DDTHH:mm')
+            ? dayjs(data.program.endDate)
+                .tz('Asia/Tokyo')
+                .format('YYYY-MM-DDTHH:mm')
             : ''
         );
         setValue('detail', data?.program?.detail ?? '');
@@ -87,11 +96,13 @@ const Belongings: NextPage = () => {
       console.log('a');
       await updateProgramMutation.mutateAsync({
         ...data,
+        date: dayjs.tz(data.date, 'Asia/Tokyo').toISOString(),
+        endDate: data.endDate
+          ? dayjs.tz(data.endDate, 'Asia/Tokyo').toISOString()
+          : data.endDate,
         id: parseInt(id as string, 10),
       });
-      console.log('b');
     } catch (e) {
-      console.log('c');
       throw e;
     }
     console.log('updated');
