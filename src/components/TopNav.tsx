@@ -64,12 +64,15 @@ const TopNav = () => {
             ダッシュボード
           </TopNavTabLink>
         )}
-        <TopNavTabLink href="/belongings" icon={NumberedListIcon}>
+        <TopNavTabLink href="/programs" icon={NumberedListIcon}>
+          合わせ一覧
+        </TopNavTabLink>
+        {/*<TopNavTabLink href="/belongings" icon={NumberedListIcon}>
           持ち物
-        </TopNavTabLink>
-        <TopNavTabLink href="/making" icon={BuildIcon}>
+        </TopNavTabLink>*/}
+        {/*<TopNavTabLink href="/making" icon={BuildIcon}>
           制作
-        </TopNavTabLink>
+        </TopNavTabLink>*/}
       </Pane>
       {session ? (
         <Link href="/user" className={styles.userLink}>
