@@ -88,6 +88,7 @@ const TopNav = () => {
       ) : (
         <TopNavTabLink
           className={styles.login}
+          paneClassName={styles.loginPane}
           icon={LogInIcon}
           onClick={signIn}
         >

@@ -1,0 +1,33 @@
+type Link {
+  url: String!
+  title: String
+  image: String
+  description: String
+}
+
+fragment LinkFragment on Link {
+  url
+  title
+  image
+  description
+}
+
+type Query {
+  link(url: String!): Link
+}
+
+query Link($url: String!) {
+  link(url: $url) {
+    ...LinkFragment
+  }
+}
+
+type Mutation {
+  createLink(url: String!): Link
+}
+
+mutation CreateLink($url: String!) {
+  createLink(url: $url) {
+    ...LinkFragment
+  }
+}

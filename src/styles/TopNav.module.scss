@@ -27,6 +27,9 @@
 .login {
   margin-left: auto;
 }
+.loginPane {
+    min-width: 70px;
+}
 .topNavTabLink.topNavTabLink {
   height: $navigation-height-pc;
   line-height: $navigation-height-pc;

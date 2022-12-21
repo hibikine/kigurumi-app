@@ -37,6 +37,7 @@ type Mutation {
 
 type Query {
   programs: [Program!]!
+  program(id: Int!): Program
 }
 
 fragment ProgramFragment on Program {
@@ -54,6 +55,11 @@ fragment ProgramFragment on Program {
 
 query Programs {
   programs {
+    ...ProgramFragment
+  }
+}
+query Program($id: Int!) {
+  program(id: $id) {
     ...ProgramFragment
   }
 }

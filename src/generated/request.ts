@@ -65,11 +65,20 @@ export type EventUrlType = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type Link = {
+  __typename?: 'Link';
+  description?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  url: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addBelonging: Belonging;
   addProgram: Program;
   createEvent: Event;
+  createLink?: Maybe<Link>;
   deleteBelonging: Belonging;
   deleteEvent: Event;
   deleteProgram: Program;
@@ -102,6 +111,11 @@ export type MutationCreateEventArgs = {
   location: Scalars['String'];
   locationGoogleUrl?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
+};
+
+
+export type MutationCreateLinkArgs = {
+  url: Scalars['String'];
 };
 
 
@@ -168,7 +182,34 @@ export type Query = {
   belongings: Array<Belonging>;
   currentUser?: Maybe<User>;
   events: Array<Event>;
+  link?: Maybe<Link>;
+  program?: Maybe<Program>;
   programs: Array<Program>;
+  twipla?: Maybe<Twipla>;
+};
+
+
+export type QueryLinkArgs = {
+  url: Scalars['String'];
+};
+
+
+export type QueryProgramArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryTwiplaArgs = {
+  id: Scalars['Int'];
+};
+
+export type Twipla = {
+  __typename?: 'Twipla';
+  date?: Maybe<Scalars['String']>;
+  detail?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  ownerUrl?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export type User = {
@@ -242,6 +283,13 @@ export type ProgramsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ProgramsQuery = { __typename?: 'Query', programs: Array<{ __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, url?: string | null, ownerUrl?: string | null, createdAt: string, updatedAt: string }> };
 
+export type ProgramQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type ProgramQuery = { __typename?: 'Query', program?: { __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, url?: string | null, ownerUrl?: string | null, createdAt: string, updatedAt: string } | null };
+
 export type AddProgramMutationVariables = Exact<{
   name: Scalars['String'];
   date: Scalars['DateTime'];
@@ -275,6 +323,31 @@ export type DeleteProgramMutationVariables = Exact<{
 
 
 export type DeleteProgramMutation = { __typename?: 'Mutation', deleteProgram: { __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, url?: string | null, ownerUrl?: string | null, createdAt: string, updatedAt: string } };
+
+export type TwiplaFragmentFragment = { __typename?: 'Twipla', name: string, date?: string | null, url?: string | null, ownerUrl?: string | null, detail?: string | null };
+
+export type TwiplaQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type TwiplaQuery = { __typename?: 'Query', twipla?: { __typename?: 'Twipla', name: string, date?: string | null, url?: string | null, ownerUrl?: string | null, detail?: string | null } | null };
+
+export type LinkFragmentFragment = { __typename?: 'Link', url: string, title?: string | null, image?: string | null, description?: string | null };
+
+export type LinkQueryVariables = Exact<{
+  url: Scalars['String'];
+}>;
+
+
+export type LinkQuery = { __typename?: 'Query', link?: { __typename?: 'Link', url: string, title?: string | null, image?: string | null, description?: string | null } | null };
+
+export type CreateLinkMutationVariables = Exact<{
+  url: Scalars['String'];
+}>;
+
+
+export type CreateLinkMutation = { __typename?: 'Mutation', createLink?: { __typename?: 'Link', url: string, title?: string | null, image?: string | null, description?: string | null } | null };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -361,6 +434,23 @@ export const ProgramFragmentFragmentDoc = `
   ownerUrl
   createdAt
   updatedAt
+}
+    `;
+export const TwiplaFragmentFragmentDoc = `
+    fragment TwiplaFragment on Twipla {
+  name
+  date
+  url
+  ownerUrl
+  detail
+}
+    `;
+export const LinkFragmentFragmentDoc = `
+    fragment LinkFragment on Link {
+  url
+  title
+  image
+  description
 }
     `;
 export const CurrentUserFragmentFragmentDoc = `
@@ -499,6 +589,25 @@ export const useProgramsQuery = <
       useFetchData<ProgramsQuery, ProgramsQueryVariables>(ProgramsDocument).bind(null, variables),
       options
     );
+export const ProgramDocument = `
+    query Program($id: Int!) {
+  program(id: $id) {
+    ...ProgramFragment
+  }
+}
+    ${ProgramFragmentFragmentDoc}`;
+export const useProgramQuery = <
+      TData = ProgramQuery,
+      TError = unknown
+    >(
+      variables: ProgramQueryVariables,
+      options?: UseQueryOptions<ProgramQuery, TError, TData>
+    ) =>
+    useQuery<ProgramQuery, TError, TData>(
+      ['Program', variables],
+      useFetchData<ProgramQuery, ProgramQueryVariables>(ProgramDocument).bind(null, variables),
+      options
+    );
 export const AddProgramDocument = `
     mutation AddProgram($name: String!, $date: DateTime!, $endDate: DateTime, $detail: String!, $location: String, $url: String, $ownerUrl: String) {
   addProgram(
@@ -562,6 +671,60 @@ export const useDeleteProgramMutation = <
     useMutation<DeleteProgramMutation, TError, DeleteProgramMutationVariables, TContext>(
       ['DeleteProgram'],
       useFetchData<DeleteProgramMutation, DeleteProgramMutationVariables>(DeleteProgramDocument),
+      options
+    );
+export const TwiplaDocument = `
+    query Twipla($id: Int!) {
+  twipla(id: $id) {
+    ...TwiplaFragment
+  }
+}
+    ${TwiplaFragmentFragmentDoc}`;
+export const useTwiplaQuery = <
+      TData = TwiplaQuery,
+      TError = unknown
+    >(
+      variables: TwiplaQueryVariables,
+      options?: UseQueryOptions<TwiplaQuery, TError, TData>
+    ) =>
+    useQuery<TwiplaQuery, TError, TData>(
+      ['Twipla', variables],
+      useFetchData<TwiplaQuery, TwiplaQueryVariables>(TwiplaDocument).bind(null, variables),
+      options
+    );
+export const LinkDocument = `
+    query Link($url: String!) {
+  link(url: $url) {
+    ...LinkFragment
+  }
+}
+    ${LinkFragmentFragmentDoc}`;
+export const useLinkQuery = <
+      TData = LinkQuery,
+      TError = unknown
+    >(
+      variables: LinkQueryVariables,
+      options?: UseQueryOptions<LinkQuery, TError, TData>
+    ) =>
+    useQuery<LinkQuery, TError, TData>(
+      ['Link', variables],
+      useFetchData<LinkQuery, LinkQueryVariables>(LinkDocument).bind(null, variables),
+      options
+    );
+export const CreateLinkDocument = `
+    mutation CreateLink($url: String!) {
+  createLink(url: $url) {
+    ...LinkFragment
+  }
+}
+    ${LinkFragmentFragmentDoc}`;
+export const useCreateLinkMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<CreateLinkMutation, TError, CreateLinkMutationVariables, TContext>) =>
+    useMutation<CreateLinkMutation, TError, CreateLinkMutationVariables, TContext>(
+      ['CreateLink'],
+      useFetchData<CreateLinkMutation, CreateLinkMutationVariables>(CreateLinkDocument),
       options
     );
 export const CurrentUserDocument = `

@@ -168,13 +168,21 @@ model Program {
     name      String
     date      DateTime
     endDate   DateTime?
-    detail    String
+    detail    String    @db.Text
     location  String?
     url       String?
     ownerUrl  String?
-    eventId   Int
-    event     Event     @relation(fields: [eventId], references: [id])
+    eventId   Int?
+    event     Event?    @relation(fields: [eventId], references: [id])
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
     deletedAt DateTime?
+}
+
+model Link {
+    url         String   @unique
+    title       String
+    description String?
+    image       String?
+    updatedAt   DateTime @default(now()) @updatedAt
 }

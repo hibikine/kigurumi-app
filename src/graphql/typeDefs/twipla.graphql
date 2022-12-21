@@ -1,0 +1,22 @@
+type Twipla {
+  name: String!
+  date: String
+  url: String
+  ownerUrl: String
+  detail: String
+}
+fragment TwiplaFragment on Twipla {
+  name
+  date
+  url
+  ownerUrl
+  detail
+}
+type Query {
+  twipla(id: Int!): Twipla
+}
+query Twipla($id: Int!) {
+  twipla(id: $id) {
+    ...TwiplaFragment
+  }
+}

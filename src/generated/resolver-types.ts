@@ -66,11 +66,20 @@ export type EventUrlType = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type Link = {
+  __typename?: 'Link';
+  description?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  url: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addBelonging: Belonging;
   addProgram: Program;
   createEvent: Event;
+  createLink?: Maybe<Link>;
   deleteBelonging: Belonging;
   deleteEvent: Event;
   deleteProgram: Program;
@@ -103,6 +112,11 @@ export type MutationCreateEventArgs = {
   location: Scalars['String'];
   locationGoogleUrl?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
+};
+
+
+export type MutationCreateLinkArgs = {
+  url: Scalars['String'];
 };
 
 
@@ -169,7 +183,34 @@ export type Query = {
   belongings: Array<Belonging>;
   currentUser?: Maybe<User>;
   events: Array<Event>;
+  link?: Maybe<Link>;
+  program?: Maybe<Program>;
   programs: Array<Program>;
+  twipla?: Maybe<Twipla>;
+};
+
+
+export type QueryLinkArgs = {
+  url: Scalars['String'];
+};
+
+
+export type QueryProgramArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type QueryTwiplaArgs = {
+  id: Scalars['Int'];
+};
+
+export type Twipla = {
+  __typename?: 'Twipla';
+  date?: Maybe<Scalars['String']>;
+  detail?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  ownerUrl?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export type User = {
@@ -258,10 +299,12 @@ export type ResolversTypes = {
   EventUrlType: ResolverTypeWrapper<EventUrlType>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  Link: ResolverTypeWrapper<Link>;
   Mutation: ResolverTypeWrapper<{}>;
   Program: ResolverTypeWrapper<Program>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Twipla: ResolverTypeWrapper<Twipla>;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -276,10 +319,12 @@ export type ResolversParentTypes = {
   EventUrlType: EventUrlType;
   ID: Scalars['ID'];
   Int: Scalars['Int'];
+  Link: Link;
   Mutation: {};
   Program: Program;
   Query: {};
   String: Scalars['String'];
+  Twipla: Twipla;
   User: User;
 };
 
@@ -337,10 +382,19 @@ export type EventUrlTypeResolvers<ContextType = Context, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type LinkResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Link'] = ResolversParentTypes['Link']> = {
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addBelonging?: Resolver<ResolversTypes['Belonging'], ParentType, ContextType, RequireFields<MutationAddBelongingArgs, 'name'>>;
   addProgram?: Resolver<ResolversTypes['Program'], ParentType, ContextType, RequireFields<MutationAddProgramArgs, 'date' | 'detail' | 'name'>>;
   createEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationCreateEventArgs, 'date' | 'location' | 'name'>>;
+  createLink?: Resolver<Maybe<ResolversTypes['Link']>, ParentType, ContextType, RequireFields<MutationCreateLinkArgs, 'url'>>;
   deleteBelonging?: Resolver<ResolversTypes['Belonging'], ParentType, ContextType, RequireFields<MutationDeleteBelongingArgs, 'belongingId'>>;
   deleteEvent?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationDeleteEventArgs, 'id'>>;
   deleteProgram?: Resolver<ResolversTypes['Program'], ParentType, ContextType, RequireFields<MutationDeleteProgramArgs, 'id'>>;
@@ -368,7 +422,19 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   belongings?: Resolver<Array<ResolversTypes['Belonging']>, ParentType, ContextType>;
   currentUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>;
+  link?: Resolver<Maybe<ResolversTypes['Link']>, ParentType, ContextType, RequireFields<QueryLinkArgs, 'url'>>;
+  program?: Resolver<Maybe<ResolversTypes['Program']>, ParentType, ContextType, RequireFields<QueryProgramArgs, 'id'>>;
   programs?: Resolver<Array<ResolversTypes['Program']>, ParentType, ContextType>;
+  twipla?: Resolver<Maybe<ResolversTypes['Twipla']>, ParentType, ContextType, RequireFields<QueryTwiplaArgs, 'id'>>;
+};
+
+export type TwiplaResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Twipla'] = ResolversParentTypes['Twipla']> = {
+  date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  detail?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  ownerUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -386,9 +452,11 @@ export type Resolvers<ContextType = Context> = {
   Event?: EventResolvers<ContextType>;
   EventUrl?: EventUrlResolvers<ContextType>;
   EventUrlType?: EventUrlTypeResolvers<ContextType>;
+  Link?: LinkResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Program?: ProgramResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Twipla?: TwiplaResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

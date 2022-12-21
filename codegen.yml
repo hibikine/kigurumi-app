@@ -18,6 +18,7 @@ generates:
         Belonging: '@prisma/client#Belonging'
         Event: '@prisma/client#Event'
         Program: '@prisma/client#Program'
+        Link: '@prisma/client#Link'
       scalars:
         Datetime: string
   src/generated/request.ts:

@@ -16,6 +16,7 @@ type Props = {
   href?: string;
   children: ReactNode;
   className?: string;
+  paneClassName?: string;
   onClick?: () => void;
   icon?: IconComponent;
 };
@@ -23,6 +24,7 @@ type Props = {
 const TopNavTabLinkComponent = ({
   icon: Icon,
   className,
+  paneClassName,
   onClick,
   fontWeight,
   color,
@@ -30,6 +32,7 @@ const TopNavTabLinkComponent = ({
 }: {
   icon?: IconComponent;
   className?: string;
+  paneClassName?: string;
   onClick?: () => void;
   fontWeight: number;
   color?: string;
@@ -50,6 +53,7 @@ const TopNavTabLinkComponent = ({
   >
     {Icon ? (
       <Pane
+        className={paneClassName}
         display="flex"
         flexDirection="column"
         alignItems="center"
@@ -58,7 +62,7 @@ const TopNavTabLinkComponent = ({
         height="100%"
       >
         <Icon size={20} />
-        <Text fontSize="16px" fontWeight={fontWeight} color={color}>
+        <Text fontSize="14px" fontWeight={fontWeight} color={color}>
           {children}
         </Text>
       </Pane>
@@ -70,7 +74,14 @@ const TopNavTabLinkComponent = ({
   </EvergreenLink>
 );
 
-const TopNavTabLink = ({ href, children, className, onClick, icon }: Props) => {
+const TopNavTabLink = ({
+  href,
+  children,
+  className,
+  onClick,
+  icon,
+  paneClassName,
+}: Props) => {
   const { pathname } = useRouter();
   const parentPath = pathname.split('/')[1];
   const isActive = href ? parentPath === href.split('/')[1] : false;
@@ -82,6 +93,7 @@ const TopNavTabLink = ({ href, children, className, onClick, icon }: Props) => {
       <TopNavTabLinkComponent
         icon={icon}
         className={className}
+        paneClassName={paneClassName}
         onClick={onClick}
         fontWeight={fontWeight}
         color={color}
@@ -96,6 +108,7 @@ const TopNavTabLink = ({ href, children, className, onClick, icon }: Props) => {
       <TopNavTabLinkComponent
         icon={icon}
         className={className}
+        paneClassName={paneClassName}
         onClick={onClick}
         fontWeight={fontWeight}
         color={color}

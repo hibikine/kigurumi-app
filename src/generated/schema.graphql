@@ -45,10 +45,18 @@ type EventUrlType {
   updatedAt: DateTime!
 }
 
+type Link {
+  description: String
+  image: String
+  title: String
+  url: String!
+}
+
 type Mutation {
   addBelonging(eventId: Int, name: String!): Belonging!
   addProgram(date: DateTime!, detail: String!, endDate: DateTime, location: String, name: String!, ownerUrl: String, url: String): Program!
   createEvent(date: DateTime!, endDate: DateTime, location: String!, locationGoogleUrl: String, name: String!): Event!
+  createLink(url: String!): Link
   deleteBelonging(belongingId: String!): Belonging!
   deleteEvent(id: Int!): Event!
   deleteProgram(id: Int!): Program!
@@ -75,7 +83,18 @@ type Query {
   belongings: [Belonging!]!
   currentUser: User
   events: [Event!]!
+  link(url: String!): Link
+  program(id: Int!): Program
   programs: [Program!]!
+  twipla(id: Int!): Twipla
+}
+
+type Twipla {
+  date: String
+  detail: String
+  name: String!
+  ownerUrl: String
+  url: String
 }
 
 type User {
