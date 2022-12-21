@@ -2,6 +2,23 @@ type User {
   id: ID
   name: String
   email: String
+  admin: Boolean
+}
+
+type Query {
+  currentUser: User
+}
+
+query CurrentUser {
+  currentUser {
+    ...CurrentUserFragment
+  }
+}
+fragment CurrentUserFragment on User {
+  id
+  name
+  email
+  admin
 }
 
 fragment UserFragment on User {
