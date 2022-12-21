@@ -83,6 +83,12 @@ localhostの証明書を発行する
 mkcert localhost
 ```
 
+## テーブル
+### Program
+イベント内イベントなどを管理する。
+
+原則論理削除
+
 ## リンク
 
 - [きぐあぷり](https://app.hikage.works/)
