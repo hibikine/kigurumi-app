@@ -165,8 +165,9 @@ export const resolvers: Resolvers = {
         dom.window.document.querySelector('span.largetext')?.textContent;
       const dateMatch = dateNode?.match(/\d{4}年\d{1,2}月\d{1,2}日/);
       const dateHourMinuteMatch = dateNode?.match(
-        /\d{4}年\d{1,2}月\d{1,2}日[.] \d{2}:\d{2}/
+        /\d{4}年\d{1,2}月\d{1,2}日\[.\] \d{2}:\d{2}/
       );
+      console.log(dateNode);
       const date = dateHourMinuteMatch
         ? dayjs
             .tz(dateHourMinuteMatch[0], 'YYYY年M月D日[dd] HH:mm', 'Asia/Tokyo')
