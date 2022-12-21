@@ -124,11 +124,11 @@ export default function LPTopView() {
             borderRadius={majorScale(1)}
             paddingX={majorScale(2)}
           >
-            持ち物や着ぐるみイベントの管理から、
+            着ぐるみイベントの予定を
             <wbr />
-            着ぐるみ制作の進捗管理まで
+            忘れないようにしよう
           </Paragraph>
-          <Link legacyBehavior href="/belongings" passHref>
+          <Link legacyBehavior href="/programs" passHref>
             <Button
               is="a"
               className={styles.cptButton}
@@ -138,7 +138,7 @@ export default function LPTopView() {
               height={majorScale(7)}
               marginRight={majorScale(4)}
             >
-              持ち物リストを作る
+              合わせ一覧を見る
             </Button>
           </Link>
         </Pane>
