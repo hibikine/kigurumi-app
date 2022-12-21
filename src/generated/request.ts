@@ -91,6 +91,8 @@ export type MutationAddProgramArgs = {
   endDate?: InputMaybe<Scalars['DateTime']>;
   location?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
+  ownerUrl?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -142,6 +144,8 @@ export type MutationUpdateProgramArgs = {
   id: Scalars['Int'];
   location?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  ownerUrl?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
 };
 
 export type Program = {
@@ -154,18 +158,22 @@ export type Program = {
   id: Scalars['Int'];
   location?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  ownerUrl?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
+  url?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
   __typename?: 'Query';
   belongings: Array<Belonging>;
+  currentUser?: Maybe<User>;
   events: Array<Event>;
   programs: Array<Program>;
 };
 
 export type User = {
   __typename?: 'User';
+  admin?: Maybe<Scalars['Boolean']>;
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
@@ -227,12 +235,12 @@ export type EventUrlFragmentFragment = { __typename?: 'EventUrl', id: number, ev
 
 export type EventUrlTypeFragmentFragment = { __typename?: 'EventUrlType', id: number, name: string, createdAt: string, updatedAt: string };
 
-export type ProgramFragmentFragment = { __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, createdAt: string, updatedAt: string };
+export type ProgramFragmentFragment = { __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, url?: string | null, ownerUrl?: string | null, createdAt: string, updatedAt: string };
 
 export type ProgramsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProgramsQuery = { __typename?: 'Query', programs: Array<{ __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, createdAt: string, updatedAt: string }> };
+export type ProgramsQuery = { __typename?: 'Query', programs: Array<{ __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, url?: string | null, ownerUrl?: string | null, createdAt: string, updatedAt: string }> };
 
 export type AddProgramMutationVariables = Exact<{
   name: Scalars['String'];
@@ -240,10 +248,12 @@ export type AddProgramMutationVariables = Exact<{
   endDate?: InputMaybe<Scalars['DateTime']>;
   detail: Scalars['String'];
   location?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+  ownerUrl?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type AddProgramMutation = { __typename?: 'Mutation', addProgram: { __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, createdAt: string, updatedAt: string } };
+export type AddProgramMutation = { __typename?: 'Mutation', addProgram: { __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, url?: string | null, ownerUrl?: string | null, createdAt: string, updatedAt: string } };
 
 export type UpdateProgramMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -252,17 +262,26 @@ export type UpdateProgramMutationVariables = Exact<{
   endDate?: InputMaybe<Scalars['DateTime']>;
   detail?: InputMaybe<Scalars['String']>;
   location?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+  ownerUrl?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type UpdateProgramMutation = { __typename?: 'Mutation', updateProgram: { __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, createdAt: string, updatedAt: string } };
+export type UpdateProgramMutation = { __typename?: 'Mutation', updateProgram: { __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, url?: string | null, ownerUrl?: string | null, createdAt: string, updatedAt: string } };
 
 export type DeleteProgramMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type DeleteProgramMutation = { __typename?: 'Mutation', deleteProgram: { __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, createdAt: string, updatedAt: string } };
+export type DeleteProgramMutation = { __typename?: 'Mutation', deleteProgram: { __typename?: 'Program', id: number, name: string, date: string, endDate?: string | null, detail: string, location?: string | null, url?: string | null, ownerUrl?: string | null, createdAt: string, updatedAt: string } };
+
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typename?: 'User', id?: string | null, name?: string | null, email?: string | null, admin?: boolean | null } | null };
+
+export type CurrentUserFragmentFragment = { __typename?: 'User', id?: string | null, name?: string | null, email?: string | null, admin?: boolean | null };
 
 export type UserFragmentFragment = { __typename?: 'User', id?: string | null, name?: string | null };
 
@@ -338,8 +357,18 @@ export const ProgramFragmentFragmentDoc = `
   endDate
   detail
   location
+  url
+  ownerUrl
   createdAt
   updatedAt
+}
+    `;
+export const CurrentUserFragmentFragmentDoc = `
+    fragment CurrentUserFragment on User {
+  id
+  name
+  email
+  admin
 }
     `;
 export const BelongingsDocument = `
@@ -471,13 +500,15 @@ export const useProgramsQuery = <
       options
     );
 export const AddProgramDocument = `
-    mutation AddProgram($name: String!, $date: DateTime!, $endDate: DateTime, $detail: String!, $location: String) {
+    mutation AddProgram($name: String!, $date: DateTime!, $endDate: DateTime, $detail: String!, $location: String, $url: String, $ownerUrl: String) {
   addProgram(
     name: $name
     date: $date
     endDate: $endDate
     detail: $detail
     location: $location
+    url: $url
+    ownerUrl: $ownerUrl
   ) {
     ...ProgramFragment
   }
@@ -493,7 +524,7 @@ export const useAddProgramMutation = <
       options
     );
 export const UpdateProgramDocument = `
-    mutation UpdateProgram($id: Int!, $name: String, $date: DateTime, $endDate: DateTime, $detail: String, $location: String) {
+    mutation UpdateProgram($id: Int!, $name: String, $date: DateTime, $endDate: DateTime, $detail: String, $location: String, $url: String, $ownerUrl: String) {
   updateProgram(
     id: $id
     name: $name
@@ -501,6 +532,8 @@ export const UpdateProgramDocument = `
     endDate: $endDate
     detail: $detail
     location: $location
+    url: $url
+    ownerUrl: $ownerUrl
   ) {
     ...ProgramFragment
   }
@@ -529,5 +562,24 @@ export const useDeleteProgramMutation = <
     useMutation<DeleteProgramMutation, TError, DeleteProgramMutationVariables, TContext>(
       ['DeleteProgram'],
       useFetchData<DeleteProgramMutation, DeleteProgramMutationVariables>(DeleteProgramDocument),
+      options
+    );
+export const CurrentUserDocument = `
+    query CurrentUser {
+  currentUser {
+    ...CurrentUserFragment
+  }
+}
+    ${CurrentUserFragmentFragmentDoc}`;
+export const useCurrentUserQuery = <
+      TData = CurrentUserQuery,
+      TError = unknown
+    >(
+      variables?: CurrentUserQueryVariables,
+      options?: UseQueryOptions<CurrentUserQuery, TError, TData>
+    ) =>
+    useQuery<CurrentUserQuery, TError, TData>(
+      variables === undefined ? ['CurrentUser'] : ['CurrentUser', variables],
+      useFetchData<CurrentUserQuery, CurrentUserQueryVariables>(CurrentUserDocument).bind(null, variables),
       options
     );
