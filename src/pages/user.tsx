@@ -6,10 +6,12 @@ import Layout from '../components/Layout';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import styles from '../styles/User.module.scss';
 import { OAuthProviderType } from 'next-auth/providers';
+import { useCurrentUserQuery } from '../generated/request';
 
 const Login: NextPage = () => {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
+  const currentUser = useCurrentUserQuery();
   const availableServers = useQuery({
     queryKey: ['availableServers'],
     queryFn: async () => {
@@ -40,6 +42,7 @@ const Login: NextPage = () => {
         >
           <PageHeader title="ユーザー" />
           {session?.user?.email}
+          {currentUser?.data?.currentUser?.admin && '管理者'}
           <Heading>ログインアカウント一覧</Heading>
           {availableServers.data &&
             (
