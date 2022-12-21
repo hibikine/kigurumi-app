@@ -15,8 +15,75 @@ export const resolvers: Resolvers = {
       });
       return belongings;
     },
+    programs: async (_, __, { prisma, currentUser }) => {
+      const programs = await prisma.program.findMany({
+        orderBy: { createdAt: 'asc' },
+        where: {
+          deletedAt: null,
+        },
+      });
+      return programs;
+    },
   },
   Mutation: {
+    addProgram: async (
+      _,
+      { name, date, endDate, detail, location },
+      { prisma, currentUser }
+    ) => {
+      if (!currentUser) {
+        throw new Error('User not logged in.');
+      }
+      const program = await prisma.program.create({
+        data: {
+          name,
+          date,
+          endDate,
+          detail,
+          location,
+        },
+      });
+      return program;
+    },
+    updateProgram: async (
+      _,
+      { id, name, date, endDate, detail, location },
+      { prisma, currentUser }
+    ) => {
+      if (!currentUser) {
+        throw new Error('User not logged in.');
+      }
+      const originalProgram = await prisma.program.findUnique({
+        where: { id },
+      });
+      if (originalProgram?.deletedAt) {
+        throw new Error('Program is already deleted.');
+      }
+      const data = {
+        name: name || originalProgram?.name,
+        date: date || originalProgram?.date,
+        endDate: endDate || originalProgram?.endDate,
+        detail: detail || originalProgram?.detail,
+        location: location || originalProgram?.location,
+      };
+      const program = await prisma.program.update({
+        where: { id },
+        data,
+      });
+      return program;
+    },
+    deleteProgram: async (_, { id }, { prisma, currentUser }) => {
+      if (!currentUser) {
+        throw new Error('User not logged in.');
+      }
+      const program = await prisma.program.update({
+        where: { id },
+        data: {
+          deletedAt: new Date(),
+        },
+      });
+      return program;
+    },
     addBelonging: async (_, { name, eventId }, { prisma, currentUser }) => {
       if (!currentUser) {
         throw new Error('User not logged in.');

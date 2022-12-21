@@ -7,6 +7,7 @@ type Event {
   locationGoogleUrl: String
   createdAt: DateTime!
   updatedAt: DateTime!
+  #eventUrls: [EventUrl]!
   #creator: User!
   # attendees: [User!]!
   # belongings: [Belonging!]!
@@ -17,8 +18,12 @@ fragment EventForBelongingsFragment on Event {
   name
   date
   location
+  locationGoogleUrl
   createdAt
   updatedAt
+  #eventUrls {
+  #  ...EventUrlFragment
+  #}
   # creator {
   #   ...UserFragment
   # }
@@ -32,8 +37,12 @@ fragment EventFragment on Event {
   name
   date
   location
+  locationGoogleUrl
   createdAt
   updatedAt
+  #eventUrls {
+  #  ...EventUrlFragment
+  #}
   #creator {
   #  ...UserFragment
   #}
@@ -43,4 +52,53 @@ fragment EventFragment on Event {
   #belongings {
   #  ...BelongingFragment
   #}
+}
+
+query Events {
+  events {
+    ...EventFragment
+  }
+}
+
+type Query {
+  events: [Event!]!
+}
+
+type Mutation {
+  createEvent(
+    name: String!
+    date: DateTime!
+    endDate: DateTime
+    location: String!
+    locationGoogleUrl: String #urls: [EventUrlInput]
+  ): Event!
+  updateEvent(
+    id: Int!
+    name: String
+    date: DateTime
+    endDate: DateTime
+    location: String
+    locationGoogleUrl: String #urls: [EventUrlInput]
+  ): Event!
+  deleteEvent(id: Int!): Event!
+}
+
+mutation UpdateEvent(
+  $id: Int!
+  $name: String
+  $date: DateTime
+  $endDate: DateTime
+  $location: String
+  $locationGoogleUrl: String #$urls: [EventUrlInput]
+) {
+  updateEvent(
+    id: $id
+    name: $name
+    date: $date
+    endDate: $endDate
+    location: $location
+    locationGoogleUrl: $locationGoogleUrl #urls: $urls
+  ) {
+    ...EventFragment
+  }
 }

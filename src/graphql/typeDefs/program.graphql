@@ -1,0 +1,95 @@
+type Program {
+  id: Int!
+  name: String!
+  date: DateTime!
+  endDate: DateTime
+  detail: String!
+  location: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+}
+
+type Mutation {
+  addProgram(
+    name: String!
+    date: DateTime!
+    endDate: DateTime
+    detail: String!
+    location: String
+  ): Program!
+  updateProgram(
+    id: Int!
+    name: String
+    date: DateTime
+    endDate: DateTime
+    detail: String
+    location: String
+  ): Program!
+  deleteProgram(id: Int!): Program!
+}
+
+type Query {
+  programs: [Program!]!
+}
+
+fragment ProgramFragment on Program {
+  id
+  name
+  date
+  endDate
+  detail
+  location
+  createdAt
+  updatedAt
+}
+
+query Programs {
+  programs {
+    ...ProgramFragment
+  }
+}
+
+mutation AddProgram(
+  $name: String!
+  $date: DateTime!
+  $endDate: DateTime
+  $detail: String!
+  $location: String
+) {
+  addProgram(
+    name: $name
+    date: $date
+    endDate: $endDate
+    detail: $detail
+    location: $location
+  ) {
+    ...ProgramFragment
+  }
+}
+
+mutation UpdateProgram(
+  $id: Int!
+  $name: String
+  $date: DateTime
+  $endDate: DateTime
+  $detail: String
+  $location: String
+) {
+  updateProgram(
+    id: $id
+    name: $name
+    date: $date
+    endDate: $endDate
+    detail: $detail
+    location: $location
+  ) {
+    ...ProgramFragment
+  }
+}
+
+mutation DeleteProgram($id: Int!) {
+  deleteProgram(id: $id) {
+    ...ProgramFragment
+  }
+}

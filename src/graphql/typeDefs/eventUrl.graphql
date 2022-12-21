@@ -1,8 +1,19 @@
-type eventUrl {
+type EventUrl {
   id: Int!
   eventId: Int!
   url: String!
-  urlType: Int!
+  urlType: EventUrlType!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+fragment EventUrlFragment on EventUrl {
+  id
+  eventId
+  url
+  urlType {
+    ...EventUrlTypeFragment
+  }
+  createdAt
+  updatedAt
 }
