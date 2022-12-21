@@ -47,14 +47,14 @@ type EventUrlType {
 
 type Mutation {
   addBelonging(eventId: Int, name: String!): Belonging!
-  addProgram(date: DateTime!, detail: String!, endDate: DateTime, location: String, name: String!): Program!
+  addProgram(date: DateTime!, detail: String!, endDate: DateTime, location: String, name: String!, ownerUrl: String, url: String): Program!
   createEvent(date: DateTime!, endDate: DateTime, location: String!, locationGoogleUrl: String, name: String!): Event!
   deleteBelonging(belongingId: String!): Belonging!
   deleteEvent(id: Int!): Event!
   deleteProgram(id: Int!): Program!
   updateBelonging(belongingId: String!, completed: Boolean, name: String): Belonging!
   updateEvent(date: DateTime, endDate: DateTime, id: Int!, location: String, locationGoogleUrl: String, name: String): Event!
-  updateProgram(date: DateTime, detail: String, endDate: DateTime, id: Int!, location: String, name: String): Program!
+  updateProgram(date: DateTime, detail: String, endDate: DateTime, id: Int!, location: String, name: String, ownerUrl: String, url: String): Program!
 }
 
 type Program {
@@ -66,16 +66,20 @@ type Program {
   id: Int!
   location: String
   name: String!
+  ownerUrl: String
   updatedAt: DateTime!
+  url: String
 }
 
 type Query {
   belongings: [Belonging!]!
+  currentUser: User
   events: [Event!]!
   programs: [Program!]!
 }
 
 type User {
+  admin: Boolean
   email: String
   id: ID
   name: String

@@ -5,6 +5,8 @@ type Program {
   endDate: DateTime
   detail: String!
   location: String
+  url: String
+  ownerUrl: String
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
@@ -17,6 +19,8 @@ type Mutation {
     endDate: DateTime
     detail: String!
     location: String
+    url: String
+    ownerUrl: String
   ): Program!
   updateProgram(
     id: Int!
@@ -25,6 +29,8 @@ type Mutation {
     endDate: DateTime
     detail: String
     location: String
+    url: String
+    ownerUrl: String
   ): Program!
   deleteProgram(id: Int!): Program!
 }
@@ -40,6 +46,8 @@ fragment ProgramFragment on Program {
   endDate
   detail
   location
+  url
+  ownerUrl
   createdAt
   updatedAt
 }
@@ -56,6 +64,8 @@ mutation AddProgram(
   $endDate: DateTime
   $detail: String!
   $location: String
+  $url: String
+  $ownerUrl: String
 ) {
   addProgram(
     name: $name
@@ -63,6 +73,8 @@ mutation AddProgram(
     endDate: $endDate
     detail: $detail
     location: $location
+    url: $url
+    ownerUrl: $ownerUrl
   ) {
     ...ProgramFragment
   }
@@ -75,6 +87,8 @@ mutation UpdateProgram(
   $endDate: DateTime
   $detail: String
   $location: String
+  $url: String
+  $ownerUrl: String
 ) {
   updateProgram(
     id: $id
@@ -83,6 +97,8 @@ mutation UpdateProgram(
     endDate: $endDate
     detail: $detail
     location: $location
+    url: $url
+    ownerUrl: $ownerUrl
   ) {
     ...ProgramFragment
   }

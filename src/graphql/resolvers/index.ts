@@ -24,11 +24,20 @@ export const resolvers: Resolvers = {
       });
       return programs;
     },
+    currentUser: async (_, __, { prisma, currentUser }) => {
+      if (!currentUser) {
+        throw new Error('User not logged in.');
+      }
+      const user = await prisma.user.findUnique({
+        where: { id: currentUser.id },
+      });
+      return user;
+    },
   },
   Mutation: {
     addProgram: async (
       _,
-      { name, date, endDate, detail, location },
+      { name, date, endDate, detail, location, url, ownerUrl },
       { prisma, currentUser }
     ) => {
       if (!currentUser) {
@@ -41,13 +50,15 @@ export const resolvers: Resolvers = {
           endDate,
           detail,
           location,
+          url,
+          ownerUrl,
         },
       });
       return program;
     },
     updateProgram: async (
       _,
-      { id, name, date, endDate, detail, location },
+      { id, name, date, endDate, detail, location, url, ownerUrl },
       { prisma, currentUser }
     ) => {
       if (!currentUser) {
@@ -65,6 +76,8 @@ export const resolvers: Resolvers = {
         endDate: endDate || originalProgram?.endDate,
         detail: detail || originalProgram?.detail,
         location: location || originalProgram?.location,
+        url: url || originalProgram?.url,
+        ownerUrl: ownerUrl || originalProgram?.ownerUrl,
       };
       const program = await prisma.program.update({
         where: { id },
