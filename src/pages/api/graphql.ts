@@ -6,18 +6,18 @@ import Cors from 'micro-cors';
 
 import { createContext } from '../../graphql/context';
 import { resolvers } from '../../graphql/resolvers';
+import { schema } from '../../generated/schema';
 
 const cors = Cors();
 
-const schema = loadSchemaSync('src/generated/schema.graphql', {
-  loaders: [new GraphQLFileLoader()],
-});
-const schemaWithResolvers = addResolversToSchema({
-  schema,
-  resolvers,
-});
+// const schema = loadSchemaSync(schemaData);
+// const schemaWithResolvers = addResolversToSchema({
+//   schema,
+//   resolvers,
+// });
 const apolloServer = new ApolloServer({
-  schema: schemaWithResolvers,
+  resolvers,
+  typeDefs: schema,
   context: createContext,
 });
 

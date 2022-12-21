@@ -4,6 +4,19 @@ generates:
       - 'src/graphql/typeDefs/**/*.graphql'
     plugins:
       - schema-ast
+  src/generated/schema.ts:
+    schema:
+      - 'src/graphql/typeDefs/**/*.graphql'
+    plugins:
+      - add:
+          content:
+            - "import { gql } from 'apollo-server-micro';"
+            - 'export const schema = gql`'
+      - schema-ast
+      - add:
+          placement: 'append'
+          content:
+            - '`;'
   src/generated/resolver-types.ts:
     schema:
       - 'src/graphql/typeDefs/**/*.graphql'
