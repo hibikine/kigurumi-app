@@ -40,11 +40,11 @@ function MyApp({
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
-        <meta name="application-name" content="PWA App" />
+        <meta name="application-name" content="きぐあぷり" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="PWA App" />
-        <meta name="description" content="Best PWA App in the world" />
+        <meta name="apple-mobile-web-app-title" content="きぐあぷり" />
+        <meta name="description" content="JMoFの○○合わせをまとめてチェック" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/icons/browserconfig.xml" />
@@ -96,22 +96,22 @@ function MyApp({
         }
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:url" content="https://yourdomain.com" />
-        <meta name="twitter:title" content="PWA App" />
-        <meta name="twitter:description" content="Best PWA App in the world" />
+        <meta name="twitter:title" content="きぐあぷり" />
         <meta
-          name="twitter:image"
-          content="https://yourdomain.com/icons/android-chrome-192x192.png"
+          name="twitter:description"
+          content="JMoFの○○合わせをまとめてチェック"
         />
-        <meta name="twitter:creator" content="@DavidWShadow" />
+        <meta name="twitter:image" content="https://kigu.app/og-image.png" />
+        <meta name="twitter:creator" content="@kiguapp" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="PWA App" />
-        <meta property="og:description" content="Best PWA App in the world" />
-        <meta property="og:site_name" content="PWA App" />
-        <meta property="og:url" content="https://yourdomain.com" />
+        <meta property="og:title" content="きぐあぷり" />
         <meta
-          property="og:image"
-          content="https://yourdomain.com/icons/apple-touch-icon.png"
+          property="og:description"
+          content="JMoFの○○合わせをまとめてチェック"
         />
+        <meta property="og:site_name" content="きぐあぷり" />
+        <meta property="og:url" content="https://kigu.app" />
+        <meta property="og:image" content="https://kigu.app/og-image.png" />
       </Head>
       <SessionProvider session={session}>
         <ApolloProvider client={client}>
