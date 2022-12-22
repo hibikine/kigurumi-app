@@ -58,6 +58,10 @@ const Belongings: NextPage = () => {
     { id: twiplaUrl ? parseInt(twiplaUrl[1], 10) : -1 },
     {
       enabled: !!twiplaUrl,
+      retry: false,
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnWindowFocus: false,
       onSuccess: (data) => {
         if (data.twipla?.name) {
           setValue('name', data.twipla.name);
