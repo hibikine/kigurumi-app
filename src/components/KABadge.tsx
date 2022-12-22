@@ -2,10 +2,12 @@ import { ReactNode } from 'react';
 import clsx from 'clsx';
 
 export const KABadge = ({
+  className,
   children,
   size,
   color,
 }: {
+  className?: string;
   children: ReactNode;
   size?: 'large' | 'medium' | 'small';
   color?: 'purple' | 'fuchsia' | 'pink' | 'rose';
@@ -26,7 +28,8 @@ export const KABadge = ({
         ? 'bg-pink-500'
         : color === 'rose'
         ? 'bg-rose-500'
-        : 'bg-pink-500'
+        : 'bg-pink-500',
+      className
     )}
   >
     {children}

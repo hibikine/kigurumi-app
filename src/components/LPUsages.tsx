@@ -11,8 +11,11 @@ import Image from 'next/image';
 import ValueCard from './ValueCard';
 import styles from '../styles/Top.module.scss';
 import Link from 'next/link';
+import clsx from 'clsx';
+import useSize from '../utils/hooks/useSize';
 
 export default function LPUsages() {
+  const size = useSize();
   return (
     <Pane
       borderTop="1px solid #efefef"
@@ -45,7 +48,7 @@ export default function LPUsages() {
       <div className="w-full px-3">
         <Link
           target="_blank"
-          className="bg-blue-600 text-white font-bold shadow-md hover:bg-blue-700 w-full p-4 flex justify-center items-center rounded-md"
+          className="bg-[#1DA1F2] text-white font-bold shadow-md w-full p-4 flex justify-center items-center rounded-md"
           href="https://twitter.com/intent/tweet?text=JMoF%E3%81%AE%E2%97%8B%E2%97%8B%E5%90%88%E3%82%8F%E3%81%9B%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A6%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%EF%BC%81%20%7C%20%E3%81%8D%E3%81%90%E3%81%82%E3%81%B7%E3%82%8A%20%40kiguapp%20%23%E3%81%8D%E3%81%90%E3%81%82%E3%81%B7%E3%82%8A%0Ahttps%3A%2F%2Fkigu.app"
         >
           <Image
@@ -55,7 +58,10 @@ export default function LPUsages() {
             width={20}
             height={20}
           />
-          Twitterでみんなに教えちゃおう！
+          <div>
+            <p className={clsx(size !== 'xs' && 'inline')}>Twitterでみんなに</p>
+            <p className={clsx(size !== 'xs' && 'inline')}>教えちゃおう！</p>
+          </div>
         </Link>
       </div>
     </Pane>

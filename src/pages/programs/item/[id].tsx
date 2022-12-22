@@ -79,8 +79,8 @@ const ProgramsItem: NextPage = () => {
               </div>
               <div className="bg-white pl-4 pr-4 pt-4 pb-8 rounded-xl flex flex-col">
                 <h1 className="text-2xl font-bold">{name}</h1>
-                <div className="mt-2 flex justify-between align-center">
-                  <KABadge size="small">
+                <div className="mt-2 flex justify-between align-center flex-wrap">
+                  <KABadge className="mb-1" size="small">
                     {dayjs
                       .tz(date, 'UTC')
                       .tz('Asia/Tokyo')
