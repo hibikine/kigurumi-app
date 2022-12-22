@@ -17,11 +17,18 @@
   }
 
 }
+
 @media screen and (min-width: 811px) {
     .chatboxInner {
     width: 265px;
     height: 265px;
   }
+}
+@media screen and (max-width: 480px) {
+    .chatboxInner {
+        width: 140px;
+        height: 140px;
+    }
 }
 @media screen and (max-width: $bp-pc) {
   .chatbox {
@@ -55,12 +62,12 @@
 }
 @media screen and (max-width: 480px) {
     .gatoImage {
-        left: calc(40vw - calc(480px * calc(70 / 100))) !important;
+        left: calc(70vw - calc(480px * calc(70 / 100))) !important;
     }
 }
 @media screen and (max-width: 810px) and (min-width: 481px){
   .gatoImage {
-    left: calc(80vw - calc(810px * calc(70 / 100))) !important;
+    left: calc(90vw - calc(810px * calc(70 / 100))) !important;
   }
 }
 

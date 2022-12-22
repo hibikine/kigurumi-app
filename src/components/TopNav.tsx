@@ -31,7 +31,7 @@ const TopNav = () => {
   return (
     <nav
       className={
-        'w-full sticky top-0 bg-white z-10 shrink-0 flex justify-center sm:justify-start items-center pr-4 pl-4 h-16 sm:h-16 lg:h-16'
+        'w-full sticky top-0 bg-white z-10 shrink-0 flex justify-center sm:justify-start items-center sm:pr-4 sm:pl-4 h-16 sm:h-16 lg:h-16'
       }
     >
       <Link href={isLogin ? '/dashboard' : '/'}>

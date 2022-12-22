@@ -12,10 +12,10 @@ export const KABadge = ({
 }) => (
   <div
     className={clsx(
-      'text-white rounded-full font-bold pl-2 pr-2 self-start',
-      size === 'small' && 'text-sm',
-      size === 'medium' && 'text-base',
-      size === 'large' && 'text-lg',
+      'text-white rounded-full font-bold self-start',
+      size === 'small' && 'text-sm px-1',
+      (size === 'medium' || size === undefined) && 'text-base px-2',
+      size === 'large' && 'text-lg px-2',
       typeof color === 'undefined'
         ? 'bg-pink-500'
         : color === 'purple'

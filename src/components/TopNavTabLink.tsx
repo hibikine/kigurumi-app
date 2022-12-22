@@ -50,6 +50,7 @@ const TopNavTabLinkComponent = ({
     fontWeight={fontWeight}
     color={color}
     marginRight={majorScale(3)}
+    marginLeft={majorScale(3)}
   >
     {Icon ? (
       <Pane

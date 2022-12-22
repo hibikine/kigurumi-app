@@ -19,7 +19,7 @@ const Programs: NextPage = () => {
 
   return (
     <Layout>
-      <Pane className="flex flex-col items-center">
+      <div className="flex flex-col items-center">
         <div className="flex mt-4 flex-col w-11/12 lg:w-10/12 items-center">
           <div className="flex flex-col lg:flex-row justify-center lg:justify-start items-center w-full pl-2 pr-2 text-slate-700">
             <div className="flex flex-col items-center md:flex-row md:justify-center">
@@ -89,7 +89,7 @@ const Programs: NextPage = () => {
             </div>
           )}
         </div>
-      </Pane>
+      </div>
     </Layout>
   );
 };

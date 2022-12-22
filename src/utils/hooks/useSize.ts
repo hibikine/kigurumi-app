@@ -12,8 +12,8 @@ const useSize = () => {
   const [size, setSize] = useState<Size>('xs');
   const onResize = () => {
     const width = window.innerWidth;
-    const newSize = (Object.keys(sizes) as Size[]).find(
-      (key) => sizes[key] > width
+    const newSize = (Object.keys(sizes).reverse() as Size[]).find(
+      (key) => sizes[key] <= width
     );
     setSize(newSize || 'xs');
   };
