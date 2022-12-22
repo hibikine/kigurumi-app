@@ -4,51 +4,10 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import Layout from '../components/Layout';
 import { useProgramsQuery } from '../generated/request';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ja';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import dayjs from '../lib/dayjs';
 import { ProgramCard } from '../components/ProgramCard';
-import { Switch } from '@headlessui/react';
-import clsx from 'clsx';
 import KAListbox from '../components/KAListbox';
-import { ReactNode } from 'react';
-
-dayjs.extend(LocalizedFormat);
-dayjs.locale('ja');
-
-const KASwitch = ({
-  id,
-  checked,
-  onChange,
-  children,
-}: {
-  id: string;
-  checked: boolean;
-  onChange: (v: boolean) => void;
-  children: ReactNode;
-}) => (
-  <>
-    <Switch
-      id={id}
-      checked={checked}
-      onChange={onChange}
-      className={clsx(
-        checked ? `bg-pink-900` : 'bg-pink-500',
-        'relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75'
-      )}
-    >
-      <span className="sr-only">{children}</span>
-      <span
-        aria-hidden="true"
-        className={`${checked ? 'translate-x-9' : 'translate-x-0'}
-            pointer-events-none inline-block h-[34px] w-[34px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
-      />
-    </Switch>
-    <label className="ml-2 font-medium" htmlFor="is-remove-finished">
-      {children}
-    </label>
-  </>
-);
+import { KASwitch } from '../components/KASwitch';
 
 const Programs: NextPage = () => {
   const { data, refetch, isFetched } = useProgramsQuery(undefined, {
@@ -89,7 +48,7 @@ const Programs: NextPage = () => {
             </Link>
           </div>
           {isFetched && data ? (
-            <div className="flex flex-col items-center mt-4 w-full flex-wrap sm:grid-cols-2 sm:gap-2 md:w-auto md:grid md:grid-cols-2 lg:gap-2 lg:w-[768px] xl:grid-cols-4 xl:gap-4 xl:w-[1024px]">
+            <div className="flex flex-col items-center mt-4 w-full flex-wrap sm:grid-cols-2 sm:gap-2 md:w-auto md:grid md:grid-cols-2 lg:gap-2 lg:w-[768px] xl:grid-cols-3 xl:gap-3 xl:w-[1024px] 2xl:gap-4 2xl:grid-cols-4 2xl:w-full 2xl:mx-10">
               {[...data.programs]
                 .sort((v1, v2) => {
                   if (order === orders[0]) {
