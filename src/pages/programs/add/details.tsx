@@ -96,7 +96,7 @@ const Belongings: NextPage = () => {
       return;
     }
     try {
-      await addProgramMutation.mutateAsync(data);
+      await addProgramMutation.mutateAsync(sendData);
     } catch (e) {
       throw e;
     }
