@@ -1,4 +1,4 @@
-import { Button, Pane, majorScale, Spinner } from 'evergreen-ui';
+import { Pane, Spinner } from 'evergreen-ui';
 import Link from 'next/link';
 import type { NextPage } from 'next';
 import { useState } from 'react';
@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ja';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import { ProgramCard } from '../components/ProgramCard';
-import { Listbox, Transition } from '@headlessui/react';
 import { Switch } from '@headlessui/react';
 import clsx from 'clsx';
 import KAListbox from '../components/KAListbox';
@@ -58,9 +57,6 @@ const Programs: NextPage = () => {
   const orders = ['日時が早い順', '日時が遅い順'] as const;
   const [isRemoveFinished, setIsRemoveFinished] = useState(false);
   const [order, setOrder] = useState<typeof orders[number]>(orders[1]);
-  if (typeof data === 'undefined') {
-    return null;
-  }
 
   return (
     <Layout>
@@ -92,7 +88,7 @@ const Programs: NextPage = () => {
               合わせを追加する
             </Link>
           </div>
-          {isFetched ? (
+          {isFetched && data ? (
             <div className="flex flex-col items-center mt-4 w-full flex-wrap sm:grid-cols-2 sm:gap-2 md:w-auto md:grid md:grid-cols-2 lg:gap-2 lg:w-[768px] xl:grid-cols-4 xl:gap-4 xl:w-[1024px]">
               {[...data.programs]
                 .sort((v1, v2) => {
