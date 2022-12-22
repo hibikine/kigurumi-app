@@ -13,38 +13,43 @@ import TopNavTabLink from './TopNavTabLink';
 import styles from '../styles/TopNav.module.scss';
 import { signIn, useSession } from 'next-auth/react';
 import clsx from 'clsx';
+import useSize from '../utils/hooks/useSize';
+
+const logoHeight: { [key in ReturnType<typeof useSize>]: number } = {
+  xs: 48,
+  sm: 48,
+  md: 72,
+  lg: 72,
+  xl: 72,
+  '2xl': 72,
+};
 
 const TopNav = () => {
   const { data: session } = useSession();
+  const size = useSize();
   const isLogin = !!session;
   return (
-    <Pane
-      className={styles.topNav}
-      is="nav"
-      width="100%"
-      position="sticky"
-      top={0}
-      backgroundColor="white"
-      zIndex={10}
-      flexShrink={0}
-      display="flex"
-      alignItems="center"
-      borderBottom="muted"
-      paddingX={majorScale(5)}
+    <nav
+      className={
+        'w-full sticky top-0 bg-white z-10 shrink-0 flex justify-center sm:justify-start items-center pr-4 pl-4 h-16 sm:h-16 lg:h-16'
+      }
     >
       <Link href={isLogin ? '/dashboard' : '/'}>
         <div
           className={clsx(
             styles.logoWrapper,
-            'h-20 w-40 flex items-center justify-center'
+            'h-full w-fit sm:w-40 flex items-center justify-center'
           )}
         >
           <Image
             alt="きぐあぷり"
             src="/logo.svg"
-            height={48}
-            width={(48 * 394) / 105}
-            className={styles.logo}
+            height={logoHeight[size]}
+            width={(logoHeight[size] * 394) / 105}
+            className={clsx(
+              'mr-auto ml-auto  sm:pr-2 sm:mr-2',
+              `h-[${logoHeight[size]}]`
+            )}
           />
         </div>
         {/*<Pane
@@ -98,7 +103,7 @@ const TopNav = () => {
           </TopNavTabLink>
         )*/}
       </Pane>
-    </Pane>
+    </nav>
   );
 };
 export default TopNav;

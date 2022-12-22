@@ -11,17 +11,9 @@
     margin-left: auto;
   }
 }
-.topNav {
-  height: $navigation-height-pc;
-}
 @media screen and (max-width: $bp-tablet) {
   .topNav {
     justify-content: center;
-  }
-}
-@media screen and (max-width: $bp-pc) {
-  .topNav {
-    height: $navigation-height-sp;
   }
 }
 .login {
