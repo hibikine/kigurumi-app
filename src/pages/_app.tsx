@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import '../styles/globals.scss';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import React, { useState } from 'react';
@@ -123,6 +124,7 @@ function MyApp({
           </QueryClientProvider>
         </ApolloProvider>
       </SessionProvider>
+      <Analytics />
     </>
   );
 }
