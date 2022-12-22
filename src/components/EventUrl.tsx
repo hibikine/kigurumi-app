@@ -10,13 +10,13 @@ const EventUrl = ({ url, className }: { url: string; className?: string }) => {
   const createLinkMutation = useCreateLinkMutation();
   return (
     <Link className={className} href={data?.link?.url || url}>
-      <div className="border border-slate-200 bg-white h-20 rounded-lg flex justify-start flex-nowrap overflow-hidden">
+      <div className="border border-slate-200 bg-white h-20 rounded-lg flex justify-start flex-nowrap overflow-hidden hover:bg-slate-100">
         {data?.link?.image ? (
           <picture className="grow-0">
             <img
               src={data.link.image}
-              width={78}
-              height={78}
+              width={88}
+              height={88}
               className="border-r rounded-l-lg max-w-none"
               alt=""
             />
