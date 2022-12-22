@@ -14,6 +14,8 @@ export const KABadge = ({
     className={clsx(
       'text-white rounded-full font-bold pl-2 pr-2 self-start',
       size === 'small' && 'text-sm',
+      size === 'medium' && 'text-base',
+      size === 'large' && 'text-lg',
       typeof color === 'undefined'
         ? 'bg-pink-500'
         : color === 'purple'
