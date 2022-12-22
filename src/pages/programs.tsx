@@ -52,14 +52,23 @@ const Programs: NextPage = () => {
               {[...data.programs]
                 .sort((v1, v2) => {
                   if (order === orders[0]) {
-                    return dayjs(v1.date).unix() - dayjs(v2.date).unix();
+                    return (
+                      dayjs.tz(v1.date, 'UTC').tz('Asia/Tokyo').unix() -
+                      dayjs.tz(v2.date, 'UTC').tz('Asia/Tokyo').unix()
+                    );
                   } else {
-                    return dayjs(v2.date).unix() - dayjs(v1.date).unix();
+                    return (
+                      dayjs.tz(v2.date, 'UTC').tz('Asia/Tokyo').unix() -
+                      dayjs.tz(v1.date, 'UTC').tz('Asia/Tokyo').unix()
+                    );
                   }
                 })
                 .filter((v) => {
                   if (isRemoveFinished) {
-                    return dayjs(v.date).unix() + 3600 > dayjs().unix();
+                    return (
+                      dayjs.tz(v.date, 'UTC').tz('Asia/Tokyo').unix() + 3600 >
+                      dayjs().tz('Asia/Tokyo').unix()
+                    );
                   } else {
                     return true;
                   }
