@@ -16,6 +16,7 @@ import TextLogo from '../../public/kiguapp-logo-text.svg';
 import styles from '../styles/Top.module.scss';
 import { backgroundColor } from '../styles/colors';
 import Link from 'next/link';
+import clsx from 'clsx';
 
 export default function LPTopView() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -75,74 +76,45 @@ export default function LPTopView() {
         </Fade>
         <Pane position="absolute" className={styles.chatbox}>
           <Rotate top left when={imageLoaded} delay={1000}>
-            <Image
-              src="/chatbox.svg"
-              width={265}
-              height={265}
-              alt="がとーちゃん「明日のイベント準備よしっ！」"
-            />
+            <div className={clsx('w-36 h-36', styles.chatboxInner)}>
+              <Image
+                src="/chatbox.svg"
+                width={265}
+                height={265}
+                alt="がとーちゃん「明日のイベント準備よしっ！」"
+              />
+            </div>
           </Rotate>
         </Pane>
       </Pane>
-      <Pane
-        className={styles.overlayPane}
-        position="absolute"
-        paddingLeft="10vw"
-        paddingRight="min(calc(100vw - 1400px), 15vw)"
-        right={majorScale(3)}
-        display="flex"
-        flexDirection="column"
-        alignItems="flex-end"
-      >
-        <TextLogo
-          className={styles.mainLogo}
-          alt="きぐあぷり"
-          //width={427 * 2 * (is1400 ? 0.5 : 1)}
-          //height={140 * 2 * (is1400 ? 0.5 : 1)}
-        />
-        <Heading
-          is="p"
-          padding={majorScale(2)}
-          paddingRight={majorScale(5)}
-          paddingLeft={majorScale(5)}
-          textAlign="right"
-          size={900}
-          fontSize={'3.5rem'}
-          backgroundColor="rgba(255, 255, 255, 0.8)"
-          borderRadius={majorScale(3)}
-          lineHeight="1.2"
-        >
+      <div className="absolute top-1/2 h-1/2 md:top-[40vh] md:h-3/5 right-0 left-0 sm:right-2 width-full sm:width-auto sm:pl-[10vw] sm:pr-[min(calc(100vw - 1400px), 15vw)] flex-col items-end flex">
+        <div className="w-52 sm:w-80 md:w-96 ml-auto mr-2 order-1">
+          <TextLogo
+            alt="きぐあぷり"
+            //width={427 * 2 * (is1400 ? 0.5 : 1)}
+            //height={140 * 2 * (is1400 ? 0.5 : 1)}
+          />
+        </div>
+        <p className="text-slate-900 text-3xl font-extrabold px-3 py-1 text-right bg-white bg-opacity-80 rounded-xl leading-10 mx-2 order-3">
           ケモノ関連イベントの
           <wbr />
           お供に
-        </Heading>
-        <Pane display="flex" alignItems="center" marginTop={majorScale(3)}>
-          <Paragraph
-            marginRight={majorScale(4)}
-            display="inline-block"
-            backgroundColor="rgba(255, 255, 255, 0.8)"
-            borderRadius={majorScale(1)}
-            paddingX={majorScale(2)}
+        </p>
+        <p className="bg-white text-slate-900 rounded-xl px-2 mx-2 bg-opacity-80 order-4 mt-2 hidden">
+          着ぐるみイベントの予定を
+          <wbr />
+          忘れないようにしよう
+        </p>
+        <div className="px-2 mb-4 w-full order-2">
+          <Link
+            href="/programs"
+            className="bg-blue-600 text-white w-full flex justify-center items-center py-4 rounded-lg shadow-md"
           >
-            着ぐるみイベントの予定を
-            <wbr />
-            忘れないようにしよう
-          </Paragraph>
-          <Link legacyBehavior href="/programs" passHref>
-            <Button
-              is="a"
-              className={styles.cptButton}
-              flexShrink={0}
-              iconBefore={NumberedListIcon}
-              appearance="primary"
-              height={majorScale(7)}
-              marginRight={majorScale(4)}
-            >
-              合わせ一覧を見る
-            </Button>
+            <NumberedListIcon className="mr-2" />
+            合わせ一覧を見る
           </Link>
-        </Pane>
-      </Pane>
+        </div>
+      </div>
     </Pane>
   );
 }

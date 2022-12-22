@@ -5,6 +5,7 @@ import {
   NotificationsIcon,
   Heading,
   MobilePhoneIcon,
+  CalendarIcon,
 } from 'evergreen-ui';
 import ValueCard from './ValueCard';
 import styles from '../styles/Top.module.scss';
@@ -26,17 +27,17 @@ export default function LPUsages() {
         <ValueCard
           icon={MobilePhoneIcon}
           title="PCでも、スマホでも"
-          description="ブラウザで使えるから、どの端末からでもアクセスできます。"
+          description="ブラウザで使えるから、どの端末からでもアクセスできます。ブラウザからアプリをインストールすればさらに便利に。"
         />
         <ValueCard
           icon={LightbulbIcon}
           title="着ぐるみに特化した使いやすさ"
-          description="イベントに必要なものに厳選しているから、すっきりしていて使いやすい。"
+          description="イベントに必要な情報に厳選しているから、すっきりしていて使いやすい。"
         />
         <ValueCard
-          icon={NotificationsIcon}
-          title="通知で忘れ物をゼロに。"
-          description="項目ごとに通知時間を設定できるから忘れない。"
+          icon={CalendarIcon}
+          title="カレンダー追加機能付き"
+          description="予定をそれぞれGoogleカレンダーに追加しよう。"
         />
       </Pane>
     </Pane>
