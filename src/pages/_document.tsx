@@ -2,7 +2,7 @@ import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
   return (
-    <Html>
+    <Html className="text-slate-800">
       <Head />
       {/* eslint-disable @next/next/no-head-element */}
       <head
