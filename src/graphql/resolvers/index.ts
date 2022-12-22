@@ -152,8 +152,9 @@ export const resolvers: Resolvers = {
       const res = await fetch(twiplaUrl);
       const text = await res.text();
       const dom = new JSDOM(text);
-      const name =
-        dom.window.document.querySelector('h1.largetext2')?.textContent || '';
+      const nameNodes =
+        dom.window.document.querySelector('h1.largetext2')?.childNodes;
+      const name = (nameNodes && [...nameNodes].at(-1)?.textContent) || '';
       console.log('a');
       const dateNode =
         dom.window.document.querySelector('span.largetext')?.textContent;
