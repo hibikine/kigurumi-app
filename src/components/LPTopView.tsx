@@ -96,22 +96,22 @@ export default function LPTopView() {
           />
         </div>
         <p className="text-slate-900 text-3xl font-extrabold px-3 py-1 text-right bg-white bg-opacity-80 rounded-xl leading-10 mx-2 order-3">
-          ケモノ関連イベントの
+          ○○合わせを登録して
           <wbr />
-          お供に
+          チェックしよう。
         </p>
-        <p className="bg-white text-slate-900 rounded-xl px-2 mx-2 bg-opacity-80 order-4 mt-2 hidden">
-          着ぐるみイベントの予定を
+        <p className="bg-white text-slate-900 rounded-xl px-2 mx-2 bg-opacity-80 order-4 mt-2 md:text-lg md:font-medium hidden md:block">
+          JMoFの合わせイベントを
           <wbr />
-          忘れないようにしよう
+          見逃さないようにしよう。
         </p>
-        <div className="px-2 mb-4 w-full order-2">
+        <div className="px-2 mb-4 w-full md:w-80 order-2">
           <Link
             href="/programs"
-            className="bg-blue-600 text-white w-full flex justify-center items-center py-4 rounded-lg shadow-md"
+            className="bg-blue-600 text-white w-full flex justify-center items-center py-4 md:py-6 md:text-xl font-bold rounded-lg shadow-md"
           >
             <NumberedListIcon className="mr-2" />
-            合わせ一覧を見る
+            ○○合わせ一覧を見る
           </Link>
         </div>
       </div>
