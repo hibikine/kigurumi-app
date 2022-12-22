@@ -5,5 +5,12 @@
       "headless": true
     }
   },
-  "conventionalCommits.scopes": ["auth", "belonging", "style", "user", "api"]
+  "conventionalCommits.scopes": [
+    "auth",
+    "belonging",
+    "style",
+    "user",
+    "api",
+    "programs"
+  ]
 }
