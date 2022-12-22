@@ -65,12 +65,12 @@ const Belongings: NextPage = () => {
   return (
     <Layout>
       <div className="flex flex-col items-center">
-        <Pane className="flex flex-col items-left max-w-2xl mt-8 mb-8 w-full">
+        <Pane className="flex pr-2 pl-2 flex-col items-left max-w-2xl mt-8 mb-8 w-full">
           <Heading marginBottom={majorScale(2)} size={700} is="h1">
             合わせを追加する
           </Heading>
-          <div className="flex justify-between text-slate-800">
-            <div className="flex flex-col w-64 mr-1 ml-1 p-2 bg-white rounded-md flex-1">
+          <div className="flex w-full flex-col md:flex-row justify-between text-slate-800">
+            <div className="flex w-full flex-col mb-2 lg:w-64 mr-1 ml-1 p-2 bg-white rounded-md flex-1">
               <Heading size={600} is="h2">
                 TwiplaのURLから追加する
               </Heading>
@@ -90,7 +90,7 @@ const Belongings: NextPage = () => {
                 TwiplaのURLから追加
               </Button>
             </div>
-            <div className="flex flex-col w-64 mr-1 ml-1 p-2 bg-white rounded-md flex-1">
+            <div className="flex flex-col w-full lg:w-64 mr-1 ml-1 p-2 bg-white rounded-md flex-1">
               <Heading size={600} is="h2">
                 直接入力する
               </Heading>

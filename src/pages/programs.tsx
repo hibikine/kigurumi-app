@@ -1,4 +1,4 @@
-import { Button, Pane, majorScale } from 'evergreen-ui';
+import { Button, Pane, majorScale, Spinner } from 'evergreen-ui';
 import Link from 'next/link';
 import type { NextPage } from 'next';
 import { useState } from 'react';
@@ -51,8 +51,8 @@ const KASwitch = ({
   </>
 );
 
-const Belongings: NextPage = () => {
-  const { data, refetch } = useProgramsQuery(undefined, {
+const Programs: NextPage = () => {
+  const { data, refetch, isFetched } = useProgramsQuery(undefined, {
     // refetchInterval: 1000 * 120,
   });
   const orders = ['日時が早い順', '日時が遅い順'] as const;
@@ -92,36 +92,42 @@ const Belongings: NextPage = () => {
               合わせを追加する
             </Link>
           </div>
-          <div className="flex flex-col items-center mt-4 w-full flex-wrap sm:grid-cols-2 sm:gap-2 md:w-auto md:grid md:grid-cols-2 lg:gap-2 lg:w-[768px] xl:grid-cols-4 xl:gap-4 xl:w-[1024px]">
-            {[...data.programs]
-              .sort((v1, v2) => {
-                if (order === orders[0]) {
-                  return dayjs(v1.date).unix() - dayjs(v2.date).unix();
-                } else {
-                  return dayjs(v2.date).unix() - dayjs(v1.date).unix();
-                }
-              })
-              .filter((v) => {
-                if (isRemoveFinished) {
-                  return dayjs(v.date).unix() + 3600 > dayjs().unix();
-                } else {
-                  return true;
-                }
-              })
-              .map(({ id, date, name, ownerUrl }) => (
-                <ProgramCard
-                  key={id}
-                  id={id}
-                  date={date}
-                  name={name}
-                  ownerUrl={ownerUrl ?? undefined}
-                />
-              ))}
-          </div>
+          {isFetched ? (
+            <div className="flex flex-col items-center mt-4 w-full flex-wrap sm:grid-cols-2 sm:gap-2 md:w-auto md:grid md:grid-cols-2 lg:gap-2 lg:w-[768px] xl:grid-cols-4 xl:gap-4 xl:w-[1024px]">
+              {[...data.programs]
+                .sort((v1, v2) => {
+                  if (order === orders[0]) {
+                    return dayjs(v1.date).unix() - dayjs(v2.date).unix();
+                  } else {
+                    return dayjs(v2.date).unix() - dayjs(v1.date).unix();
+                  }
+                })
+                .filter((v) => {
+                  if (isRemoveFinished) {
+                    return dayjs(v.date).unix() + 3600 > dayjs().unix();
+                  } else {
+                    return true;
+                  }
+                })
+                .map(({ id, date, name, ownerUrl }) => (
+                  <ProgramCard
+                    key={id}
+                    id={id}
+                    date={date}
+                    name={name}
+                    ownerUrl={ownerUrl ?? undefined}
+                  />
+                ))}
+            </div>
+          ) : (
+            <div className="w-full h-80 flex justify-center items-center">
+              <Spinner />
+            </div>
+          )}
         </div>
       </Pane>
     </Layout>
   );
 };
 
-export default Belongings;
+export default Programs;

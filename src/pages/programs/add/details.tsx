@@ -105,7 +105,7 @@ const Belongings: NextPage = () => {
   return (
     <Layout>
       <div className="flex flex-col items-center">
-        <Pane className="flex flex-col items-left max-w-2xl mt-8 mb-8 w-full">
+        <Pane className="flex pl-2 pr-2 flex-col items-left max-w-2xl mt-8 mb-8 w-full">
           <Heading marginBottom={majorScale(2)} size={700} is="h1">
             合わせを追加する
           </Heading>
@@ -179,7 +179,13 @@ const Belongings: NextPage = () => {
                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
   />*/}
             </div>
-            <Button appearance="primary" alignSelf="center" display="block">
+            <Button
+              className="w-full mb-16"
+              appearance="primary"
+              alignSelf="center"
+              display="block"
+              size="large"
+            >
               追加
             </Button>
           </form>
