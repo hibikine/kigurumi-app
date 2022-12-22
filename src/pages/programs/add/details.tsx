@@ -22,12 +22,7 @@ import {
 } from '../../../generated/request';
 import { useCallback, createRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import dayjs from 'dayjs';
-import Timezone from 'dayjs/plugin/timezone';
-import UTC from 'dayjs/plugin/utc';
-
-dayjs.extend(Timezone);
-dayjs.extend(UTC);
+import dayjs from '../../../lib/dayjs';
 
 type FormData = {
   name: string;
@@ -70,7 +65,10 @@ const Belongings: NextPage = () => {
         if (data.twipla?.date) {
           setValue(
             'date',
-            dayjs(data.twipla.date).tz('Asia/Tokyo').format('YYYY-MM-DDTHH:mm')
+            dayjs
+              .tz(data.twipla.date, 'UTC')
+              .tz('Asia/Tokyo')
+              .format('YYYY-MM-DDTHH:mm')
           );
         }
         if (data.twipla?.detail) {
@@ -87,6 +85,13 @@ const Belongings: NextPage = () => {
   );
 
   const onSubmit = handleSubmit(async (data) => {
+    const sendData = {
+      ...data,
+      date: dayjs(data.date).utc().format('YYYY-MM-DDTHH:mm'),
+      endDate: data.endDate
+        ? dayjs(data.endDate).utc().format('YYYY-MM-DDTHH:mm')
+        : undefined,
+    };
     if (!recaptchaSuccess) {
       return;
     }
