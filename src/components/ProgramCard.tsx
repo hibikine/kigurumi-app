@@ -1,6 +1,6 @@
 import { Heading } from 'evergreen-ui';
 import Link from 'next/link';
-import dayjs from 'dayjs';
+import dayjs from '../lib/dayjs';
 import clsx from 'clsx';
 import { KABadge } from './KABadge';
 import { useLinkQuery } from '../generated/request';
@@ -29,7 +29,7 @@ export const ProgramCard = ({
   const size = useSize();
   return (
     <Link
-      className="block w-full h-40 mt-1 mb-1 mr-2 ml-2"
+      className="block w-full h-40 mt-1 mb-1 sm:mr-2 sm:ml-2"
       href={`/programs/item/${id}`}
     >
       <div className="flex w-full h-full flex-col shadow-sm text-slate-700 bg-white  p-4 md:p-2 lg:p-3 rounded-sm">
@@ -40,9 +40,9 @@ export const ProgramCard = ({
         </div>
         <KABadge
           size={size === 'sm' || size === 'md' ? 'medium' : 'small'}
-          color={dateToColor(dayjs(date))}
+          color={dateToColor(dayjs.tz(date, 'UTC').tz('Asia/Tokyo'))}
         >
-          {dayjs(date).format('M月D日(dd) HH:mm')}
+          {dayjs.tz(date, 'UTC').tz('Asia/Tokyo').format('M月D日(dd) HH:mm')}
         </KABadge>
         {ownerLink && (
           <div className="flex mt-1 items-center overflow-hidden overflow-ellipsis">
