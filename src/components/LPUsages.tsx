@@ -9,6 +9,7 @@ import {
 } from 'evergreen-ui';
 import ValueCard from './ValueCard';
 import styles from '../styles/Top.module.scss';
+import Link from 'next/link';
 
 export default function LPUsages() {
   return (
@@ -31,15 +32,24 @@ export default function LPUsages() {
         />
         <ValueCard
           icon={LightbulbIcon}
-          title="着ぐるみに特化した使いやすさ"
-          description="イベントに必要な情報に厳選しているから、すっきりしていて使いやすい。"
+          title="TwiplaのURLから簡単登録"
+          description="TwiplaのURLから一部の内容を自動で登録してくれるから、とっても簡単に登録できます。"
         />
         <ValueCard
           icon={CalendarIcon}
           title="カレンダー追加機能付き"
-          description="予定をそれぞれGoogleカレンダーに追加しよう。"
+          description="行きたい合わせの予定をGoogleカレンダーに追加して、忘れないようにしよう。JMoFのスケジュール管理もバッチリ。"
         />
       </Pane>
+      <div className="w-full">
+        <Link
+          target="_blank"
+          className="bg-blue-600 text-white font-bold shadow-md hover:bg-blue-700 w-full mx-4 p-4 flex justify-center items-center rounded-md "
+          href="https://twitter.com/intent/tweet?text=JMoF%E3%81%AE%E2%97%8B%E2%97%8B%E5%90%88%E3%82%8F%E3%81%9B%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A6%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%EF%BC%81%20%7C%20%E3%81%8D%E3%81%90%E3%81%82%E3%81%B7%E3%82%8A%20%40kiguapp%20%23%E3%81%8D%E3%81%90%E3%81%82%E3%81%B7%E3%82%8A%0Ahttps%3A%2F%2Fkigu.app"
+        >
+          Twitterでみんなに教えちゃおう！
+        </Link>
+      </div>
     </Pane>
   );
 }
