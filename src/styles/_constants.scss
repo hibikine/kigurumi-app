@@ -1,5 +1,10 @@
 $navigation-height-pc: 64px;
 $navigation-height-sp: 80px;
 $bp-pc: 1024px;
-$bp-sp: 600px;
+$bp-sp: 640px;
 $bp-tablet: 768px;
+$bp-sm: $bp-sp;
+$bp-md: $bp-tablet;
+$bp-lg: $bp-pc;
+$bp-xl: 1280px;
+$bp-2xl: 1536px;
