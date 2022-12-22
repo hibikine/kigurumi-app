@@ -2,14 +2,7 @@ import type { Resolvers } from '../../generated/resolver-types';
 import { Client, auth } from 'twitter-api-sdk';
 import fetch from 'cross-fetch';
 import { JSDOM } from 'jsdom';
-import dayjs from 'dayjs';
-import CustomParseFormat from 'dayjs/plugin/customParseFormat';
-import UTC from 'dayjs/plugin/utc';
-import Timezone from 'dayjs/plugin/timezone';
-
-dayjs.extend(CustomParseFormat);
-dayjs.extend(UTC);
-dayjs.extend(Timezone);
+import dayjs from '../../lib/dayjs';
 
 function naiveInnerText(node: Node): string {
   const Node = node; // We need Node(DOM's Node) for the constants, but Node doesn't exist in the nodejs global space, and any Node instance references the constants through the prototype chain
@@ -172,9 +165,13 @@ export const resolvers: Resolvers = {
       const date = dateHourMinuteMatch
         ? dayjs
             .tz(dateHourMinuteMatch[0], 'YYYY年M月D日[dd] HH:mm', 'Asia/Tokyo')
+            .utc()
             .toISOString()
         : dateMatch
-        ? dayjs.tz(dateMatch[0], 'YYYY年M月D日', 'Asia/Tokyo').toISOString()
+        ? dayjs
+            .tz(dateMatch[0], 'YYYY年M月D日', 'Asia/Tokyo')
+            .utc()
+            .toISOString()
         : '';
 
       const ownerUrlBase = dom.window.document
