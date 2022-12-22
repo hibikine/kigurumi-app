@@ -12,6 +12,7 @@ import Image from 'next/image';
 import TopNavTabLink from './TopNavTabLink';
 import styles from '../styles/TopNav.module.scss';
 import { signIn, useSession } from 'next-auth/react';
+import clsx from 'clsx';
 
 const TopNav = () => {
   const { data: session } = useSession();
@@ -32,20 +33,20 @@ const TopNav = () => {
       paddingX={majorScale(5)}
     >
       <Link href={isLogin ? '/dashboard' : '/'}>
-        <Pane
-          className={styles.logoWrapper}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
+        <div
+          className={clsx(
+            styles.logoWrapper,
+            'h-20 w-40 flex items-center justify-center'
+          )}
         >
           <Image
             alt="きぐあぷり"
             src="/logo.svg"
-            height={majorScale(6)}
-            width={(majorScale(6) * 394) / 105}
+            height={48}
+            width={(48 * 394) / 105}
             className={styles.logo}
           />
-        </Pane>
+        </div>
         {/*<Pane
           is="img"
           alt="きぐあぷり"
@@ -73,28 +74,30 @@ const TopNav = () => {
         {/*<TopNavTabLink href="/making" icon={BuildIcon}>
           制作
         </TopNavTabLink>*/}
-      </Pane>
-      {session ? (
-        <Link href="/user" className={styles.userLink}>
-          <Pane
-            height="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
+        {/* 後で戻す
+
+        session ? (
+          <Link href="/user" className={styles.userLink}>
+            <Pane
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Avatar name="test" size={majorScale(5)} />
+            </Pane>
+          </Link>
+        ) : (
+          <TopNavTabLink
+            className={styles.login}
+            paneClassName={styles.loginPane}
+            icon={LogInIcon}
+            onClick={signIn}
           >
-            <Avatar name="test" size={majorScale(5)} />
-          </Pane>
-        </Link>
-      ) : (
-        <TopNavTabLink
-          className={styles.login}
-          paneClassName={styles.loginPane}
-          icon={LogInIcon}
-          onClick={signIn}
-        >
-          ログイン
-        </TopNavTabLink>
-      )}
+            ログイン
+          </TopNavTabLink>
+        )*/}
+      </Pane>
     </Pane>
   );
 };

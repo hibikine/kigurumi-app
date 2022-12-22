@@ -2,18 +2,37 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import Layout from '../../../components/Layout';
 import { useRouter } from 'next/router';
-import { useProgramQuery, useProgramsQuery } from '../../../generated/request';
+import {
+  useDeleteProgramMutation,
+  useProgramQuery,
+  useProgramsQuery,
+} from '../../../generated/request';
 import EventUrl from '../../../components/EventUrl';
 import nl2br from 'react-nl2br';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja';
-import { Button, majorScale } from 'evergreen-ui';
+import { Button, majorScale, TextInputField } from 'evergreen-ui';
+import { KABadge } from '../../../components/KABadge';
+import { useState, Fragment, useCallback } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { TrashIcon } from '@heroicons/react/20/solid';
 dayjs.locale('ja');
 
 const ProgramsItem: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const { data, refetch } = useProgramQuery({ id: parseInt(id as string, 10) });
+  const deleteProgramMutation = useDeleteProgramMutation();
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  const closeModal = useCallback(
+    () => setIsOpenDeleteModal(false),
+    [setIsOpenDeleteModal]
+  );
+  const openModal = useCallback(
+    () => setIsOpenDeleteModal(true),
+    [setIsOpenDeleteModal]
+  );
+  const [startDateReverse, setStartDateReverse] = useState('');
   if (data === undefined) {
     return null;
   }
@@ -37,6 +56,7 @@ const ProgramsItem: NextPage = () => {
   if (url) {
     calendarUrl.searchParams.append('sprop', url);
   }
+
   return (
     <Layout>
       <div className="flex flex-col items-center">
@@ -49,9 +69,9 @@ const ProgramsItem: NextPage = () => {
           <div className="bg-white pl-4 pr-4 pt-4 pb-8 rounded-xl flex flex-col">
             <h1 className="text-2xl font-bold">{name}</h1>
             <div className="mt-2 flex justify-between align-center">
-              <div className="bg-pink-500 text-white rounded-full font-bold pl-2 pr-2 self-start">
+              <KABadge size="large">
                 {dayjs(date).format('D日(dd) HH:mm')}～
-              </div>
+              </KABadge>
               <Link legacyBehavior passHref href={calendarUrl}>
                 <Button is="a" size="small" marginRight={majorScale(1)}>
                   Googleカレンダーに追加
@@ -89,10 +109,113 @@ const ProgramsItem: NextPage = () => {
                   編集する
                 </Button>
               </Link>
+              <Button
+                className="ml-4"
+                is="a"
+                size="small"
+                intent="danger"
+                onClick={openModal}
+              >
+                削除する
+              </Button>
             </div>
           </div>
         </div>
       </div>
+      <Transition appear show={isOpenDeleteModal} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg flex items-center font-medium leading-6 text-gray-900"
+                  >
+                    <TrashIcon
+                      className="h-5 w-5 text-red-700 inline"
+                      aria-hidden="true"
+                    />
+                    本当に削除しますか？
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">
+                      一度削除すると元には戻せません。
+                    </p>
+                    <p>
+                      削除する場合は、以下のフォームに開始日時を以下の形式で入力してください。
+                    </p>
+                    <p className="text-center">59:23 31-12-2023</p>
+                    <p className="mt-4">
+                      開始日時:{' '}
+                      <span className="font-bold">
+                        {dayjs(date).format('YYYY-MM-DD HH:mm')}
+                      </span>
+                    </p>
+                    <div className="mt-2">
+                      <TextInputField
+                        label="開始日時"
+                        description="スペースを含めすべて半角で、逆順で入力してください。"
+                        placeholder="59:23 31-12-2023"
+                        required
+                        value={startDateReverse}
+                        onChange={(e: any) =>
+                          setStartDateReverse(e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className="mt-4 flex justify-between">
+                    <Button>キャンセル</Button>
+                    <Button
+                      appearance="primary"
+                      intent="danger"
+                      disabled={
+                        dayjs(date).format('mm:HH DD-MM-YYYY') !==
+                        startDateReverse
+                      }
+                      onClick={async () => {
+                        if (
+                          dayjs(date).format('mm:HH DD-MM-YYYY') !==
+                          startDateReverse
+                        ) {
+                          return;
+                        }
+                        await deleteProgramMutation.mutateAsync({
+                          id: parseInt(id as string, 10),
+                        });
+                        router.push('/programs');
+                      }}
+                    >
+                      削除する
+                    </Button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </Layout>
   );
 };

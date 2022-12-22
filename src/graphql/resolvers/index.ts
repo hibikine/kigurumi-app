@@ -155,7 +155,8 @@ export const resolvers: Resolvers = {
           detail: '',
         };
       }
-      const res = await fetch(`https://twipla.jp/events/${id}`);
+      const twiplaUrl = `https://twipla.jp/events/${id}`;
+      const res = await fetch(twiplaUrl);
       const text = await res.text();
       const dom = new JSDOM(text);
       const name =
@@ -183,7 +184,15 @@ export const resolvers: Resolvers = {
         ? `https://twitter.com/${ownerUrlBase}`
         : '';
       const desc = dom.window.document.querySelector('#desc');
-      const detail = desc ? naiveInnerText(desc) : '';
+      const detail = desc
+        ? `Twiplaより引用:
+---
+
+${naiveInnerText(desc)}
+
+---
+引用元: ${twiplaUrl}`
+        : '';
 
       const data: {
         name: string;
@@ -252,9 +261,10 @@ export const resolvers: Resolvers = {
       return program;
     },
     deleteProgram: async (_, { id }, { prisma, currentUser }) => {
-      if (!currentUser) {
+      // 後で戻す
+      /*if (!currentUser) {
         throw new Error('User not logged in.');
-      }
+      }*/
       const program = await prisma.program.update({
         where: { id },
         data: {
