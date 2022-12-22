@@ -7,7 +7,7 @@ import { useProgramsQuery } from '../generated/request';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import { ProgramCard } from './ProgramCard';
+import { ProgramCard } from '../components/ProgramCard';
 import { Listbox, Transition } from '@headlessui/react';
 import { Switch } from '@headlessui/react';
 import clsx from 'clsx';

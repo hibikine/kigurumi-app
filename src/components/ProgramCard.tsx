@@ -2,7 +2,7 @@ import { Heading } from 'evergreen-ui';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import clsx from 'clsx';
-import { KABadge } from '../components/KABadge';
+import { KABadge } from './KABadge';
 import { useLinkQuery } from '../generated/request';
 import useSize from '../utils/hooks/useSize';
 import dateToColor from '../utils/dateToColor';
