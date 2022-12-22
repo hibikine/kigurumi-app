@@ -13,5 +13,5 @@ export const useNeedToLogin = () => {
     if (!session) {
       router.push(`/login?redirect=${router.asPath}`);
     }
-  }, [session, router]);
+  }, [session, router, status]);
 };
