@@ -13,7 +13,7 @@ export const KABadge = ({
   <div
     className={clsx(
       'text-white rounded-full font-bold self-start',
-      size === 'small' && 'text-sm px-1',
+      size === 'small' && 'text-xs px-2 py-0.5',
       (size === 'medium' || size === undefined) && 'text-base px-2',
       size === 'large' && 'text-lg px-2',
       typeof color === 'undefined'
