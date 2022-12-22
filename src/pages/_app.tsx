@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+import '../styles/globals.scss';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import React, { useState } from 'react';
 import type { AppProps } from 'next/app';

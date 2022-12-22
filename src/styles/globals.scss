@@ -1,8 +1,18 @@
+@use 'constants' as *;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
     font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
+}
 
+html {
+    font-size: 20px;
+}
+
+@media screen and (min-width: $bp-sm) {
+    html {
+        font-size: 18px;
+    }
 }
