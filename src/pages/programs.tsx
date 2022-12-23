@@ -33,6 +33,54 @@ const Programs: NextPage = () => {
   ] as const;
   const [isRemoveFinished, setIsRemoveFinished] = useState(false);
   const [order, setOrder] = useState<typeof orders[number]>(orders[0]);
+  const filteredData =
+    data &&
+    [...data.programs]
+      .sort((v1, v2) => {
+        if (order === orders[0]) {
+          return (
+            dayjs.tz(v1.date, 'UTC').tz('Asia/Tokyo').unix() -
+            dayjs.tz(v2.date, 'UTC').tz('Asia/Tokyo').unix()
+          );
+        } else if (order === orders[1]) {
+          return (
+            dayjs.tz(v2.date, 'UTC').tz('Asia/Tokyo').unix() -
+            dayjs.tz(v1.date, 'UTC').tz('Asia/Tokyo').unix()
+          );
+        } else if (order === orders[2]) {
+          return +new Date(v2.updatedAt) - +new Date(v1.updatedAt);
+        } else if (order === orders[3]) {
+          return +new Date(v1.updatedAt) - +new Date(v2.updatedAt);
+        } else if (order === orders[4]) {
+          return +new Date(v2.createdAt) - +new Date(v1.createdAt);
+        } else {
+          return +new Date(v1.createdAt) - +new Date(v2.createdAt);
+        }
+      })
+      .filter((v) => {
+        let filterValue = true;
+        if (isRemoveFinished) {
+          filterValue &&=
+            dayjs.tz(v.date, 'UTC').tz('Asia/Tokyo').unix() + 3600 >
+            dayjs().tz('Asia/Tokyo').unix();
+        }
+        if (searchTargetText !== '') {
+          filterValue &&=
+            v.name.includes(searchTargetText) ||
+            v.detail?.includes(searchTargetText);
+        }
+        return filterValue;
+      });
+  type NotNullDataType = Exclude<typeof data, undefined>;
+  const dateGroup = filteredData?.reduce((acc, v) => {
+    const date = dayjs.tz(v.date, 'UTC').tz('Asia/Tokyo');
+    const key = date.format('YYYY-MM-DD');
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(v);
+    return acc;
+  }, {} as { [key: string]: NotNullDataType['programs'] });
 
   return (
     <Layout>
@@ -74,90 +122,54 @@ const Programs: NextPage = () => {
           </div>
           {isFetched && data ? (
             <div className="flex flex-col items-center mt-4 w-full flex-wrap md:w-auto lg:mt-8 lg:w-[768px] xl:w-[1024px] 2xl:mx-10">
-              {Object.entries(
-                [...data.programs]
-                  .sort((v1, v2) => {
-                    if (order === orders[0]) {
-                      return (
-                        dayjs.tz(v1.date, 'UTC').tz('Asia/Tokyo').unix() -
-                        dayjs.tz(v2.date, 'UTC').tz('Asia/Tokyo').unix()
-                      );
-                    } else if (order === orders[1]) {
-                      return (
-                        dayjs.tz(v2.date, 'UTC').tz('Asia/Tokyo').unix() -
-                        dayjs.tz(v1.date, 'UTC').tz('Asia/Tokyo').unix()
-                      );
-                    } else if (order === orders[2]) {
-                      return +new Date(v2.updatedAt) - +new Date(v1.updatedAt);
-                    } else if (order === orders[3]) {
-                      return +new Date(v1.updatedAt) - +new Date(v2.updatedAt);
-                    } else if (order === orders[4]) {
-                      return +new Date(v2.createdAt) - +new Date(v1.createdAt);
-                    } else {
-                      return +new Date(v1.createdAt) - +new Date(v2.createdAt);
-                    }
-                  })
-                  .filter((v) => {
-                    let filterValue = true;
-                    if (isRemoveFinished) {
-                      filterValue &&=
-                        dayjs.tz(v.date, 'UTC').tz('Asia/Tokyo').unix() + 3600 >
-                        dayjs().tz('Asia/Tokyo').unix();
-                    }
-                    if (searchTargetText !== '') {
-                      filterValue &&=
-                        v.name.includes(searchTargetText) ||
-                        v.detail?.includes(searchTargetText);
-                    }
-                    return filterValue;
-                  })
-                  .reduce((acc, v) => {
-                    const date = dayjs.tz(v.date, 'UTC').tz('Asia/Tokyo');
-                    const key = date.format('YYYY-MM-DD');
-                    if (!acc[key]) {
-                      acc[key] = [];
-                    }
-                    acc[key].push(v);
-                    return acc;
-                  }, {} as { [key: string]: typeof data.programs })
-              ).map(([date, dayData]) => {
-                const dayDiff = dayjs(date).diff(dayjs('2023-01-05'), 'day');
-                const dayDiffStr =
-                  dayDiff >= 0 && dayDiff < 4
-                    ? ` 《JMoF${dayDiff + 1}日目》`
-                    : '';
-                return (
-                  <div className="w-full">
-                    {(order === orders[0] || order === orders[1]) && (
-                      <>
-                        <p className="text-slate-500 text-sm font-bold">
-                          {date}
-                          <span className="inline font-normal">
-                            {dayDiffStr}
-                          </span>
-                        </p>
-                        <div className="border-b border-b-slate-200 mb-2" />
-                      </>
-                    )}
-                    <div
-                      className={clsx(
-                        'w-full',
-                        (order === orders[0] || order === orders[1]) && 'mb-8'
+              {(order === orders[0] || order === orders[1]) &&
+                dateGroup &&
+                Object.entries(dateGroup).map(([date, dayData], i) => {
+                  const dayDiff = dayjs(date).diff(dayjs('2023-01-05'), 'day');
+                  const dayDiffStr =
+                    dayDiff >= 0 && dayDiff < 4
+                      ? ` 《JMoF${dayDiff + 1}日目》`
+                      : '';
+                  return (
+                    <div className="w-full" key={i}>
+                      {(order === orders[0] || order === orders[1]) && (
+                        <>
+                          <p className="text-slate-500 text-sm font-bold">
+                            {date}
+                            <span className="inline font-normal">
+                              {dayDiffStr}
+                            </span>
+                          </p>
+                          <div className="border-b border-b-slate-200 mb-2" />
+                        </>
                       )}
-                    >
-                      {dayData.map(({ id, date, name, ownerUrl }) => (
-                        <ProgramCard
-                          key={id}
-                          id={id}
-                          date={date}
-                          name={name}
-                          ownerUrl={ownerUrl ?? undefined}
-                        />
-                      ))}
+                      <div className="w-full mb-8">
+                        {dayData.map(({ id, date, name, ownerUrl }) => (
+                          <ProgramCard
+                            key={id}
+                            id={id}
+                            date={date}
+                            name={name}
+                            ownerUrl={ownerUrl ?? undefined}
+                          />
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              {filteredData && (
+                <div className="w-full">
+                  {filteredData.map(({ id, date, name, ownerUrl }) => (
+                    <ProgramCard
+                      key={id}
+                      id={id}
+                      date={date}
+                      name={name}
+                      ownerUrl={ownerUrl ?? undefined}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
             <div className="w-full h-80 flex justify-center items-center">
