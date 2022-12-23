@@ -8,6 +8,8 @@ import dayjs from '../lib/dayjs';
 import { ProgramCard } from '../components/ProgramCard';
 import KAListbox from '../components/KAListbox';
 import { KASwitch } from '../components/KASwitch';
+import type { Dayjs } from 'dayjs';
+import clsx from 'clsx';
 
 const Programs: NextPage = () => {
   const { data, refetch, isFetched } = useProgramsQuery(undefined, {
@@ -21,9 +23,16 @@ const Programs: NextPage = () => {
     }, 600);
     return () => clearTimeout(timer);
   }, [searchText, setSearchTargetText]);
-  const orders = ['日時が早い順', '日時が遅い順'] as const;
+  const orders = [
+    '日時が早い順',
+    '日時が遅い順',
+    '更新が新しい順',
+    '更新が古い順',
+    '登録が新しい順',
+    '登録が古い順',
+  ] as const;
   const [isRemoveFinished, setIsRemoveFinished] = useState(false);
-  const [order, setOrder] = useState<typeof orders[number]>(orders[1]);
+  const [order, setOrder] = useState<typeof orders[number]>(orders[0]);
 
   return (
     <Layout>
@@ -64,44 +73,91 @@ const Programs: NextPage = () => {
             </Link>
           </div>
           {isFetched && data ? (
-            <div className="flex flex-col items-center mt-4 w-full flex-wrap sm:grid-cols-2 sm:gap-2 md:w-auto md:grid md:grid-cols-2 lg:gap-2 lg:w-[768px] xl:grid-cols-3 xl:gap-3 xl:w-[1024px] 2xl:gap-4 2xl:grid-cols-4 2xl:w-full 2xl:mx-10">
-              {[...data.programs]
-                .sort((v1, v2) => {
-                  if (order === orders[0]) {
-                    return (
-                      dayjs.tz(v1.date, 'UTC').tz('Asia/Tokyo').unix() -
-                      dayjs.tz(v2.date, 'UTC').tz('Asia/Tokyo').unix()
-                    );
-                  } else {
-                    return (
-                      dayjs.tz(v2.date, 'UTC').tz('Asia/Tokyo').unix() -
-                      dayjs.tz(v1.date, 'UTC').tz('Asia/Tokyo').unix()
-                    );
-                  }
-                })
-                .filter((v) => {
-                  let filterValue = true;
-                  if (isRemoveFinished) {
-                    filterValue &&=
-                      dayjs.tz(v.date, 'UTC').tz('Asia/Tokyo').unix() + 3600 >
-                      dayjs().tz('Asia/Tokyo').unix();
-                  }
-                  if (searchTargetText !== '') {
-                    filterValue &&=
-                      v.name.includes(searchTargetText) ||
-                      v.detail?.includes(searchTargetText);
-                  }
-                  return filterValue;
-                })
-                .map(({ id, date, name, ownerUrl }) => (
-                  <ProgramCard
-                    key={id}
-                    id={id}
-                    date={date}
-                    name={name}
-                    ownerUrl={ownerUrl ?? undefined}
-                  />
-                ))}
+            <div className="flex flex-col items-center mt-4 w-full flex-wrap md:w-auto lg:mt-8 lg:w-[768px] xl:w-[1024px] 2xl:mx-10">
+              {Object.entries(
+                [...data.programs]
+                  .sort((v1, v2) => {
+                    if (order === orders[0]) {
+                      return (
+                        dayjs.tz(v1.date, 'UTC').tz('Asia/Tokyo').unix() -
+                        dayjs.tz(v2.date, 'UTC').tz('Asia/Tokyo').unix()
+                      );
+                    } else if (order === orders[1]) {
+                      return (
+                        dayjs.tz(v2.date, 'UTC').tz('Asia/Tokyo').unix() -
+                        dayjs.tz(v1.date, 'UTC').tz('Asia/Tokyo').unix()
+                      );
+                    } else if (order === orders[2]) {
+                      return +new Date(v2.updatedAt) - +new Date(v1.updatedAt);
+                    } else if (order === orders[3]) {
+                      return +new Date(v1.updatedAt) - +new Date(v2.updatedAt);
+                    } else if (order === orders[4]) {
+                      return +new Date(v2.createdAt) - +new Date(v1.createdAt);
+                    } else {
+                      return +new Date(v1.createdAt) - +new Date(v2.createdAt);
+                    }
+                  })
+                  .filter((v) => {
+                    let filterValue = true;
+                    if (isRemoveFinished) {
+                      filterValue &&=
+                        dayjs.tz(v.date, 'UTC').tz('Asia/Tokyo').unix() + 3600 >
+                        dayjs().tz('Asia/Tokyo').unix();
+                    }
+                    if (searchTargetText !== '') {
+                      filterValue &&=
+                        v.name.includes(searchTargetText) ||
+                        v.detail?.includes(searchTargetText);
+                    }
+                    return filterValue;
+                  })
+                  .reduce((acc, v) => {
+                    const date = dayjs.tz(v.date, 'UTC').tz('Asia/Tokyo');
+                    const key = date.format('YYYY-MM-DD');
+                    if (!acc[key]) {
+                      acc[key] = [];
+                    }
+                    acc[key].push(v);
+                    return acc;
+                  }, {} as { [key: string]: typeof data.programs })
+              ).map(([date, dayData]) => {
+                const dayDiff = dayjs(date).diff(dayjs('2023-01-05'), 'day');
+                const dayDiffStr =
+                  dayDiff >= 0 && dayDiff < 4
+                    ? ` 《JMoF${dayDiff + 1}日目》`
+                    : '';
+                return (
+                  <div className="w-full">
+                    {(order === orders[0] || order === orders[1]) && (
+                      <>
+                        <p className="text-slate-500 text-sm font-bold">
+                          {date}
+                          <span className="inline font-normal">
+                            {dayDiffStr}
+                          </span>
+                        </p>
+                        <div className="border-b border-b-slate-200 mb-2" />
+                      </>
+                    )}
+                    <div
+                      className={clsx(
+                        'w-full',
+                        (order === orders[0] || order === orders[1]) && 'mb-8'
+                      )}
+                    >
+                      {dayData.map(({ id, date, name, ownerUrl }) => (
+                        <ProgramCard
+                          key={id}
+                          id={id}
+                          date={date}
+                          name={name}
+                          ownerUrl={ownerUrl ?? undefined}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="w-full h-80 flex justify-center items-center">

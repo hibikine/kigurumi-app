@@ -9,7 +9,7 @@ export const KABadge = ({
 }: {
   className?: string;
   children: ReactNode;
-  size?: 'large' | 'medium' | 'small';
+  size?: 'large' | 'medium' | 'small' | 'xsmall';
   color?: 'purple' | 'fuchsia' | 'pink' | 'rose';
 }) => (
   <div
@@ -18,6 +18,7 @@ export const KABadge = ({
       size === 'small' && 'text-xs px-2 py-0.5',
       (size === 'medium' || size === undefined) && 'text-base px-2',
       size === 'large' && 'text-lg px-2',
+      size === 'xsmall' && 'text-2xs px-2',
       typeof color === 'undefined'
         ? 'bg-pink-500'
         : color === 'purple'
