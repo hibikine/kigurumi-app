@@ -38,6 +38,7 @@
     "firebase": "^9.13.0",
     "graphql": "^16.6.0",
     "ical-generator": "^3.6.0",
+    "ics": "^2.41.0",
     "jsdom": "^20.0.3",
     "micro": "^9.4.1",
     "micro-cors": "^0.1.1",
