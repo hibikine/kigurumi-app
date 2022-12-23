@@ -12,5 +12,8 @@
     "user",
     "api",
     "programs"
-  ]
+  ],
+  "editor.quickSuggestions": {
+    "strings": "on"
+  }
 }
