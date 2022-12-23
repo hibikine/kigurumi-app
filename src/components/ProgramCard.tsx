@@ -1,4 +1,3 @@
-import { Heading } from 'evergreen-ui';
 import Link from 'next/link';
 import dayjs from '../lib/dayjs';
 import clsx from 'clsx';
@@ -12,11 +11,21 @@ export const ProgramCard = ({
   name,
   date,
   ownerUrl,
+  prevDate,
+  order,
 }: {
   id: number;
   name: string;
   date: string;
   ownerUrl?: string;
+  prevDate?: string;
+  order:
+    | '日時が早い順'
+    | '日時が遅い順'
+    | '更新が新しい順'
+    | '更新が古い順'
+    | '登録が新しい順'
+    | '登録が古い順';
 }) => {
   const { data: ownerUrlData } = useLinkQuery(
     { url: ownerUrl ?? '' },
@@ -27,10 +36,13 @@ export const ProgramCard = ({
     /https:\/\/twitter.com\/([a-zA-Z_]+)/
   )?.[1];
   const size = useSize();
+  const prevDateDayjs = dayjs.tz(prevDate, 'UTC').tz('Asia/Tokyo');
+  const dateDayjs = dayjs.tz(date, 'UTC').tz('Asia/Tokyo');
+  const isSameHour = prevDateDayjs.isSame(dateDayjs, 'hour');
   console.log(size);
   return (
     <Link
-      className="block w-full h-50 sm:h-30 mt-1 mb-1 sm:mb-3 sm:mr-2 sm:ml-2 md:h-30 lg:h-28"
+      className="block w-full h-50 sm:h-30 mt-1 mb-1 sm:mb-3 sm:mr-2 sm:ml-2 md:h-30 lg:h-28 relative"
       href={`/programs/item/${id}`}
     >
       <div className="flex w-full h-full flex-col shadow-sm text-slate-700 bg-white  px-4 pt-3 pb-2 md:p-2 lg:p-3 rounded-sm">
@@ -49,6 +61,23 @@ export const ProgramCard = ({
           </div>
         )}
       </div>
+      {prevDate && !isSameHour && (
+        <div className="absolute border-t border-t-slate-300 w-4 -left-4 lg:-left-8 lg:w-8 -top-0.5 sm:-top-1.5">
+          <p
+            className={clsx(
+              '[writing-mode:vertical-rl] lg:[writing-mode:horizontal-tb] absolute text-xs text-slate-400',
+              order === '日時が早い順' &&
+                '-left-0 sm:-left-1 top-1.5 lg:-left-0 lg:top-1',
+              order === '日時が遅い順' &&
+                '-left-0 sm:-left-1 -top-9 lg:-left-0 lg:-top-5'
+            )}
+          >
+            {(order === '日時が早い順' ? dateDayjs : prevDateDayjs)
+              .startOf('h')
+              .format('HH:mm')}
+          </p>
+        </div>
+      )}
     </Link>
   );
 };

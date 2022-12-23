@@ -131,7 +131,7 @@ const Programs: NextPage = () => {
                       ? ` 《JMoF${dayDiff + 1}日目》`
                       : '';
                   return (
-                    <div className="w-full" key={i}>
+                    <div className="w-full pl-1 sm:pl-0" key={i}>
                       {(order === orders[0] || order === orders[1]) && (
                         <>
                           <p className="text-slate-500 text-sm font-bold">
@@ -144,20 +144,22 @@ const Programs: NextPage = () => {
                         </>
                       )}
                       <div className="w-full mb-8">
-                        {dayData.map(({ id, date, name, ownerUrl }) => (
+                        {dayData.map(({ id, date, name, ownerUrl }, i) => (
                           <ProgramCard
                             key={id}
                             id={id}
                             date={date}
                             name={name}
                             ownerUrl={ownerUrl ?? undefined}
+                            prevDate={i === 0 ? undefined : dayData[i - 1].date}
+                            order={order}
                           />
                         ))}
                       </div>
                     </div>
                   );
                 })}
-              {filteredData && (
+              {filteredData && !(order === orders[0] || order === orders[1]) && (
                 <div className="w-full">
                   {filteredData.map(({ id, date, name, ownerUrl }) => (
                     <ProgramCard
@@ -166,6 +168,7 @@ const Programs: NextPage = () => {
                       date={date}
                       name={name}
                       ownerUrl={ownerUrl ?? undefined}
+                      order={order}
                     />
                   ))}
                 </div>
