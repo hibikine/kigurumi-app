@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const PageFooter = () => {
   return (
-    <small className="text-slate-500 text-center w-full block mt-auto mb-1">
+    <small className="mt-auto mb-1 block w-full text-center text-slate-500">
       &copy; 2022{' '}
       <Link
         className="underline hover:text-slate-600"

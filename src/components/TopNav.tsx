@@ -31,14 +31,14 @@ const TopNav = () => {
   return (
     <nav
       className={
-        'w-full sticky top-0 bg-white z-10 shrink-0 flex justify-center sm:justify-start items-center sm:pr-4 sm:pl-4 h-16 sm:h-16 lg:h-16'
+        'sticky top-0 z-10 flex h-16 w-full shrink-0 items-center justify-center bg-white sm:h-16 sm:justify-start sm:px-4 lg:h-16'
       }
     >
       <Link href={isLogin ? '/dashboard' : '/'}>
         <div
           className={clsx(
             styles.logoWrapper,
-            'h-full w-fit sm:w-40 flex items-center justify-center'
+            'flex h-full w-fit items-center justify-center sm:w-40'
           )}
         >
           <Image
@@ -47,7 +47,7 @@ const TopNav = () => {
             height={logoHeight[size]}
             width={(logoHeight[size] * 394) / 105}
             className={clsx(
-              'mr-auto ml-auto  sm:pr-2 sm:mr-2',
+              'mx-auto sm:mr-2  sm:pr-2',
               `h-[${logoHeight[size]}]`
             )}
           />

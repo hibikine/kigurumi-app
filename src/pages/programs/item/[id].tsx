@@ -18,7 +18,7 @@ import { TrashIcon } from '@heroicons/react/20/solid';
 
 const Loading = () => {
   return (
-    <div className="w-full h-screen flex items-center justify-center">
+    <div className="flex h-screen w-full items-center justify-center">
       <Spinner size={48} />
     </div>
   );
@@ -70,16 +70,16 @@ const ProgramsItem: NextPage = () => {
     <Layout>
       {isFetched && data ? (
         <>
-          <div className="flex flex-col items-center pl-2 pr-2 mb-10">
-            <div className="w-full lg:w-96 max-w-full text-slate-700 ">
-              <div className="self-start pt-2 pb-2">
+          <div className="mb-10 flex flex-col items-center px-2">
+            <div className="w-full max-w-full text-slate-700 lg:w-96 ">
+              <div className="self-start py-2">
                 <Link className=" text-blue-500 " href="/programs">
                   ◁合わせ一覧に戻る
                 </Link>
               </div>
-              <div className="bg-white pl-4 pr-4 pt-4 pb-8 rounded-xl flex flex-col">
+              <div className="flex flex-col rounded-xl bg-white px-4 pt-4 pb-8">
                 <h1 className="text-2xl font-bold">{name}</h1>
-                <div className="mt-2 flex justify-between align-center flex-wrap">
+                <div className="align-center mt-2 flex flex-wrap justify-between">
                   <KABadge className="mb-1" size="small">
                     {dayjs
                       .tz(date, 'UTC')
@@ -95,38 +95,38 @@ const ProgramsItem: NextPage = () => {
                 </div>
                 {location && (
                   <div className="mt-4">
-                    <h2 className="text-xl font-bold mb-1">場所</h2>
+                    <h2 className="mb-1 text-xl font-bold">場所</h2>
                     <p>{location}</p>
                   </div>
                 )}
                 {url && (
                   <div className="mt-4">
-                    <h2 className="text-xl font-bold mb-1">リンク</h2>
+                    <h2 className="mb-1 text-xl font-bold">リンク</h2>
                     <EventUrl className=" block" url={url} />
                   </div>
                 )}
                 {ownerUrl && (
                   <div className="mt-4">
-                    <h2 className="text-xl font-bold mb-1">主催者</h2>
+                    <h2 className="mb-1 text-xl font-bold">主催者</h2>
                     <EventUrl url={ownerUrl} />
                   </div>
                 )}
                 {detail && (
                   <div className="mt-4">
-                    <h2 className="text-xl font-bold mb-1">詳細</h2>
+                    <h2 className="mb-1 text-xl font-bold">詳細</h2>
                     <p>{nl2br(detail)}</p>
                   </div>
                 )}
-                <div className="border-t mt-6 mb-6" />
+                <div className="my-6 border-t" />
                 <div className="flex justify-end">
                   <Link
-                    className="border border-slate-400 text-2xs flex justify-center items-center rounded px-2 py-0.5"
+                    className="flex items-center justify-center rounded border border-slate-400 px-2 py-0.5 text-2xs"
                     href={`/programs/edit/${id}`}
                   >
                     編集する
                   </Link>
                   <button
-                    className="ml-4 border border-red-400 text-red-500 text-2xs flex justify-center items-center rounded px-2 py-0.5"
+                    className="ml-4 flex items-center justify-center rounded border border-red-400 px-2 py-0.5 text-2xs text-red-500"
                     onClick={openModal}
                   >
                     削除する
@@ -160,13 +160,13 @@ const ProgramsItem: NextPage = () => {
                     leaveFrom="opacity-100 scale-100"
                     leaveTo="opacity-0 scale-95"
                   >
-                    <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                    <Dialog.Panel className="w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                       <Dialog.Title
                         as="h3"
-                        className="text-lg flex items-center font-medium leading-6 text-gray-900"
+                        className="flex items-center text-lg font-medium leading-6 text-gray-900"
                       >
                         <TrashIcon
-                          className="h-5 w-5 text-red-700 inline"
+                          className="inline h-5 w-5 text-red-700"
                           aria-hidden="true"
                         />
                         本当に削除しますか？

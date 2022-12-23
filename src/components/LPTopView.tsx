@@ -76,7 +76,7 @@ export default function LPTopView() {
         </Fade>
         <Pane position="absolute" className={styles.chatbox}>
           <Rotate top left when={imageLoaded} delay={1000}>
-            <div className={clsx('w-36 h-36', styles.chatboxInner)}>
+            <div className={clsx('h-36 w-36', styles.chatboxInner)}>
               <Image
                 src="/chatbox.svg"
                 width={265}
@@ -87,28 +87,28 @@ export default function LPTopView() {
           </Rotate>
         </Pane>
       </Pane>
-      <div className="absolute top-1/2 h-1/2 md:top-[40vh] md:h-3/5 right-0 left-0 sm:right-2 width-full sm:width-auto sm:pl-[10vw] sm:pr-[min(calc(100vw - 1400px), 15vw)] flex-col items-end flex">
-        <div className="w-52 sm:w-80 md:w-96 ml-auto mr-2 order-1">
+      <div className="width-full sm:width-auto sm:pr-[min(calc(100vw - 1400px), 15vw)] absolute inset-x-0 top-1/2 flex h-1/2 flex-col items-end sm:right-2 sm:pl-[10vw] md:top-[40vh] md:h-3/5">
+        <div className="order-1 ml-auto mr-2 w-52 sm:w-80 md:w-96">
           <TextLogo
             alt="きぐあぷり"
             //width={427 * 2 * (is1400 ? 0.5 : 1)}
             //height={140 * 2 * (is1400 ? 0.5 : 1)}
           />
         </div>
-        <p className="text-slate-900 text-3xl font-extrabold px-3 py-1 text-right bg-white bg-opacity-80 rounded-xl leading-10 mx-2 order-3">
+        <p className="order-3 mx-2 rounded-xl bg-white bg-opacity-80 px-3 py-1 text-right text-3xl font-extrabold leading-10 text-slate-900">
           ○○合わせを登録して
           <wbr />
           チェックしよう。
         </p>
-        <p className="bg-white text-slate-900 rounded-xl px-2 mx-2 bg-opacity-80 order-4 mt-2 md:text-lg md:font-medium hidden md:block">
+        <p className="order-4 mx-2 mt-2 hidden rounded-xl bg-white bg-opacity-80 px-2 text-slate-900 md:block md:text-lg md:font-medium">
           JMoFの合わせイベントを
           <wbr />
           見逃さないようにしよう。
         </p>
-        <div className="px-2 mb-4 w-full md:w-80 order-2">
+        <div className="order-2 mb-4 w-full px-2 md:w-80">
           <Link
             href="/programs"
-            className="bg-blue-600 text-white w-full flex justify-center items-center py-4 md:py-6 md:text-xl font-bold rounded-lg shadow-md"
+            className="flex w-full items-center justify-center rounded-lg bg-blue-600 py-4 font-bold text-white shadow-md md:py-6 md:text-xl"
           >
             <NumberedListIcon className="mr-2" />
             ○○合わせ一覧を見る

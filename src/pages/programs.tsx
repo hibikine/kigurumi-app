@@ -85,17 +85,17 @@ const Programs: NextPage = () => {
   return (
     <Layout>
       <div className="flex flex-col items-center">
-        <div className="flex mt-4 flex-col w-11/12 lg:w-10/12 items-center">
-          <div className="flex flex-col lg:flex-row justify-center lg:justify-start items-center w-full pl-2 pr-2 text-slate-700">
+        <div className="mt-4 flex w-11/12 flex-col items-center lg:w-10/12">
+          <div className="flex w-full flex-col items-center justify-center px-2 text-slate-700 lg:flex-row lg:justify-start">
             <div className="flex flex-col items-center lg:flex-row lg:justify-center">
-              <div className="w-60 mr-4">
+              <div className="mr-4 w-60">
                 <KAListbox
                   value={order}
                   onChange={setOrder}
                   options={orders as unknown as typeof orders[number][]}
                 />
               </div>
-              <div className="flex items-center mt-4 lg:mt-0">
+              <div className="mt-4 flex items-center lg:mt-0">
                 <KASwitch
                   id="is-remove-finished"
                   checked={isRemoveFinished}
@@ -104,7 +104,7 @@ const Programs: NextPage = () => {
                   過去の合わせを表示しない
                 </KASwitch>
               </div>
-              <div className="lg:ml-4 mr-2 mt-2 lg:mt-0">
+              <div className="mr-2 mt-2 lg:ml-4 lg:mt-0">
                 <TextInput
                   value={searchText}
                   placeholder="検索キーワード"
@@ -114,14 +114,14 @@ const Programs: NextPage = () => {
               </div>
             </div>
             <Link
-              className="mt-4 lg:mt-0 w-60 h-12 text-center font-bold lg:ml-auto rounded-lg bg-blue-600 text-white flex justify-center items-center"
+              className="mt-4 flex h-12 w-60 items-center justify-center rounded-lg bg-blue-600 text-center font-bold text-white lg:mt-0 lg:ml-auto"
               href="/programs/add"
             >
               合わせを追加する
             </Link>
           </div>
           {isFetched && data ? (
-            <div className="flex flex-col items-center mt-4 w-full flex-wrap md:w-auto lg:mt-8 lg:w-[768px] xl:w-[1024px] 2xl:mx-10">
+            <div className="mt-4 flex w-full flex-col flex-wrap items-center md:w-auto lg:mt-8 lg:w-[768px] xl:w-[1024px] 2xl:mx-10">
               {(order === orders[0] || order === orders[1]) &&
                 dateGroup &&
                 Object.entries(dateGroup).map(([date, dayData], i) => {
@@ -134,16 +134,16 @@ const Programs: NextPage = () => {
                     <div className="w-full pl-1 sm:pl-0" key={i}>
                       {(order === orders[0] || order === orders[1]) && (
                         <>
-                          <p className="text-slate-500 text-sm font-bold">
+                          <p className="text-sm font-bold text-slate-500">
                             {date}
                             <span className="inline font-normal">
                               {dayDiffStr}
                             </span>
                           </p>
-                          <div className="border-b border-b-slate-200 mb-2" />
+                          <div className="mb-2 border-b border-b-slate-200" />
                         </>
                       )}
-                      <div className="w-full mb-8">
+                      <div className="mb-8 w-full">
                         {dayData.map(({ id, date, name, ownerUrl }, i) => (
                           <ProgramCard
                             key={id}
@@ -175,7 +175,7 @@ const Programs: NextPage = () => {
               )}
             </div>
           ) : (
-            <div className="w-full h-80 flex justify-center items-center">
+            <div className="flex h-80 w-full items-center justify-center">
               <Spinner />
             </div>
           )}
