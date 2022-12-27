@@ -6,8 +6,8 @@ export default function Calendar() {
   const { data, isFetched } = useProgramsQuery();
   return (
     <Layout>
-      <div className="mt-4 flex flex-col items-center">
-        <div className="mx-1 w-full text-slate-600 sm:w-auto">
+      <div className="mt-4 flex w-full flex-col items-center">
+        <div className="w-full px-2 text-slate-600 sm:w-auto">
           <h1 className="text-xl font-bold">カレンダー連携</h1>
           <p>
             GoogleカレンダーやiOSカレンダーと全イベント一覧の連携ができます。
@@ -21,7 +21,7 @@ export default function Calendar() {
             )}
           </p>
           <input
-            className="mt-2 mb-10 w-80 rounded-lg border border-slate-300 p-1"
+            className="mt-2 mb-10 block w-full rounded-lg border border-slate-300 p-1 sm:mx-0 sm:w-80"
             type="text"
             value="https://kigu.app/api/programs/calendar.ics"
             readOnly
@@ -31,6 +31,7 @@ export default function Calendar() {
           />
           <p>GoogleカレンダーのURLの追加方法は、以下の画像をご覧ください。</p>
           <Image
+            className="mb-2"
             src="/calendar.png"
             width="798"
             height="381"
