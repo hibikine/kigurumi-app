@@ -6,15 +6,19 @@ import {
   BuildIcon,
   LogInIcon,
   Avatar,
+  CalendarIcon,
 } from 'evergreen-ui';
 import Link from 'next/link';
 import Image from 'next/image';
-import TopNavTabLink from './TopNavTabLink';
-import styles from '../styles/TopNav.module.scss';
 import { signIn, useSession } from 'next-auth/react';
 import clsx from 'clsx';
+import TopNavTabLink from './TopNavTabLink';
+import styles from '../styles/TopNav.module.scss';
 import useSize from '../utils/hooks/useSize';
-import { NAVIGATION_HEIGHT_SP } from '../styles/constants';
+import {
+  NAVIGATION_HEIGHT_PC,
+  NAVIGATION_HEIGHT_SP,
+} from '../styles/constants';
 
 const logoHeight: { [key in ReturnType<typeof useSize>]: number } = {
   xs: 48,
@@ -32,7 +36,7 @@ const TopNav = () => {
   return (
     <nav
       className={
-        'sticky top-0 z-10 flex h-12 w-full shrink-0 items-center justify-center bg-white sm:h-14 sm:justify-start sm:px-4 lg:h-16'
+        'sticky top-0 z-10 flex h-12 w-full shrink-0 items-center justify-center bg-white sm:h-14 sm:justify-start sm:px-4 '
       }
     >
       <Link href={isLogin ? '/dashboard' : '/'}>
@@ -67,7 +71,7 @@ const TopNav = () => {
       </Link>
       <div
         // eslint-disable-next-line tailwindcss/no-custom-classname
-        className={`h-${NAVIGATION_HEIGHT_SP} fixed inset-x-0 bottom-0 flex w-full items-center justify-around bg-white md:static md:h-auto md:bg-transparent`}
+        className={`h-${NAVIGATION_HEIGHT_SP} md:h-${NAVIGATION_HEIGHT_PC} fixed inset-x-0 bottom-0 flex w-full items-center justify-around bg-white md:static md:h-auto md:justify-start md:bg-transparent`}
       >
         {isLogin && (
           <TopNavTabLink href="/dashboard" icon={PanelStatsIcon}>
@@ -76,6 +80,9 @@ const TopNav = () => {
         )}
         <TopNavTabLink href="/programs" icon={NumberedListIcon}>
           合わせ一覧
+        </TopNavTabLink>
+        <TopNavTabLink href="/programs/calendar" icon={CalendarIcon}>
+          {size === 'xs' ? 'カレンダー' : '合わせカレンダー'}
         </TopNavTabLink>
         {/*<TopNavTabLink href="/belongings" icon={NumberedListIcon}>
           持ち物
