@@ -1,20 +1,20 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import Layout from '../../../components/Layout';
 import { useRouter } from 'next/router';
+import nl2br from 'react-nl2br';
+import { Button, majorScale, Spinner, TextInputField } from 'evergreen-ui';
+import { useState, Fragment, useCallback } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { TrashIcon } from '@heroicons/react/20/solid';
+import { KABadge } from '../../../components/KABadge';
+import dayjs from '../../../lib/dayjs';
+import EventUrl from '../../../components/EventUrl';
 import {
   useDeleteProgramMutation,
   useProgramQuery,
   useProgramsQuery,
 } from '../../../generated/request';
-import EventUrl from '../../../components/EventUrl';
-import nl2br from 'react-nl2br';
-import dayjs from '../../../lib/dayjs';
-import { Button, majorScale, Spinner, TextInputField } from 'evergreen-ui';
-import { KABadge } from '../../../components/KABadge';
-import { useState, Fragment, useCallback } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { TrashIcon } from '@heroicons/react/20/solid';
+import Layout from '../../../components/Layout';
 
 const Loading = () => {
   return (
