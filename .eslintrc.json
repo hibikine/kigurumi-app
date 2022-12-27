@@ -17,6 +17,19 @@
           "!mysql"
         ]
       }
+    ],
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "external",
+          "builtin",
+          "internal",
+          "sibling",
+          "parent",
+          "index"
+        ]
+      }
     ]
   }
 }
