@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
+import LinkButton from '../../components/LinkButton';
 import { useProgramsQuery } from '../../generated/request';
 
 export default function Calendar() {
@@ -23,18 +23,22 @@ export default function Calendar() {
               <>現在、{data?.programs.length}件のイベントが登録されています。</>
             )}
           </p>
-          <Link
+          <LinkButton
             href={googleCalendarUrl}
-            className="my-2 rounded-md border border-blue-600 bg-blue-500 py-2 px-4 text-center text-sm font-bold text-white"
+            className="my-2"
+            color="primary"
+            fullWidth
           >
             Googleカレンダーに追加する
-          </Link>
-          <Link
-            className="my-2 rounded-md border border-blue-600 bg-blue-500 py-2 px-4 text-center text-sm font-bold text-white"
+          </LinkButton>
+          <LinkButton
+            className="my-2"
             href="webcal://calendar.kigu.app/api/programs/calendar.ics"
+            color="primary"
+            fullWidth
           >
             Apple Calendar / Microsoft Outlookに追加する
-          </Link>
+          </LinkButton>
           <p>
             その他のカレンダーアプリでは以下のURLをコピーして、「URLで追加」から追加してください。
           </p>
