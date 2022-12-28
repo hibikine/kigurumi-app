@@ -4,6 +4,7 @@
     "plugin:storybook/recommended",
     "plugin:tailwindcss/recommended"
   ],
+  "plugins": ["@typescript-eslint"],
   "rules": {
     "tailwindcss/no-custom-classname": [
       "warn",
@@ -29,6 +30,12 @@
           "parent",
           "index"
         ]
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_"
       }
     ]
   }
