@@ -42,34 +42,34 @@ export const ProgramCard = ({
   console.log(size);
   return (
     <Link
-      className="block w-full h-50 sm:h-30 mt-1 mb-1 sm:mb-3 sm:mr-2 sm:ml-2 md:h-30 lg:h-28 relative"
+      className="h-50 sm:h-30 md:h-30 relative my-1 block w-full sm:mx-2 sm:mb-3 lg:h-28"
       href={`/programs/item/${id}`}
     >
-      <div className="flex w-full h-full flex-col shadow-sm text-slate-700 bg-white  px-4 pt-3 pb-2 md:p-2 lg:p-3 rounded-sm">
-        <div className="overflow-hidden w-full [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
-          <h2 className="text-slate-700 text-lg font-bold leading-6 mb-2 lg:truncate">
+      <div className="flex h-full w-full flex-col rounded-sm bg-white px-4  pt-3 pb-2 text-slate-700 shadow-sm md:p-2 lg:p-3">
+        <div className="w-full overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
+          <h2 className="mb-2 text-lg font-bold leading-6 text-slate-700 lg:truncate">
             {name}
           </h2>
         </div>
         <DateBadge date={date} />
         {ownerLink && (
-          <div className="flex mt-1 items-center">
+          <div className="mt-1 flex items-center">
             {ownerLink?.image && <Icon src={ownerLink.image} />}
-            <p className="truncate text-xs sm:text-sm text-slate-400">
+            <p className="truncate text-xs text-slate-400 sm:text-sm">
               {ownerLink?.title || ownerTwitterId}
             </p>
           </div>
         )}
       </div>
       {prevDate && !isSameHour && (
-        <div className="absolute border-t border-t-slate-300 w-4 -left-4 lg:-left-8 lg:w-8 -top-0.5 sm:-top-1.5">
+        <div className="absolute -left-4 -top-0.5 w-4 border-t border-t-slate-300 sm:-top-1.5 lg:-left-8 lg:w-8">
           <p
             className={clsx(
-              '[writing-mode:vertical-rl] lg:[writing-mode:horizontal-tb] absolute text-xs text-slate-400',
+              'absolute text-xs text-slate-400 [writing-mode:vertical-rl] lg:[writing-mode:horizontal-tb]',
               order === '日時が早い順' &&
-                '-left-0 sm:-left-1 top-1.5 lg:-left-0 lg:top-1',
+                '-left-0 top-1.5 sm:-left-1 lg:-left-0 lg:top-1',
               order === '日時が遅い順' &&
-                '-left-0 sm:-left-1 -top-9 lg:-left-0 lg:-top-5'
+                '-left-0 -top-9 sm:-left-1 lg:-left-0 lg:-top-5'
             )}
           >
             {(order === '日時が早い順' ? dateDayjs : prevDateDayjs)
@@ -90,12 +90,12 @@ const DateBadge = ({ date }: { date: string }) => {
     dateDiff >= 0 && dateDiff < 4 ? `${dateDiff + 1}日目` : '';
   return (
     <div className="flex items-center">
-      <span className="font-bold text-sm inline">
+      <span className="inline text-sm font-bold">
         {dayjsDate.format(`M月D日(dd) HH:mm`)}
       </span>
       {dateDiffText && (
         <KABadge
-          className="inline-block ml-2"
+          className="ml-2 inline-block"
           size={size === 'sm' || size === 'md' ? 'small' : 'xsmall'}
           color={dateToColor(dayjs.tz(date, 'UTC').tz('Asia/Tokyo'))}
         >
@@ -107,7 +107,7 @@ const DateBadge = ({ date }: { date: string }) => {
 };
 
 const Icon = ({ src }: { src: string }) => (
-  <picture className="block w-4 h-4 sm:w-6 sm:h-6 lg:h-6 lg:w-6 rounded-full overflow-hidden mr-1">
-    <img className="w-full h-full" alt="" src={src} width="40" height="40" />
+  <picture className="mr-1 block h-4 w-4 overflow-hidden rounded-full sm:h-6 sm:w-6 lg:h-6 lg:w-6">
+    <img className="h-full w-full" alt="" src={src} width="40" height="40" />
   </picture>
 );

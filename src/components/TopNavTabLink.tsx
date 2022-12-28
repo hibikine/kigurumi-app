@@ -1,16 +1,13 @@
 import { ReactNode } from 'react';
-import {
-  majorScale,
-  Link as EvergreenLink,
-  Pane,
-  IconComponent,
-  Text,
-  minorScale,
-} from 'evergreen-ui';
+import { Pane, IconComponent } from 'evergreen-ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from '../styles/TopNav.module.scss';
 import clsx from 'clsx';
+import {
+  NAVIGATION_HEIGHT_PC,
+  NAVIGATION_HEIGHT_SP,
+} from '../styles/constants';
 
 type Props = {
   href?: string;
@@ -26,53 +23,39 @@ const TopNavTabLinkComponent = ({
   className,
   paneClassName,
   onClick,
-  fontWeight,
-  color,
   children,
 }: {
   icon?: IconComponent;
   className?: string;
   paneClassName?: string;
   onClick?: () => void;
-  fontWeight: number;
-  color?: string;
   children: ReactNode;
 }) => (
-  <EvergreenLink
-    cursor="pointer"
-    className={clsx(
-      styles.topNavTabLink,
-      Icon && styles.topNavTabLinkWithIcon,
-      className
-    )}
-    fontSize="18px"
+  <button
+    className={
+      /* eslint-disable tailwindcss/no-custom-classname */
+      clsx(
+        'mx-6 flex-1 cursor-pointer text-lg md:flex-initial',
+        `h-${NAVIGATION_HEIGHT_SP}`,
+        !Icon && `leading-[${NAVIGATION_HEIGHT_SP}rem]`,
+        `md:h-${NAVIGATION_HEIGHT_PC}`,
+        !Icon && `md:leading-[${NAVIGATION_HEIGHT_PC}rem]`,
+        Icon && 'leading-3',
+        className
+      )
+      /* eslint-enable tailwindcss/no-custom-classname */
+    }
     onClick={onClick}
-    fontWeight={fontWeight}
-    color={color}
-    marginRight={majorScale(3)}
-    marginLeft={majorScale(3)}
   >
     {Icon ? (
-      <Pane
-        className={paneClassName}
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="space-around"
-        paddingY={minorScale(2)}
-        height="100%"
-      >
-        <Icon size={20} />
-        <Text fontSize="14px" fontWeight={fontWeight} color={color}>
-          {children}
-        </Text>
+      <Pane className="flex h-full flex-col items-center justify-around py-1">
+        <Icon className="text-slate-500" size={20} />
+        <p className="text-sm">{children}</p>
       </Pane>
     ) : (
-      <Text fontSize="18px" fontWeight={fontWeight} color={color}>
-        {children}
-      </Text>
+      <p className="text-lg">{children}</p>
     )}
-  </EvergreenLink>
+  </button>
 );
 
 const TopNavTabLink = ({
@@ -86,18 +69,16 @@ const TopNavTabLink = ({
   const { pathname } = useRouter();
   const parentPath = pathname.split('/')[1];
   const isActive = href ? parentPath === href.split('/')[1] : false;
-  const fontWeight = isActive ? 600 : 400;
-  const color = isActive ? 'neutral' : undefined;
+  const fontWeight = isActive ? 'font-semibold' : 'font-normal';
+  const color = isActive ? 'slate-900' : 'slate-600';
 
   if (href === undefined) {
     return (
       <TopNavTabLinkComponent
         icon={icon}
-        className={className}
+        className={clsx(fontWeight, color, className)}
         paneClassName={paneClassName}
         onClick={onClick}
-        fontWeight={fontWeight}
-        color={color}
       >
         {children}
       </TopNavTabLinkComponent>
@@ -108,11 +89,9 @@ const TopNavTabLink = ({
     <Link href={href} passHref legacyBehavior>
       <TopNavTabLinkComponent
         icon={icon}
-        className={className}
+        className={clsx(fontWeight, color, className)}
         paneClassName={paneClassName}
         onClick={onClick}
-        fontWeight={fontWeight}
-        color={color}
       >
         {children}
       </TopNavTabLinkComponent>

@@ -3,5 +3,33 @@
     "next/core-web-vitals",
     "plugin:storybook/recommended",
     "plugin:tailwindcss/recommended"
-  ]
+  ],
+  "rules": {
+    "tailwindcss/no-custom-classname": [
+      "warn",
+      {
+        "cssFiles": [
+          "**/*.css",
+          "!**/node_modules",
+          "!**/.*",
+          "!**/dist",
+          "!**/build",
+          "!mysql"
+        ]
+      }
+    ],
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "external",
+          "builtin",
+          "internal",
+          "sibling",
+          "parent",
+          "index"
+        ]
+      }
+    ]
+  }
 }

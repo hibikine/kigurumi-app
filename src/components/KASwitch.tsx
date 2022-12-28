@@ -27,7 +27,7 @@ export const KASwitch = ({
       <span
         aria-hidden="true"
         className={`${checked ? 'translate-x-9' : 'translate-x-0'}
-            pointer-events-none inline-block h-[34px] w-[34px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+            pointer-events-none inline-block h-[34px] w-[34px] rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
       />
     </Switch>
     <label className="ml-2 font-medium" htmlFor="is-remove-finished">

@@ -114,7 +114,7 @@ const Belongings: NextPage = () => {
   return (
     <Layout>
       <div className="flex flex-col items-center">
-        <Pane className="flex pl-2 pr-2 flex-col items-left max-w-2xl mt-8 mb-8 w-full">
+        <Pane className="items-left my-8 flex w-full max-w-2xl flex-col px-2">
           <Heading marginBottom={majorScale(2)} size={700} is="h1">
             合わせを追加する
           </Heading>
@@ -189,7 +189,7 @@ const Belongings: NextPage = () => {
   />*/}
             </div>
             <Button
-              className="w-full mb-16"
+              className="mb-16 w-full"
               appearance="primary"
               alignSelf="center"
               display="block"

@@ -113,7 +113,7 @@ const Belongings: NextPage = () => {
   return (
     <Layout>
       <div className="flex flex-col items-center">
-        <Pane className="flex flex-col items-left max-w-2xl mt-8 mb-8 w-full">
+        <Pane className="items-left my-8 flex w-full max-w-2xl flex-col">
           <Heading marginBottom={majorScale(2)} size={700} is="h1">
             合わせを編集する
           </Heading>
@@ -198,7 +198,7 @@ const Belongings: NextPage = () => {
               </Button>
             </form>
           ) : (
-            <div className="w-full h-screen flex justify-center items-center">
+            <div className="flex h-screen w-full items-center justify-center">
               <Spinner />
             </div>
           )}
