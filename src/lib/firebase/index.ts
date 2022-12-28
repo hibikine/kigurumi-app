@@ -8,13 +8,13 @@ import { getMessaging, getToken } from 'firebase/messaging';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyBrR52CelaVY2QyeJdfiEAP9C1oQq1l_A8',
-  authDomain: 'hikage-works.firebaseapp.com',
-  projectId: 'hikage-works',
-  storageBucket: 'hikage-works.appspot.com',
-  messagingSenderId: '141706354198',
-  appId: '1:141706354198:web:6357f01a5ca9f2648e9f37',
-  measurementId: 'G-8WHCZ8CYGS',
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -27,8 +27,7 @@ export const requestPermissionAndGetToken = async () => {
     if (permission === 'granted') {
       const messaging = getMessaging(app);
       const token = await getToken(messaging, {
-        vapidKey:
-          'BF0Dk08j4tFT5AKrXLHkeKFqdP_2qQ3DyhlcvshzVV9Y9fTJ3i2YAMZGd-K9F-xpEG1a9WCg0UOJO76-tUNHYAY',
+        vapidKey: process.env.FIREBASE_MESSAGING_VAPID_KEY,
       });
       // submit token
       fetch('/api/notifications/subscribe', {
